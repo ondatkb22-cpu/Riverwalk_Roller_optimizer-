@@ -16,13 +16,17 @@
 *{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
-/* ── HEADER ── */
-.hdr{background:#000;padding:15px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+/* ── HEADER & BUDGET BAR ── */
+.hdr{background:#000;padding:15px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center; z-index:50;}
 .logo{font-family:'Oswald', sans-serif;font-size:20px;font-weight:700;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;}
 .lu-count{background:rgba(0, 242, 255, 0.1);padding:5px 12px;border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(0, 242, 255, 0.3);font-weight:700;}
 
+.budget-bar{background:var(--surface2);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:10px;font-family:var(--mono);font-size:12px;position:sticky;top:0;z-index:40;box-shadow:0 4px 10px rgba(0,0,0,0.5);}
+.b-item span{color:var(--sub);margin-right:5px;font-size:10px;text-transform:uppercase;}
+.b-val{font-weight:700;transition:color 0.2s;}
+
 /* ── MAIN ── */
-.main{flex:1;overflow-y:auto;padding-bottom:80px; -webkit-overflow-scrolling:touch;}
+.main{flex:1;overflow-y:auto;padding-bottom:80px; -webkit-overflow-scrolling:touch; position:relative;}
 .panel{display:none;}
 .panel.on{display:block;}
 
@@ -49,9 +53,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 .step-text strong{color:var(--text);}
 
 /* ── TABLE ── */
-.tw{overflow-x:auto;padding:0 12px;}
+.tw{overflow-x:auto;padding:0 12px 12px;}
 table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;}
-th{padding:12px 8px;text-align:left;font-size:9px;color:var(--sub);text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;position:sticky;top:0;}
+th{padding:12px 8px;text-align:left;font-size:9px;color:var(--sub);text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;}
 td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
 
 .stm-badge{background:var(--green);color:#000;font-size:8px;padding:2px 4px;border-radius:3px;font-weight:900;margin-left:5px;vertical-align:middle;}
@@ -59,8 +63,9 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
 .vel-dn{color:var(--pink);font-weight:700;}
 
 .gen-btn{background:linear-gradient(90deg, var(--teal), var(--pink));color:#fff;width:calc(100% - 24px);margin:12px;padding:16px;border:none;border-radius:12px;font-weight:900;font-family:'Oswald';font-size:16px;letter-spacing:1px;}
-.add-btn{background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:4px 10px;border-radius:6px;font-weight:700;}
+.add-btn{background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:4px 10px;border-radius:6px;font-weight:700; transition:0.2s;}
 .add-btn.is-locked{background:var(--teal);color:#000;}
+.add-btn:disabled{opacity:0.3; border-color:var(--muted); color:var(--muted);}
 </style>
 </head>
 <body>
@@ -71,7 +76,11 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
 </div>
 
 <div class="main">
-  <!-- INTEL TAB -->
+  <div class="budget-bar">
+    <div class="b-item"><span>REM SALARY:</span> <strong class="b-val" id="rem-sal" style="color:var(--green)">$50,000</strong></div>
+    <div class="b-item"><span>AVG/PLAYER:</span> <strong class="b-val" id="avg-sal" style="color:var(--text)">$8,333</strong></div>
+  </div>
+
   <div class="panel on" id="panel-intel">
     <div class="hero-card">
       <h2 style="font-family:'Oswald'; color:var(--text); margin-bottom:4px; font-size:22px;">The Winning DNA</h2>
@@ -102,20 +111,19 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
       
       <div class="guide-step">
         <div class="step-num">1</div>
-        <div class="step-text"><strong>Scan the Market (Arb Tab):</strong> Look for players with <strong>STEAM</strong> (Green badge). This means their betting odds are improving rapidly, but DraftKings hasn't adjusted their salary.</div>
+        <div class="step-text"><strong>Scan the Market (Arb Tab):</strong> Look for players with <strong>STEAM</strong>. This means their betting odds are improving rapidly, but DraftKings hasn't adjusted.</div>
       </div>
       <div class="guide-step">
         <div class="step-num">2</div>
-        <div class="step-text"><strong>Anchor Your Core:</strong> Tap the <strong>+</strong> button to LOCK 2-3 players you trust in the Texas wind. Do not lock all 6.</div>
+        <div class="step-text"><strong>Anchor Your Core:</strong> Tap the <strong>+</strong> button to LOCK players. Watch your remaining salary update at the top of the screen just like Rotowire.</div>
       </div>
       <div class="guide-step">
         <div class="step-num">3</div>
-        <div class="step-text"><strong>Roll the Engine:</strong> Navigate to the <strong>Optimize</strong> tab and hit the button. The $DLTA algorithm will mathematically fill the rest of your salary cap with the best values.</div>
+        <div class="step-text"><strong>Roll the Engine:</strong> Navigate to the <strong>Optimize</strong> tab and hit the button to let the algorithm finalize the best remaining value.</div>
       </div>
     </div>
   </div>
 
-  <!-- ARB TAB -->
   <div class="panel" id="panel-arb">
     <div class="tw">
       <table>
@@ -134,7 +142,6 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
     </div>
   </div>
 
-  <!-- BUILD TAB -->
   <div class="panel" id="panel-build">
     <div style="padding:16px;">
        <div id="lu-card"></div>
@@ -186,21 +193,51 @@ function compute() {
   });
 }
 
+// Update the Top Budget Bar Live Tracker
+function updateBudget() {
+  let locked = players.filter(p => p.locked);
+  let spent = locked.reduce((s, p) => s + p.price, 0);
+  let rem = SAL_CAP - spent;
+  let slotsLeft = 6 - locked.length;
+  let avg = slotsLeft > 0 ? Math.floor(rem / slotsLeft) : 0;
+
+  document.getElementById('lu-badge').innerText = `${locked.length}/6 LOCKED`;
+  
+  let remEl = document.getElementById('rem-sal');
+  remEl.innerText = `$${rem.toLocaleString()}`;
+  remEl.style.color = rem < 0 ? 'var(--pink)' : 'var(--green)';
+
+  let avgEl = document.getElementById('avg-sal');
+  avgEl.innerText = `$${avg.toLocaleString()}`;
+  // Turn orange if avg drops below $7500, pink if negative
+  avgEl.style.color = avg < 0 ? 'var(--pink)' : (avg < 7500 && slotsLeft > 0) ? 'var(--orange)' : 'var(--text)';
+}
+
 function renderArb() {
   const tbody = document.getElementById('arb-tbody');
+  
+  // Get current remaining budget to check if we can afford players
+  let lockedCount = players.filter(p => p.locked).length;
+  let spent = players.filter(p => p.locked).reduce((s, p) => s + p.price, 0);
+  let maxAffordable = SAL_CAP - spent - ((6 - lockedCount - 1) * 6500); // Assuming 6500 is min price
+
   tbody.innerHTML = players.sort((a,b) => b.dlta - a.dlta).map(p => {
     let velClass = p.velocity > 0 ? 'vel-up' : 'vel-dn';
     let velArrow = p.velocity > 0 ? '▲' : '▼';
     let isSteam = p.velocity > 0.003 && p.delta > 0;
     
+    let isFull = (!p.locked && lockedCount >= 6);
+    let isOverBudget = (!p.locked && lockedCount < 6 && p.price > maxAffordable);
+    let disabledAttr = (isFull || isOverBudget) ? 'disabled' : '';
+    
     return `
-      <tr>
+      <tr style="${(isFull || isOverBudget) && !p.locked ? 'opacity:0.4;' : ''}">
         <td><strong>${p.name}</strong>${isSteam ? '<span class="stm-badge">STEAM</span>' : ''}</td>
         <td style="font-family:var(--mono)">$${p.price/1000}k</td>
         <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--pink)'};">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
         <td class="${velClass}">${velArrow}${(Math.abs(p.velocity)*100).toFixed(2)}</td>
         <td style="color:var(--orange); font-weight:bold;">${p.dlta}</td>
-        <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
+        <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')" ${disabledAttr}>${p.locked ? '✓' : '+'}</button></td>
       </tr>
     `;
   }).join('');
@@ -220,14 +257,14 @@ function toggleLock(name) {
     const lockedCount = players.filter(x => x.locked).length;
     if (!p.locked && lockedCount >= 6) return;
     p.locked = !p.locked;
-    document.getElementById('lu-badge').innerText = `${players.filter(x => x.locked).length}/6 LOCKED`;
+    updateBudget();
     renderArb();
   }
 }
 
 function clearLocks() {
   players.forEach(p => p.locked = false);
-  document.getElementById('lu-badge').innerText = `0/6 LOCKED`;
+  updateBudget();
   renderAll();
   document.getElementById('lu-card').innerHTML = '';
 }
@@ -238,8 +275,16 @@ function buildAndRender() {
   for (let p of pool) {
     if (lineup.length >= 6) break;
     let currentCost = lineup.reduce((s, x) => s + x.price, 0);
-    if (currentCost + p.price <= SAL_CAP) lineup.push(p);
+    // Rough logic: leave room for min priced players ($6500)
+    let slotsRemaining = 6 - lineup.length - 1;
+    if (currentCost + p.price + (slotsRemaining * 6500) <= SAL_CAP) {
+      lineup.push(p);
+    }
   }
+  
+  // Sort lineup by price descending for clean display
+  lineup.sort((a,b) => b.price - a.price);
+  
   const card = document.getElementById('lu-card');
   card.innerHTML = `
     <div style="background:var(--surface2); border-radius:12px; border:1px solid var(--border); overflow:hidden;">
@@ -247,13 +292,25 @@ function buildAndRender() {
         <span>FIESTA READY LINEUP</span>
         <span style="font-size:10px; color:var(--sub); font-family:var(--sans); letter-spacing:0;">${lineup.length}/6 SLOTS</span>
       </div>
-      ${lineup.map(p => `<div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);"><span>${p.name}</span><strong style="font-family:var(--mono);">$${p.price}</strong></div>`).join('')}
-      <div style="padding:15px; background:var(--bg); display:flex; justify-content:space-between;"><span>TOTAL SALARY</span><strong style="color:var(--green); font-family:var(--mono);">$${lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
+      ${lineup.map(p => `
+        <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);">
+          <span>${p.locked ? '🔒 ' : ''}${p.name}</span>
+          <strong style="font-family:var(--mono); color:${p.locked ? 'var(--teal)' : 'var(--text)'}">$${p.price}</strong>
+        </div>
+      `).join('')}
+      <div style="padding:15px; background:var(--bg); display:flex; justify-content:space-between;">
+        <span>TOTAL SALARY</span>
+        <strong style="color:var(--green); font-family:var(--mono);">$${lineup.reduce((s,x)=>s+x.price,0)}</strong>
+      </div>
     </div>
   `;
 }
 
-function renderAll() { compute(); renderArb(); }
+function renderAll() { 
+  compute(); 
+  updateBudget();
+  renderArb(); 
+}
 renderAll();
 </script>
 </body>
