@@ -3,106 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Alamo City Optimizer — Valero 2026</title>
+<title>Riverwalk Roller | Valero 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=JetBrains+Mono:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050505;--surface:#111111;--surface2:#1a1a1a;
-  --border:#2a2a2a;--text:#ffffff;--sub:#a0a0a0;--muted:#555555;
-  --fiesta-pink:#ff2d55;--fiesta-teal:#00e5ff;--fiesta-orange:#ff9500;
-  --green:#4caf50;--gold:#ffca28;--dk-blue:#1d2a3c;
+  --bg:#000000;--surface:#0a0a0a;--surface2:#121212;
+  --border:#1f1f1f;--text:#ffffff;--sub:#888888;--muted:#444444;
+  --teal:#00f2ff;--pink:#ff007a;--orange:#ff8c00;
+  --green:#39ff14;--gold:#ffcc00;--dk-blue:#0d1117;
   --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
-/* ── DK STYLE HEADER ── */
-.hdr{background:#000;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-.logo{font-family:'Oswald', sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;color:var(--fiesta-pink);}
-.lu-count{background:var(--dk-blue);padding:4px 10px;border-radius:4px;font-family:var(--mono);font-size:11px;border:1px solid #334155;}
+/* ── HEADER ── */
+.hdr{background:#000;padding:15px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Oswald', sans-serif;font-size:20px;font-weight:700;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;}
+.lu-count{background:rgba(0, 242, 255, 0.1);padding:5px 12px;border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(0, 242, 255, 0.3);font-weight:700;}
 
-/* ── MAIN CONTENT AREA ── */
+/* ── MAIN ── */
 .main{flex:1;overflow-y:auto;padding-bottom:80px; -webkit-overflow-scrolling:touch;}
 .panel{display:none;}
 .panel.on{display:block;}
 
-/* ── BOTTOM TAB NAV ── */
-.tab-bar{position:fixed;bottom:0;left:0;right:0;height:65px;background:#000;border-top:1px solid var(--border);display:flex;z-index:1000;padding-bottom:env(safe-area-inset-bottom);}
-.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.tab-item.on{color:var(--fiesta-teal);}
-.tab-icon{font-size:20px;margin-bottom:4px;}
+/* ── BOTTOM TABS ── */
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:70px;background:#000;border-top:1px solid var(--border);display:flex;z-index:1000;padding-bottom:env(safe-area-inset-bottom);}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;transition:0.2s;}
+.tab-item.on{color:var(--pink);}
+.tab-icon{font-size:22px;margin-bottom:4px;}
 
-/* ── HOME / HOW-TO ── */
-.welcome-card{background:linear-gradient(145deg, #1a0a1a, var(--bg));margin:16px;padding:20px;border-radius:12px;border:1px solid #3d1c3d;}
-.guide-step{display:flex;gap:12px;margin-bottom:16px;}
-.step-num{background:var(--fiesta-teal);color:#000;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;}
-.founder-note{background:rgba(255,45,85,0.05);border-left:3px solid var(--fiesta-pink);padding:15px;margin:16px;font-style:italic;font-size:12px;color:var(--sub);}
+/* ── HOME CARD ── */
+.course-card{background:linear-gradient(145deg, #0a1111, #000);margin:16px;padding:24px;border-radius:16px;border:1px solid var(--border);box-shadow: 0 10px 30px rgba(0,242,255,0.05);}
+.stat-row{display:flex;justify-content:space-between;margin-top:15px;padding-top:15px;border-top:1px solid var(--border);}
+.stat-box{text-align:center;}
+.stat-val{display:block;font-family:'Oswald';font-size:18px;color:var(--teal);}
+.stat-lbl{font-size:9px;color:var(--sub);text-transform:uppercase;}
+
+.founder-note{background:rgba(255,0,122,0.03);border-left:3px solid var(--pink);padding:15px;margin:16px;font-size:12px;color:var(--sub);line-height:1.6;}
 
 /* ── TABLE ── */
 .tw{padding:0 12px;}
-table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:8px;overflow:hidden;}
-thead{position:sticky;top:0;z-index:10;background:var(--surface2);}
-th{padding:10px 8px;text-align:left;font-size:10px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);}
-td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;overflow:hidden;}
+th{padding:12px 8px;text-align:left;font-size:10px;color:var(--sub);text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);}
+td{padding:12px 8px;border-bottom:1px solid var(--border);}
 
-.pod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;}
-.pod{background:var(--surface);padding:10px;border-radius:8px;text-align:center;border:1px solid var(--border);}
-.pod-v{display:block;font-family:var(--mono);font-size:16px;color:var(--fiesta-orange);}
-.pod-l{font-size:9px;color:var(--muted);text-transform:uppercase;}
+.add-btn{background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:5px 12px;border-radius:6px;font-weight:700;transition:0.2s;}
+.add-btn.is-locked{background:var(--teal);color:#000;}
 
-.gen-btn{background:var(--fiesta-teal);color:#000;width:calc(100% - 24px);margin:12px;padding:15px;border:none;border-radius:8px;font-weight:900;font-family:'Oswald', sans-serif;font-size:16px;cursor:pointer;}
-.add-btn{background:var(--surface2);color:var(--fiesta-teal);border:1px solid var(--fiesta-teal);padding:4px 10px;border-radius:4px;font-weight:bold;}
-.add-btn.is-locked{background:var(--fiesta-teal);color:#000;}
-
-.lu-card{background:var(--surface2);margin:12px;border-radius:12px;border:1px solid var(--border);overflow:hidden;}
-.lu-row{display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid var(--border);}
+.gen-btn{background:linear-gradient(90deg, var(--teal), var(--pink));color:#fff;width:calc(100% - 24px);margin:12px;padding:16px;border:none;border-radius:12px;font-weight:900;font-family:'Oswald';font-size:16px;letter-spacing:1px;}
 </style>
 </head>
 <body>
 
 <div class="hdr">
-  <div class="logo">VALERO VANTAGE 2026</div>
+  <div class="logo">Riverwalk Roller</div>
   <div class="lu-count" id="lu-badge">0/6 LOCKED</div>
 </div>
 
 <div class="main">
-  <!-- PAGE 1: HOME/GUIDE -->
+  <!-- HOME -->
   <div class="panel on" id="panel-home">
-    <div class="welcome-card">
-      <h2 style="font-family:'Oswald'; color:var(--fiesta-teal); margin-bottom:10px;">San Antonio Strategy</h2>
-      <p style="color:var(--sub); margin-bottom:20px;">TPC San Antonio (Oaks) requires elite Bogey Avoidance and SG:APP. The wind is the main defense here.</p>
+    <div class="course-card">
+      <h2 style="font-family:'Oswald'; color:var(--text); margin-bottom:4px; font-size:22px;">TPC San Antonio</h2>
+      <p style="color:var(--teal); font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase;">The Oaks Course</p>
       
-      <div class="guide-step">
-        <div class="step-num">1</div>
-        <div><strong>Scout the Field:</strong> Go to <strong>Arb</strong> to find players whose odds are surging faster than their DK salary rank.</div>
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-val">72</span><span class="stat-lbl">Par</span></div>
+        <div class="stat-box"><span class="stat-val">7,438</span><span class="stat-lbl">Yards</span></div>
+        <div class="stat-box"><span class="stat-val">3,797</span><span class="stat-lbl">Out</span></div>
+        <div class="stat-box"><span class="stat-val">3,641</span><span class="stat-lbl">In</span></div>
       </div>
-      <div class="guide-step">
-        <div class="step-num">2</div>
-        <div><strong>Core Locks:</strong> Use the <strong>+</strong> button to anchor your "Alamo Locks"—players who won't leave your lineup.</div>
-      </div>
-      <div class="guide-step">
-        <div class="step-num">3</div>
-        <div><strong>The Build:</strong> Hit the <strong>Build</strong> tab. The Genie will optimize for $DLTA while balancing salary and cut-probability.</div>
-      </div>
+    </div>
+
+    <div style="padding:0 16px;">
+      <h3 style="font-family:'Oswald'; font-size:14px; color:var(--orange); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Optimizer Guide</h3>
+      <p style="color:var(--sub); font-size:12px; margin-bottom:15px;">1. Use <strong>Arb</strong> to identify pricing inefficiency.<br>2. Lock your core pillars for the San Antonio breeze.<br>3. Run <strong>Build</strong> to finalize the most optimal lineup.</p>
     </div>
 
     <div class="founder-note">
-      <strong>Founder's Note:</strong> "The 2026 Valero field is a mix of stars looking for a tune-up and grinders fighting for the final ticket to the following week. This tool optimizes for consistency and value. Play smart, bank your locks, and let's win some Texas gold."
-      <br><br>— <em>Alamo City Team</em>
+      <strong>Responsible Play:</strong> This optimizer is built on market velocity and course-fit modeling. Performance in the Texas wind is volatile—play within your limits.
     </div>
   </div>
 
-  <!-- PAGE 2: ARB -->
+  <!-- ARB -->
   <div class="panel" id="panel-arb">
-    <div class="pod-grid" id="pods"></div>
     <div class="tw">
       <table>
         <thead>
           <tr>
-            <th onclick="srt('name')">Player</th>
-            <th onclick="srt('price')">Sal</th>
-            <th onclick="srt('delta')">Δ</th>
-            <th onclick="srt('dlta')">$DLTA</th>
+            <th>Player</th>
+            <th>Sal</th>
+            <th>Δ</th>
+            <th>$DLTA</th>
             <th>+</th>
           </tr>
         </thead>
@@ -111,53 +103,35 @@ td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
     </div>
   </div>
 
-  <!-- PAGE 3: EXPERT -->
-  <div class="panel" id="panel-prebuilt">
-    <div style="padding:16px;">
-      <h3 style="color:var(--fiesta-pink); margin-bottom:12px; font-family:'Oswald';">San Antonio Steam Lines</h3>
-      <div id="pb-steam-card"></div>
-      <div id="pb-cash-card"></div>
-    </div>
-  </div>
-
-  <!-- PAGE 4: BUILD -->
+  <!-- BUILD -->
   <div class="panel" id="panel-build">
     <div style="padding:16px;">
        <div id="lu-card"></div>
-       <button class="gen-btn" onclick="buildAndRender()">REBUILD LINEUP</button>
-       <button onclick="clearLocks()" style="width:100%; background:none; border:none; color:var(--muted); font-size:11px; text-decoration:underline;">Clear All Locks</button>
+       <button class="gen-btn" onclick="buildAndRender()">OPTIMIZE LINEUP</button>
+       <button onclick="clearLocks()" style="width:100%; margin-top:15px; background:none; border:none; color:var(--muted); font-size:11px; text-decoration:underline;">Clear All Locks</button>
     </div>
   </div>
 </div>
 
-<!-- NAVIGATION TAB BAR -->
 <nav class="tab-bar">
-  <a href="#" class="tab-item on" onclick="showTab('home', this)">
-    <span class="tab-icon">🏠</span><span>Home</span>
-  </a>
-  <a href="#" class="tab-item" onclick="showTab('arb', this)">
-    <span class="tab-icon">📈</span><span>Arb</span>
-  </a>
-  <a href="#" class="tab-item" onclick="showTab('prebuilt', this)">
-    <span class="tab-icon">🔥</span><span>Expert</span>
-  </a>
-  <a href="#" class="tab-item" onclick="showTab('build', this)">
-    <span class="tab-icon">⛳</span><span>Build</span>
-  </a>
+  <a href="#" class="tab-item on" onclick="showTab('home', this)"><span class="tab-icon">🏠</span><span>Course</span></a>
+  <a href="#" class="tab-item" onclick="showTab('arb', this)"><span class="tab-icon">📊</span><span>Arb</span></a>
+  <a href="#" class="tab-item" onclick="showTab('build', this)"><span class="tab-icon">⚡</span><span>Build</span></a>
 </nav>
 
 <script>
-// --- VALERO 2026 FIELD DATA ---
 var SAL_CAP = 50000;
+// Example Data - Swap for real DK Monday salaries
 var RAW = [
-  ["Brian Harman", 10400, 1800, 1600, 1800, "AM", "Elite"],
-  ["Corey Conners", 9800, 2200, 2000, 2200, "PM", "Strong"],
-  ["Jordan Spieth", 9500, 2500, 2800, 2500, "AM", "Elite"],
-  ["Matt Fitzpatrick", 9200, 2800, 2500, 2800, "PM", "Strong"],
-  ["Hideki Matsuyama", 9000, 3000, 2800, 3000, "AM", "Elite"],
-  ["Keith Mitchell", 8200, 4500, 4000, 4500, "PM", "Strong"],
-  ["Sahith Theegala", 7900, 5000, 4500, 5000, "AM", "Mid"],
-  ["Chris Gotterup", 7300, 6500, 5500, 6500, "PM", "Mid"]
+  ["Corey Conners", 10200, 1500, 1200, 1500, "AM", "Elite"],
+  ["Jordan Spieth", 9900, 2000, 2500, 2000, "PM", "Elite"],
+  ["Hideki Matsuyama", 9600, 2200, 1800, 2200, "AM", "Strong"],
+  ["Ludvig Aberg", 9400, 2500, 2200, 2500, "PM", "Strong"],
+  ["Matt Fitzpatrick", 8900, 3500, 3000, 3500, "AM", "Mid"],
+  ["Brian Harman", 8500, 4000, 3500, 4000, "PM", "Strong"],
+  ["Sahith Theegala", 8100, 5000, 4500, 5000, "AM", "Mid"],
+  ["Keith Mitchell", 7800, 6000, 5500, 6000, "PM", "Mid"],
+  ["Chris Gotterup", 7400, 7000, 6000, 7000, "AM", "Value"]
 ];
 
 var players = RAW.map(r => ({
@@ -170,7 +144,7 @@ function compute() {
   players.sort((a,b) => a.liveOdds - b.liveOdds).forEach((p, i) => p.oddsRank = i + 1);
   players.forEach(p => {
     p.delta = p.salRank - p.oddsRank;
-    p.dlta = p.delta > 0 ? (p.delta * (1000/p.liveOdds) * 12).toFixed(1) : 0;
+    p.dlta = p.delta > 0 ? (p.delta * (1000/p.liveOdds) * 15).toFixed(1) : 0;
   });
 }
 
@@ -186,23 +160,13 @@ function renderArb() {
   const tbody = document.getElementById('arb-tbody');
   tbody.innerHTML = players.sort((a,b) => b.dlta - a.dlta).map(p => `
     <tr>
-      <td><strong>${p.name}</strong><br><small style="color:var(--muted)">TPC Fit: ${p.fit}</small></td>
+      <td><strong>${p.name}</strong><br><small style="color:var(--sub)">${p.wave} · ${p.fit}</small></td>
       <td style="font-family:var(--mono)">$${p.price/1000}k</td>
-      <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--fiesta-pink)'}">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
-      <td style="color:var(--fiesta-orange); font-weight:bold;">${p.dlta}</td>
-      <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
+      <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--pink)'}; font-weight:700;">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
+      <td style="color:var(--orange); font-weight:700;">${p.dlta}</td>
+      <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? 'LOCKED' : 'LOCK'}</button></td>
     </tr>
   `).join('');
-}
-
-function renderPods() {
-  const top = [...players].sort((a,b) => b.dlta - a.dlta)[0];
-  document.getElementById('pods').innerHTML = `
-    <div class="pod"><span class="pod-v">${players.filter(p=>p.delta>0).length}</span><span class="pod-l">Gains</span></div>
-    <div class="pod"><span class="pod-v">${top.name.split(' ').pop()}</span><span class="pod-l">Top $D</span></div>
-    <div class="pod"><span class="pod-v">${players.filter(p=>p.price<8000).length}</span><span class="pod-l">Sleepers</span></div>
-    <div class="pod"><span class="pod-v">Par 72</span><span class="pod-l">Oaks</span></div>
-  `;
 }
 
 function toggleLock(name) {
@@ -232,17 +196,15 @@ function buildAndRender() {
   }
   const card = document.getElementById('lu-card');
   card.innerHTML = `
-    <div class="lu-card">
-      <div style="padding:12px; background:var(--surface); font-weight:bold; color:var(--fiesta-teal);">ALAMO OPTIMIZED</div>
-      ${lineup.map(p => `
-        <div class="lu-row"><span>${p.name}</span><strong>$${p.price}</strong></div>
-      `).join('')}
-      <div class="lu-row" style="background:var(--bg)"><span>CAP REMAINING</span><strong>$${SAL_CAP - lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
+    <div style="background:var(--surface2); border-radius:12px; border:1px solid var(--border); overflow:hidden;">
+      <div style="padding:15px; border-bottom:1px solid var(--border); background:var(--surface); font-family:'Oswald'; color:var(--teal); letter-spacing:1px;">OPTIMIZED LINEUP</div>
+      ${lineup.map(p => `<div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);"><span>${p.name}</span><strong>$${p.price}</strong></div>`).join('')}
+      <div style="padding:15px; background:var(--bg); display:flex; justify-content:space-between;"><span>CAP USED</span><strong style="color:var(--green)">$${lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
     </div>
   `;
 }
 
-function renderAll() { compute(); renderPods(); renderArb(); }
+function renderAll() { compute(); renderArb(); }
 renderAll();
 </script>
 </body>
