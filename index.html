@@ -3,23 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Green Jacket Genie — Masters 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Alamo City Optimizer — Valero 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=JetBrains+Mono:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050d05;--surface:#0f2410;--surface2:#132e14;
-  --border:#1e4d20;--text:#e8f0e8;--sub:#9cb89e;--muted:#5a7a5c;
-  --green:#4caf50;--green-bright:#66ff6a;
-  --gold:#d4a843;--gold-bright:#ffd700;
-  --red:#e74c3c;--dk-blue:#1d2a3c;
-  --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;--disp:'Playfair Display',serif;
+  --bg:#050505;--surface:#111111;--surface2:#1a1a1a;
+  --border:#2a2a2a;--text:#ffffff;--sub:#a0a0a0;--muted:#555555;
+  --fiesta-pink:#ff2d55;--fiesta-teal:#00e5ff;--fiesta-orange:#ff9500;
+  --green:#4caf50;--gold:#ffca28;--dk-blue:#1d2a3c;
+  --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
 /* ── DK STYLE HEADER ── */
 .hdr{background:#000;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-.logo{font-family:var(--disp);font-size:18px;font-weight:900;color:var(--gold-bright);}
+.logo{font-family:'Oswald', sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;color:var(--fiesta-pink);}
 .lu-count{background:var(--dk-blue);padding:4px 10px;border-radius:4px;font-family:var(--mono);font-size:11px;border:1px solid #334155;}
 
 /* ── MAIN CONTENT AREA ── */
@@ -27,44 +26,42 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 .panel{display:none;}
 .panel.on{display:block;}
 
-/* ── BOTTOM TAB NAV (DK STYLE) ── */
+/* ── BOTTOM TAB NAV ── */
 .tab-bar{position:fixed;bottom:0;left:0;right:0;height:65px;background:#000;border-top:1px solid var(--border);display:flex;z-index:1000;padding-bottom:env(safe-area-inset-bottom);}
 .tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
-.tab-item.on{color:var(--gold-bright);}
+.tab-item.on{color:var(--fiesta-teal);}
 .tab-icon{font-size:20px;margin-bottom:4px;}
 
-/* ── HOME / HOW-TO STYLES ── */
-.welcome-card{background:linear-gradient(145deg, var(--surface), var(--bg));margin:16px;padding:20px;border-radius:12px;border:1px solid var(--border);}
+/* ── HOME / HOW-TO ── */
+.welcome-card{background:linear-gradient(145deg, #1a0a1a, var(--bg));margin:16px;padding:20px;border-radius:12px;border:1px solid #3d1c3d;}
 .guide-step{display:flex;gap:12px;margin-bottom:16px;}
-.step-num{background:var(--gold);color:#000;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;}
-.founder-note{background:rgba(212,168,67,0.05);border-left:3px solid var(--gold);padding:15px;margin:16px;font-style:italic;font-size:12px;color:var(--sub);}
+.step-num{background:var(--fiesta-teal);color:#000;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;}
+.founder-note{background:rgba(255,45,85,0.05);border-left:3px solid var(--fiesta-pink);padding:15px;margin:16px;font-style:italic;font-size:12px;color:var(--sub);}
 
-/* ── TABLE STICKY HEADERS ── */
+/* ── TABLE ── */
 .tw{padding:0 12px;}
 table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:8px;overflow:hidden;}
 thead{position:sticky;top:0;z-index:10;background:var(--surface2);}
 th{padding:10px 8px;text-align:left;font-size:10px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);}
 td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
 
-/* ── UTILS ── */
 .pod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px;}
 .pod{background:var(--surface);padding:10px;border-radius:8px;text-align:center;border:1px solid var(--border);}
-.pod-v{display:block;font-family:var(--mono);font-size:16px;color:var(--gold);}
+.pod-v{display:block;font-family:var(--mono);font-size:16px;color:var(--fiesta-orange);}
 .pod-l{font-size:9px;color:var(--muted);text-transform:uppercase;}
 
-.gen-btn{background:var(--gold);color:#000;width:calc(100% - 24px);margin:12px;padding:15px;border:none;border-radius:8px;font-weight:900;font-family:var(--disp);font-size:16px;cursor:pointer;}
-.add-btn{background:var(--surface2);color:var(--gold);border:1px solid var(--gold);padding:4px 10px;border-radius:4px;font-weight:bold;}
-.add-btn.is-locked{background:var(--gold);color:#000;}
+.gen-btn{background:var(--fiesta-teal);color:#000;width:calc(100% - 24px);margin:12px;padding:15px;border:none;border-radius:8px;font-weight:900;font-family:'Oswald', sans-serif;font-size:16px;cursor:pointer;}
+.add-btn{background:var(--surface2);color:var(--fiesta-teal);border:1px solid var(--fiesta-teal);padding:4px 10px;border-radius:4px;font-weight:bold;}
+.add-btn.is-locked{background:var(--fiesta-teal);color:#000;}
 
-/* Lineup Card */
-.lu-card{background:var(--surface2);margin:12px;border-radius:12px;border:1px solid var(--border2);overflow:hidden;}
+.lu-card{background:var(--surface2);margin:12px;border-radius:12px;border:1px solid var(--border);overflow:hidden;}
 .lu-row{display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid var(--border);}
 </style>
 </head>
 <body>
 
 <div class="hdr">
-  <div class="logo">GREEN JACKET GENIE</div>
+  <div class="logo">VALERO VANTAGE 2026</div>
   <div class="lu-count" id="lu-badge">0/6 LOCKED</div>
 </div>
 
@@ -72,26 +69,26 @@ td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
   <!-- PAGE 1: HOME/GUIDE -->
   <div class="panel on" id="panel-home">
     <div class="welcome-card">
-      <h2 style="font-family:var(--disp); color:var(--gold); margin-bottom:10px;">The Masters Optimizer</h2>
-      <p style="color:var(--sub); margin-bottom:20px;">Leveraging course history, approach metrics, and market velocity to build elite Augusta lineups.</p>
+      <h2 style="font-family:'Oswald'; color:var(--fiesta-teal); margin-bottom:10px;">San Antonio Strategy</h2>
+      <p style="color:var(--sub); margin-bottom:20px;">TPC San Antonio (Oaks) requires elite Bogey Avoidance and SG:APP. The wind is the main defense here.</p>
       
       <div class="guide-step">
         <div class="step-num">1</div>
-        <div><strong>Analyze the Field:</strong> Go to the <strong>Arb</strong> tab to see which players are underpriced relative to their betting odds.</div>
+        <div><strong>Scout the Field:</strong> Go to <strong>Arb</strong> to find players whose odds are surging faster than their DK salary rank.</div>
       </div>
       <div class="guide-step">
         <div class="step-num">2</div>
-        <div><strong>Lock Your Core:</strong> Tap the <strong>+</strong> button on the Arb table to lock "must-have" players into every build.</div>
+        <div><strong>Core Locks:</strong> Use the <strong>+</strong> button to anchor your "Alamo Locks"—players who won't leave your lineup.</div>
       </div>
       <div class="guide-step">
         <div class="step-num">3</div>
-        <div><strong>Generate:</strong> Use the <strong>Build</strong> tab to fill the remaining slots based on our $DLTA algorithmic math.</div>
+        <div><strong>The Build:</strong> Hit the <strong>Build</strong> tab. The Genie will optimize for $DLTA while balancing salary and cut-probability.</div>
       </div>
     </div>
 
     <div class="founder-note">
-      <strong>Founder's Disclosure:</strong> "The Genie is a tool designed to find mathematical edges in DFS pricing. However, golf is inherently volatile—especially at Augusta. Use these projections responsibly. This is for entertainment and strategic research. Have fun, play within your limits, and enjoy the tradition unlike any other." 
-      <br><br>— <em>The Genie Team</em>
+      <strong>Founder's Note:</strong> "The 2026 Valero field is a mix of stars looking for a tune-up and grinders fighting for the final ticket to the following week. This tool optimizes for consistency and value. Play smart, bank your locks, and let's win some Texas gold."
+      <br><br>— <em>Alamo City Team</em>
     </div>
   </div>
 
@@ -114,10 +111,10 @@ td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
     </div>
   </div>
 
-  <!-- PAGE 3: PRE-BUILT -->
+  <!-- PAGE 3: EXPERT -->
   <div class="panel" id="panel-prebuilt">
     <div style="padding:16px;">
-      <h3 style="color:var(--gold); margin-bottom:12px; font-family:var(--disp);">Expert Consensus Lines</h3>
+      <h3 style="color:var(--fiesta-pink); margin-bottom:12px; font-family:'Oswald';">San Antonio Steam Lines</h3>
       <div id="pb-steam-card"></div>
       <div id="pb-cash-card"></div>
     </div>
@@ -127,7 +124,7 @@ td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
   <div class="panel" id="panel-build">
     <div style="padding:16px;">
        <div id="lu-card"></div>
-       <button class="gen-btn" onclick="buildAndRender()">RUN OPTIMIZER</button>
+       <button class="gen-btn" onclick="buildAndRender()">REBUILD LINEUP</button>
        <button onclick="clearLocks()" style="width:100%; background:none; border:none; color:var(--muted); font-size:11px; text-decoration:underline;">Clear All Locks</button>
     </div>
   </div>
@@ -139,28 +136,28 @@ td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.05);}
     <span class="tab-icon">🏠</span><span>Home</span>
   </a>
   <a href="#" class="tab-item" onclick="showTab('arb', this)">
-    <span class="tab-icon">📊</span><span>Arb</span>
+    <span class="tab-icon">📈</span><span>Arb</span>
   </a>
   <a href="#" class="tab-item" onclick="showTab('prebuilt', this)">
     <span class="tab-icon">🔥</span><span>Expert</span>
   </a>
   <a href="#" class="tab-item" onclick="showTab('build', this)">
-    <span class="tab-icon">⚡</span><span>Build</span>
+    <span class="tab-icon">⛳</span><span>Build</span>
   </a>
 </nav>
 
 <script>
-// --- DATA & ENGINE ---
+// --- VALERO 2026 FIELD DATA ---
 var SAL_CAP = 50000;
 var RAW = [
-  ["Scottie Scheffler", 12500, 450, 400, 410, "AM", "Elite"],
-  ["Rory McIlroy", 11200, 900, 950, 920, "PM", "Elite"],
-  ["Jon Rahm", 10800, 1100, 1050, 1100, "AM", "Strong"],
-  ["Ludvig Aberg", 9800, 1800, 1600, 1700, "PM", "Strong"],
-  ["Hideki Matsuyama", 9200, 2200, 1800, 2000, "AM", "Elite"],
-  ["Will Zalatoris", 8500, 3500, 2800, 3000, "PM", "Strong"],
-  ["Sahith Theegala", 7900, 4500, 4000, 4200, "AM", "Mid"],
-  ["Corey Conners", 7400, 5500, 4500, 5000, "PM", "Strong"]
+  ["Brian Harman", 10400, 1800, 1600, 1800, "AM", "Elite"],
+  ["Corey Conners", 9800, 2200, 2000, 2200, "PM", "Strong"],
+  ["Jordan Spieth", 9500, 2500, 2800, 2500, "AM", "Elite"],
+  ["Matt Fitzpatrick", 9200, 2800, 2500, 2800, "PM", "Strong"],
+  ["Hideki Matsuyama", 9000, 3000, 2800, 3000, "AM", "Elite"],
+  ["Keith Mitchell", 8200, 4500, 4000, 4500, "PM", "Strong"],
+  ["Sahith Theegala", 7900, 5000, 4500, 5000, "AM", "Mid"],
+  ["Chris Gotterup", 7300, 6500, 5500, 6500, "PM", "Mid"]
 ];
 
 var players = RAW.map(r => ({
@@ -173,11 +170,10 @@ function compute() {
   players.sort((a,b) => a.liveOdds - b.liveOdds).forEach((p, i) => p.oddsRank = i + 1);
   players.forEach(p => {
     p.delta = p.salRank - p.oddsRank;
-    p.dlta = p.delta > 0 ? (p.delta * (1000/p.liveOdds) * 10).toFixed(1) : 0;
+    p.dlta = p.delta > 0 ? (p.delta * (1000/p.liveOdds) * 12).toFixed(1) : 0;
   });
 }
 
-// --- UI LOGIC ---
 function showTab(tabId, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
   document.getElementById('panel-' + tabId).classList.add('on');
@@ -190,10 +186,10 @@ function renderArb() {
   const tbody = document.getElementById('arb-tbody');
   tbody.innerHTML = players.sort((a,b) => b.dlta - a.dlta).map(p => `
     <tr>
-      <td><strong>${p.name}</strong><br><small style="color:var(--muted)">${p.fit}</small></td>
+      <td><strong>${p.name}</strong><br><small style="color:var(--muted)">TPC Fit: ${p.fit}</small></td>
       <td style="font-family:var(--mono)">$${p.price/1000}k</td>
-      <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--red)'}">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
-      <td style="color:var(--gold); font-weight:bold;">${p.dlta}</td>
+      <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--fiesta-pink)'}">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
+      <td style="color:var(--fiesta-orange); font-weight:bold;">${p.dlta}</td>
       <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
     </tr>
   `).join('');
@@ -202,10 +198,10 @@ function renderArb() {
 function renderPods() {
   const top = [...players].sort((a,b) => b.dlta - a.dlta)[0];
   document.getElementById('pods').innerHTML = `
-    <div class="pod"><span class="pod-v">${players.filter(p=>p.delta>0).length}</span><span class="pod-l">Values</span></div>
-    <div class="pod"><span class="pod-v">${top.name.split(' ').pop()}</span><span class="pod-l">Best $D</span></div>
+    <div class="pod"><span class="pod-v">${players.filter(p=>p.delta>0).length}</span><span class="pod-l">Gains</span></div>
+    <div class="pod"><span class="pod-v">${top.name.split(' ').pop()}</span><span class="pod-l">Top $D</span></div>
     <div class="pod"><span class="pod-v">${players.filter(p=>p.price<8000).length}</span><span class="pod-l">Sleepers</span></div>
-    <div class="pod"><span class="pod-v">62%</span><span class="pod-l">Avg Cut</span></div>
+    <div class="pod"><span class="pod-v">Par 72</span><span class="pod-l">Oaks</span></div>
   `;
 }
 
@@ -229,21 +225,19 @@ function clearLocks() {
 function buildAndRender() {
   let lineup = players.filter(p => p.locked);
   let pool = players.filter(p => !p.locked).sort((a,b) => b.dlta - a.dlta);
-  
   for (let p of pool) {
     if (lineup.length >= 6) break;
     let currentCost = lineup.reduce((s, x) => s + x.price, 0);
     if (currentCost + p.price <= SAL_CAP) lineup.push(p);
   }
-
   const card = document.getElementById('lu-card');
   card.innerHTML = `
     <div class="lu-card">
-      <div style="padding:12px; background:var(--surface); font-weight:bold; color:var(--gold);">OPTIMIZED LINEUP</div>
+      <div style="padding:12px; background:var(--surface); font-weight:bold; color:var(--fiesta-teal);">ALAMO OPTIMIZED</div>
       ${lineup.map(p => `
         <div class="lu-row"><span>${p.name}</span><strong>$${p.price}</strong></div>
       `).join('')}
-      <div class="lu-row" style="background:var(--bg)"><span>REMAINING</span><strong>$${SAL_CAP - lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
+      <div class="lu-row" style="background:var(--bg)"><span>CAP REMAINING</span><strong>$${SAL_CAP - lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
     </div>
   `;
 }
