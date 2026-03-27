@@ -10,7 +10,7 @@
   --bg:#000000;--surface:#0a0a0a;--surface2:#121212;
   --border:#1f1f1f;--text:#ffffff;--sub:#888888;--muted:#444444;
   --teal:#00f2ff;--pink:#ff007a;--orange:#ff8c00;
-  --green:#39ff14;--gold:#ffcc00;--dk-blue:#0d1117;
+  --green:#39ff14;--gold:#ffcc00;
   --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -32,25 +32,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 .tab-item.on{color:var(--pink);}
 .tab-icon{font-size:22px;margin-bottom:4px;}
 
-/* ── HOME CARD ── */
-.course-card{background:linear-gradient(145deg, #0a1111, #000);margin:16px;padding:24px;border-radius:16px;border:1px solid var(--border);box-shadow: 0 10px 30px rgba(0,242,255,0.05);}
-.stat-row{display:flex;justify-content:space-between;margin-top:15px;padding-top:15px;border-top:1px solid var(--border);}
-.stat-box{text-align:center;}
-.stat-val{display:block;font-family:'Oswald';font-size:18px;color:var(--teal);}
-.stat-lbl{font-size:9px;color:var(--sub);text-transform:uppercase;}
+/* ── INTEL TAB ── */
+.hero-card{background:linear-gradient(145deg, #0a1111, #000);margin:16px;padding:20px;border-radius:16px;border:1px solid var(--border);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.stat-box{background:var(--surface2);padding:12px;border-radius:8px;border:1px solid rgba(0,242,255,0.1); border-left:3px solid var(--teal);}
+.stat-box.pink{border-left-color:var(--pink); border-color:rgba(255,0,122,0.1);}
+.stat-box.orange{border-left-color:var(--orange); border-color:rgba(255,140,0,0.1);}
+.stat-box.green{border-left-color:var(--green); border-color:rgba(57,255,20,0.1);}
+.stat-title{font-family:'Oswald';font-size:14px;color:var(--text);margin-bottom:4px;letter-spacing:0.5px;}
+.stat-desc{font-size:10px;color:var(--sub);line-height:1.4;}
 
-.founder-note{background:rgba(255,0,122,0.03);border-left:3px solid var(--pink);padding:15px;margin:16px;font-size:12px;color:var(--sub);line-height:1.6;}
+.guide-container{padding:0 16px;}
+.guide-step{display:flex;align-items:flex-start;margin-bottom:12px;background:var(--surface2);padding:12px;border-radius:8px;}
+.step-num{background:var(--pink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:bold;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin-right:12px;flex-shrink:0;}
+.step-text{font-size:12px;color:var(--sub);line-height:1.5;}
+.step-text strong{color:var(--text);}
 
 /* ── TABLE ── */
-.tw{padding:0 12px;}
-table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;overflow:hidden;}
-th{padding:12px 8px;text-align:left;font-size:10px;color:var(--sub);text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);}
-td{padding:12px 8px;border-bottom:1px solid var(--border);}
+.tw{overflow-x:auto;padding:0 12px;}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;}
+th{padding:12px 8px;text-align:left;font-size:9px;color:var(--sub);text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;position:sticky;top:0;}
+td{padding:12px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
 
-.add-btn{background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:5px 12px;border-radius:6px;font-weight:700;transition:0.2s;}
-.add-btn.is-locked{background:var(--teal);color:#000;}
+.stm-badge{background:var(--green);color:#000;font-size:8px;padding:2px 4px;border-radius:3px;font-weight:900;margin-left:5px;vertical-align:middle;}
+.vel-up{color:var(--green);font-weight:700;}
+.vel-dn{color:var(--pink);font-weight:700;}
 
 .gen-btn{background:linear-gradient(90deg, var(--teal), var(--pink));color:#fff;width:calc(100% - 24px);margin:12px;padding:16px;border:none;border-radius:12px;font-weight:900;font-family:'Oswald';font-size:16px;letter-spacing:1px;}
+.add-btn{background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:4px 10px;border-radius:6px;font-weight:700;}
+.add-btn.is-locked{background:var(--teal);color:#000;}
 </style>
 </head>
 <body>
@@ -61,31 +71,51 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);}
 </div>
 
 <div class="main">
-  <!-- HOME -->
-  <div class="panel on" id="panel-home">
-    <div class="course-card">
-      <h2 style="font-family:'Oswald'; color:var(--text); margin-bottom:4px; font-size:22px;">TPC San Antonio</h2>
-      <p style="color:var(--teal); font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase;">The Oaks Course</p>
+  <!-- INTEL TAB -->
+  <div class="panel on" id="panel-intel">
+    <div class="hero-card">
+      <h2 style="font-family:'Oswald'; color:var(--text); margin-bottom:4px; font-size:22px;">The Winning DNA</h2>
+      <p style="color:var(--teal); font-weight:700; font-size:11px; letter-spacing:1px; text-transform:uppercase;">TPC San Antonio Key Metrics</p>
       
-      <div class="stat-row">
-        <div class="stat-box"><span class="stat-val">72</span><span class="stat-lbl">Par</span></div>
-        <div class="stat-box"><span class="stat-val">7,438</span><span class="stat-lbl">Yards</span></div>
-        <div class="stat-box"><span class="stat-val">3,797</span><span class="stat-lbl">Out</span></div>
-        <div class="stat-box"><span class="stat-val">3,641</span><span class="stat-lbl">In</span></div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-title">SG: Approach</div>
+          <div class="stat-desc">Severe green undulations require elite iron play, specifically from <strong>150-200 yards</strong>.</div>
+        </div>
+        <div class="stat-box pink">
+          <div class="stat-title">Good Drive %</div>
+          <div class="stat-desc">Missing fairways means native rocks and cactus. Total driving and keeping it in play is vital.</div>
+        </div>
+        <div class="stat-box orange">
+          <div class="stat-title">Scrambling</div>
+          <div class="stat-desc">Texas wind forces missed greens. Getting up-and-down from deep bunkers saves rounds here.</div>
+        </div>
+        <div class="stat-box green">
+          <div class="stat-title">Par 5 Scoring</div>
+          <div class="stat-desc">With tough Par 3s and 4s, the four Par 5s are where the winner separates from the field.</div>
+        </div>
       </div>
     </div>
 
-    <div style="padding:0 16px;">
-      <h3 style="font-family:'Oswald'; font-size:14px; color:var(--orange); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Optimizer Guide</h3>
-      <p style="color:var(--sub); font-size:12px; margin-bottom:15px;">1. Use <strong>Arb</strong> to identify pricing inefficiency.<br>2. Lock your core pillars for the San Antonio breeze.<br>3. Run <strong>Build</strong> to finalize the most optimal lineup.</p>
-    </div>
-
-    <div class="founder-note">
-      <strong>Responsible Play:</strong> This optimizer is built on market velocity and course-fit modeling. Performance in the Texas wind is volatile—play within your limits.
+    <div class="guide-container">
+      <h3 style="font-family:'Oswald'; font-size:14px; color:var(--text); text-transform:uppercase; margin-bottom:12px; margin-top:8px;">How to Deploy the Roller</h3>
+      
+      <div class="guide-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Scan the Market (Arb Tab):</strong> Look for players with <strong>STEAM</strong> (Green badge). This means their betting odds are improving rapidly, but DraftKings hasn't adjusted their salary.</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Anchor Your Core:</strong> Tap the <strong>+</strong> button to LOCK 2-3 players you trust in the Texas wind. Do not lock all 6.</div>
+      </div>
+      <div class="guide-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Roll the Engine:</strong> Navigate to the <strong>Optimize</strong> tab and hit the button. The $DLTA algorithm will mathematically fill the rest of your salary cap with the best values.</div>
+      </div>
     </div>
   </div>
 
-  <!-- ARB -->
+  <!-- ARB TAB -->
   <div class="panel" id="panel-arb">
     <div class="tw">
       <table>
@@ -94,6 +124,7 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);}
             <th>Player</th>
             <th>Sal</th>
             <th>Δ</th>
+            <th>Vel</th>
             <th>$DLTA</th>
             <th>+</th>
           </tr>
@@ -103,49 +134,76 @@ td{padding:12px 8px;border-bottom:1px solid var(--border);}
     </div>
   </div>
 
-  <!-- BUILD -->
+  <!-- BUILD TAB -->
   <div class="panel" id="panel-build">
     <div style="padding:16px;">
        <div id="lu-card"></div>
-       <button class="gen-btn" onclick="buildAndRender()">OPTIMIZE LINEUP</button>
-       <button onclick="clearLocks()" style="width:100%; margin-top:15px; background:none; border:none; color:var(--muted); font-size:11px; text-decoration:underline;">Clear All Locks</button>
+       <button class="gen-btn" onclick="buildAndRender()">ROLL OPTIMIZER</button>
+       <button onclick="clearLocks()" style="width:100%; margin-top:15px; background:none; border:none; color:var(--muted); font-size:11px; text-decoration:underline; cursor:pointer;">Clear All Locks</button>
     </div>
   </div>
 </div>
 
 <nav class="tab-bar">
-  <a href="#" class="tab-item on" onclick="showTab('home', this)"><span class="tab-icon">🏠</span><span>Course</span></a>
-  <a href="#" class="tab-item" onclick="showTab('arb', this)"><span class="tab-icon">📊</span><span>Arb</span></a>
-  <a href="#" class="tab-item" onclick="showTab('build', this)"><span class="tab-icon">⚡</span><span>Build</span></a>
+  <a href="#" class="tab-item on" onclick="showTab('intel', this)"><span class="tab-icon">🎯</span><span>Intel</span></a>
+  <a href="#" class="tab-item" onclick="showTab('arb', this)"><span class="tab-icon">📊</span><span>Market</span></a>
+  <a href="#" class="tab-item" onclick="showTab('build', this)"><span class="tab-icon">⚡</span><span>Optimize</span></a>
 </nav>
 
 <script>
 var SAL_CAP = 50000;
-// Example Data - Swap for real DK Monday salaries
+
+// Example 2026 Data (Update Monday afternoon)
+// [Name, Salary, LiveOdds, MonOdds, Wave, Fit]
 var RAW = [
-  ["Corey Conners", 10200, 1500, 1200, 1500, "AM", "Elite"],
-  ["Jordan Spieth", 9900, 2000, 2500, 2000, "PM", "Elite"],
-  ["Hideki Matsuyama", 9600, 2200, 1800, 2200, "AM", "Strong"],
-  ["Ludvig Aberg", 9400, 2500, 2200, 2500, "PM", "Strong"],
-  ["Matt Fitzpatrick", 8900, 3500, 3000, 3500, "AM", "Mid"],
-  ["Brian Harman", 8500, 4000, 3500, 4000, "PM", "Strong"],
-  ["Sahith Theegala", 8100, 5000, 4500, 5000, "AM", "Mid"],
-  ["Keith Mitchell", 7800, 6000, 5500, 6000, "PM", "Mid"],
-  ["Chris Gotterup", 7400, 7000, 6000, 7000, "AM", "Value"]
+  ["Min Woo Lee", 9900, 1475, 1800, "AM", "Elite"],
+  ["Chris Gotterup", 9800, 2050, 2500, "PM", "Strong"],
+  ["Sam Burns", 9700, 2300, 2800, "AM", "Strong"],
+  ["Brooks Koepka", 9600, 2400, 2900, "PM", "Mid"],
+  ["Jake Knapp", 9500, 2350, 2600, "AM", "Mid"],
+  ["Rickie Fowler", 9400, 2600, 3300, "PM", "Mid"],
+  ["Keith Mitchell", 8200, 4100, 4700, "AM", "Strong"],
+  ["Sahith Theegala", 7600, 4500, 5900, "PM", "Strong"]
 ];
 
-var players = RAW.map(r => ({
-  name: r[0], price: r[1], monOdds: r[2], liveOdds: r[3], prevOdds: r[4], wave: r[5], fit: r[6],
-  locked: false, delta: 0, dlta: 0
-}));
+function toImp(o){ return 100/(o+100); }
+
+var players = RAW.map(r => {
+  let impLive = toImp(r[2]), impMon = toImp(r[3]);
+  return {
+    name: r[0], price: r[1], impLive, impMon,
+    velocity: (impLive - impMon),
+    wave: r[4], fit: r[5], locked: false, delta: 0, dlta: 0
+  }
+});
 
 function compute() {
   players.sort((a,b) => b.price - a.price).forEach((p, i) => p.salRank = i + 1);
-  players.sort((a,b) => a.liveOdds - b.liveOdds).forEach((p, i) => p.oddsRank = i + 1);
+  players.sort((a,b) => b.impMon - a.impMon).forEach((p, i) => p.oddsRank = i + 1);
   players.forEach(p => {
     p.delta = p.salRank - p.oddsRank;
-    p.dlta = p.delta > 0 ? (p.delta * (1000/p.liveOdds) * 15).toFixed(1) : 0;
+    p.dlta = p.delta > 0 ? (p.delta * (p.impLive * 100) * (1 + (p.velocity * 50))).toFixed(1) : 0;
   });
+}
+
+function renderArb() {
+  const tbody = document.getElementById('arb-tbody');
+  tbody.innerHTML = players.sort((a,b) => b.dlta - a.dlta).map(p => {
+    let velClass = p.velocity > 0 ? 'vel-up' : 'vel-dn';
+    let velArrow = p.velocity > 0 ? '▲' : '▼';
+    let isSteam = p.velocity > 0.003 && p.delta > 0;
+    
+    return `
+      <tr>
+        <td><strong>${p.name}</strong>${isSteam ? '<span class="stm-badge">STEAM</span>' : ''}</td>
+        <td style="font-family:var(--mono)">$${p.price/1000}k</td>
+        <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--pink)'};">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
+        <td class="${velClass}">${velArrow}${(Math.abs(p.velocity)*100).toFixed(2)}</td>
+        <td style="color:var(--orange); font-weight:bold;">${p.dlta}</td>
+        <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function showTab(tabId, el) {
@@ -153,20 +211,7 @@ function showTab(tabId, el) {
   document.getElementById('panel-' + tabId).classList.add('on');
   document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('on'));
   el.classList.add('on');
-  if(tabId === 'arb' || tabId === 'build') renderAll();
-}
-
-function renderArb() {
-  const tbody = document.getElementById('arb-tbody');
-  tbody.innerHTML = players.sort((a,b) => b.dlta - a.dlta).map(p => `
-    <tr>
-      <td><strong>${p.name}</strong><br><small style="color:var(--sub)">${p.wave} · ${p.fit}</small></td>
-      <td style="font-family:var(--mono)">$${p.price/1000}k</td>
-      <td style="color:${p.delta > 0 ? 'var(--green)' : 'var(--pink)'}; font-weight:700;">${p.delta > 0 ? '+'+p.delta : p.delta}</td>
-      <td style="color:var(--orange); font-weight:700;">${p.dlta}</td>
-      <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? 'LOCKED' : 'LOCK'}</button></td>
-    </tr>
-  `).join('');
+  if(tabId === 'arb' || tabId === 'build') { compute(); renderArb(); }
 }
 
 function toggleLock(name) {
@@ -184,6 +229,7 @@ function clearLocks() {
   players.forEach(p => p.locked = false);
   document.getElementById('lu-badge').innerText = `0/6 LOCKED`;
   renderAll();
+  document.getElementById('lu-card').innerHTML = '';
 }
 
 function buildAndRender() {
@@ -197,9 +243,12 @@ function buildAndRender() {
   const card = document.getElementById('lu-card');
   card.innerHTML = `
     <div style="background:var(--surface2); border-radius:12px; border:1px solid var(--border); overflow:hidden;">
-      <div style="padding:15px; border-bottom:1px solid var(--border); background:var(--surface); font-family:'Oswald'; color:var(--teal); letter-spacing:1px;">OPTIMIZED LINEUP</div>
-      ${lineup.map(p => `<div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);"><span>${p.name}</span><strong>$${p.price}</strong></div>`).join('')}
-      <div style="padding:15px; background:var(--bg); display:flex; justify-content:space-between;"><span>CAP USED</span><strong style="color:var(--green)">$${lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
+      <div style="padding:15px; background:var(--surface); font-family:'Oswald'; color:var(--teal); letter-spacing:1px; display:flex; justify-content:space-between; align-items:center;">
+        <span>FIESTA READY LINEUP</span>
+        <span style="font-size:10px; color:var(--sub); font-family:var(--sans); letter-spacing:0;">${lineup.length}/6 SLOTS</span>
+      </div>
+      ${lineup.map(p => `<div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);"><span>${p.name}</span><strong style="font-family:var(--mono);">$${p.price}</strong></div>`).join('')}
+      <div style="padding:15px; background:var(--bg); display:flex; justify-content:space-between;"><span>TOTAL SALARY</span><strong style="color:var(--green); font-family:var(--mono);">$${lineup.reduce((s,x)=>s+x.price,0)}</strong></div>
     </div>
   `;
 }
