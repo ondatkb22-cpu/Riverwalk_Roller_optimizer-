@@ -543,24 +543,94 @@ function renderArb(){
   document.getElementById('arb-tbody').innerHTML=html;
 }
 
-function buildLineup(locked,pool,type,wave){
-  var avail=pool.filter(function(p){return p.price>=MIN_PRICE;});
-  if(wave&&wave!=='off'){var wp=avail.filter(function(p){return p.wave===wave;});if(wp.length>=4)avail=wp;}
-  if(type==='gpp')avail.sort(function(a,b){return b.dlta-a.dlta;});
-  else avail.sort(function(a,b){return(b.dlta*0.4+b.cut*100*0.3+b.convSort*10*0.3)-(a.dlta*0.4+a.cut*100*0.3+a.convSort*10*0.3);});
-  var lineup=locked.slice();var ln={};locked.forEach(function(p){ln[p.name]=true;});
-  var o10=lineup.filter(function(p){return p.price>10000;}).length;
-  for(var i=0;i<avail.length&&lineup.length<6;i++){var c=avail[i];if(ln[c.name])continue;var sp=lineup.reduce(function(s,p){return s+p.price;},0);var rem=5-lineup.length;if(c.price>SAL_CAP-sp-rem*MIN_PRICE)continue;if(type==='cash'&&c.price>10000&&o10>=1)continue;lineup.push(c);if(c.price>10000)o10++;}
-  if(type==='cash'){var total=lineup.reduce(function(s,p){return s+p.price;},0);if(total<48500){for(var i=0;i<lineup.length;i++){if(ln[lineup[i].name])continue;var cur=lineup.reduce(function(s,p){return s+p.price;},0);var room=SAL_CAP-cur;for(var j=0;j<avail.length;j++){var up=avail[j];if(up.price>lineup[i].price&&up.price<=lineup[i].price+room&&!inLU(lineup,up.name)){if(up.price>10000&&o10>=1&&lineup[i].price<=10000)continue;lineup[i]=up;break;}}if(lineup.reduce(function(s,p){return s+p.price;},0)>=48500)break;}}}
-  return lineup;
+function buildLineup(locked, pool, type, wave) {
+  var avail = pool.filter(function(p){ return p.price >= MIN_PRICE; });
+
+  // Apply wave stacking if selected and enough players exist in that wave
+  if (wave && wave !== 'off') {
+    var wp = avail.filter(function(p){ return p.wave === wave; });
+    if (wp.length >= 6 - locked.length) avail = wp; 
+  }
+
+  // Dynamic sorting based on lineup type
+  var sortFn;
+  if (type === 'steam') {
+    sortFn = function(a,b){ return ((b.velocity>VEL_THRESHOLD?10:0)+b.dlta) - ((a.velocity>VEL_THRESHOLD?10:0)+a.dlta); };
+  } else if (type === 'gpp') {
+    sortFn = function(a,b){ return b.dlta - a.dlta; };
+  } else {
+    // Cash: Balanced weighting between Delta, Cut Equity, and Conviction
+    sortFn = function(a,b){ return (b.dlta*0.5 + b.cut*100*0.3 + b.convSort*10*0.2) - (a.dlta*0.5 + a.cut*100*0.3 + a.convSort*10*0.2); };
+  }
+
+  avail.sort(sortFn);
+
+  var bestLineup = [];
+  var bestScore = -1;
+
+  // Helper array to find the absolute minimum cost remaining in the pool
+  var sortedByPrice = avail.slice().sort(function(a,b){ return a.price - b.price; });
+
+  // Multi-pass solver: Tries different starting points to ensure a valid 6-man roster under $50k
+  for (var skip = 0; skip < avail.length; skip++) {
+    var lineup = locked.slice();
+    var ln = {};
+    locked.forEach(function(p){ ln[p.name] = true; });
+    var o10 = lineup.filter(function(p){ return p.price >= 10000; }).length;
+
+    for (var i = 0; i < avail.length && lineup.length < 6; i++) {
+      // Force variations by skipping top heavy players if previous loops failed
+      if (skip > 0 && i < skip && locked.length === 0) continue; 
+      
+      var c = avail[i];
+      if (ln[c.name]) continue;
+
+      var sp = lineup.reduce(function(s,p){ return s + p.price; }, 0);
+      var rem = 5 - lineup.length;
+
+      // Check if picking this player makes it mathematically impossible to finish the lineup
+      var minCostRemaining = 0;
+      var found = 0;
+      for (var j = 0; j < sortedByPrice.length && found < rem; j++) {
+        var cheapP = sortedByPrice[j];
+        if (!ln[cheapP.name] && cheapP.name !== c.name) {
+          minCostRemaining += cheapP.price;
+          found++;
+        }
+      }
+
+      // If we don't have enough players to fill the roster, or adding them busts the $50k cap, skip
+      if (found < rem || c.price + sp + minCostRemaining > SAL_CAP) continue;
+      
+      // Cash game constraint: Max one $10k+ player for safer floor builds
+      if (type === 'cash' && c.price >= 10000 && o10 >= 1) continue;
+
+      // Player fits all constraints, add to roster
+      lineup.push(c);
+      ln[c.name] = true;
+      if (c.price >= 10000) o10++;
+    }
+
+    // Evaluate valid 6-man builds and keep the highest scoring one
+    if (lineup.length === 6) {
+      var score = lineup.reduce(function(s,p){ return s + p.dlta; }, 0);
+      if (score > bestScore) {
+        bestScore = score;
+        bestLineup = lineup.slice();
+      }
+      // If the absolute greedy best worked on the first try, exit the loop early
+      if (skip === 0) break;
+    }
+  }
+
+  return bestLineup;
 }
-function inLU(lu,n){for(var i=0;i<lu.length;i++){if(lu[i].name===n)return true;}return false;}
 
 function buildPrebuilt(){
   if(!players.length){['pb-steam-card','pb-gpp-card','pb-cash-card'].forEach(function(id){document.getElementById(id).innerHTML='<div style="padding:30px;text-align:center;color:var(--muted)">Load data first</div>';});return;}
   compute();
-  renderLUCard('pb-steam-card',buildLineup([],players,'gpp','off'),'steam');
-  renderLUCard('pb-gpp-card',buildLineup([],players,'gpp','AM'),'gpp');
+  renderLUCard('pb-steam-card',buildLineup([],players,'steam','off'),'steam');
+  renderLUCard('pb-gpp-card',buildLineup([],players,'gpp','off'),'gpp');
   renderLUCard('pb-cash-card',buildLineup([],players,'cash','off'),'cash');
 }
 
