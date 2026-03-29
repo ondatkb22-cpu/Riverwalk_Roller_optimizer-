@@ -7,20 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0B131E; /* Deep Valero Navy */
-  --surface:#16202B; /* Darker slate */
+  --bg:#0B131E; 
+  --surface:#16202B; 
   --surface2:#1E2B3A;
   --surface3:#2C3D51;
   --border:#2A3A4C;
   --border2:#3D5065;
-  --text:#F4F1EA; /* Bone white / Parchment */
+  --text:#F4F1EA; 
   --sub:#B9C3CE;
   --muted:#7A8D9F;
-  --teal:#7D9A3B; /* Texas Agave Green */
+  --teal:#7D9A3B; 
   --teal-bright:#A6CD4F; 
-  --gold:#D4AF37; /* Alamo Gold */
+  --gold:#D4AF37; 
   --gold-bright:#FFD700;
-  --red:#D9534F; /* Terracotta / Texas Red */
+  --red:#D9534F; 
   --red-bg:rgba(217, 83, 79, 0.12);
   --amber:#E5A823;
   --amber-bg:rgba(229, 168, 35, 0.12);
@@ -30,7 +30,7 @@
   --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;--disp:'Playfair Display',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:60px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:100px}
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
 
 .hdr{background:linear-gradient(135deg,#0B131E 0%,#0E1925 40%,#132230 100%);border-bottom:1px solid var(--border);padding:14px 16px;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
@@ -44,6 +44,10 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-tab{flex:1;padding:14px 6px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(212, 175, 55, 0.04)}
 .nav-tab:hover:not(.on){color:var(--sub)}
+
+.roster-strip {position:fixed;bottom:52px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);display:flex;justify-content:space-between;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;transform:translateY(100%);transition:transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
+.roster-strip.on {transform:translateY(0);}
+.rs-val {color:var(--text);font-size:14px;margin-left:6px;}
 
 .panel{display:none;flex:1;overflow-y:auto}
 .panel.on{display:block}
@@ -108,12 +112,15 @@ td{padding:7px;vertical-align:middle;white-space:nowrap}
 .lu-slot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(42, 58, 76, 0.4);gap:8px}
 .lu-slot:last-child{border:none}
 .lu-slot-num{font-size:10px;color:var(--muted);font-weight:700;width:20px;flex-shrink:0}
-.lu-slot-name{font-weight:700;font-size:13px}
+.lu-slot-name{font-weight:700;font-size:13px;display:flex;align-items:center}
 .lu-slot-meta{font-size:10px;color:var(--muted);margin-top:2px}
 .lu-slot-sal{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--gold);white-space:nowrap}
 .lu-totals{display:grid;grid-template-columns:repeat(4,1fr);padding:12px 16px;background:var(--surface2);border-top:1px solid var(--border);gap:4px}
 .lu-total-val{font-family:var(--disp);font-weight:900;font-size:17px}
 .lu-total-lbl{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+
+.del-btn{background:var(--red-bg);color:var(--red);border:1px solid rgba(217, 83, 79, 0.3);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;font-weight:900;margin-right:10px;transition:all 0.1s;}
+.del-btn:hover{background:var(--red);color:#fff;}
 
 textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;font-family:var(--mono);outline:none;resize:vertical;white-space:pre}
 textarea:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(125, 154, 59, 0.15)}
@@ -135,8 +142,8 @@ textarea::placeholder{color:var(--muted)}
 .add-btn.is-locked{background:var(--teal-bright);color:#0B131E}
 .add-btn.is-full{background:var(--muted);cursor:not-allowed;opacity:.4}
 
-.stm-badge{font-size:9px;background:var(--teal);color:#0B131E;padding:1px 5px;border-radius:3px;font-weight:800;margin-left:4px}
-.wave-badge{font-size:9px;background:rgba(91, 192, 222, 0.2);color:var(--blue);padding:1px 5px;border-radius:3px;font-weight:700;margin-left:3px}
+.stm-badge{font-size:9px;background:var(--teal);color:#0B131E;padding:1px 5px;border-radius:3px;font-weight:800;margin-left:6px}
+.wave-badge{font-size:9px;background:rgba(91, 192, 222, 0.2);color:var(--blue);padding:1px 5px;border-radius:3px;font-weight:700;margin-left:6px}
 .pb-tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.5px}
 .pb-steam{background:rgba(125, 154, 59, 0.2);color:var(--teal-bright)}
 .pb-gpp{background:rgba(212, 175, 55, 0.15);color:var(--gold)}
@@ -232,15 +239,18 @@ textarea::placeholder{color:var(--muted)}
     <button class="wave-btn" id="w-AM" onclick="setWave('AM')">AM</button>
     <button class="wave-btn" id="w-PM" onclick="setWave('PM')">PM</button>
   </div>
-  <div class="lu-card" id="lu-card">
+  
+  <!-- Dynamic Current Core Card -->
+  <div id="lu-card" class="lu-card">
     <div style="padding:20px;text-align:center">
       <div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div>
-      <div style="color:var(--muted);font-size:12px">Tap + on any player, then Build.</div>
+      <div style="color:var(--muted);font-size:12px">Tap + on any player to add them to your core.</div>
     </div>
   </div>
+
   <div style="padding:0 12px">
-    <button class="btn btn-gold" onclick="buildAndRender()">Build Lineup</button>
-    <button class="clear-btn" onclick="clearLocks()">Clear All Locks</button>
+    <button class="btn btn-gold" onclick="buildAndRender()">Auto-Fill Lineup</button>
+    <button class="clear-btn" onclick="clearLocks()">Clear Entire Roster</button>
   </div>
 </div>
 
@@ -320,16 +330,15 @@ textarea::placeholder{color:var(--muted)}
   <div class="insight">
     <strong>TPC San Antonio pattern:</strong> GIR is king — 3 of last 5 winners ranked 1st in GIR that week. Wind is the great equalizer — scoring avg 72.51 (2024) was 7th hardest on Tour. Charley Hoffman has 17 cuts in 18 starts with 7 top-10s. Corey Conners is a 2× winner. Course history matters more than season-long stats here.
   </div>
+</div>
 
-  <div class="card">
-    <div class="card-head"><span class="card-title">Course Scoring History</span></div>
-    <div style="padding:4px 0">
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>Lowest Avg Score (2018–24)</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Conners 69.75</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>2nd Lowest</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Spieth 69.75</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>3rd Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">McCarthy 70.11</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>4th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Kuchar 70.18</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;font-size:12px"><span>5th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Bhatia 70.20</span></div>
-    </div>
+<!-- Sticky Running Salary Bar -->
+<div class="roster-strip" id="roster-strip">
+  <div style="display:flex;align-items:center;">
+    REM: <span class="rs-val" id="rs-rem" style="color:var(--teal-bright)">$50,000</span>
+  </div>
+  <div style="display:flex;align-items:center;">
+    AVG/PLYR: <span class="rs-val" id="rs-avg" style="color:var(--gold)">$8,333</span>
   </div>
 </div>
 
@@ -508,7 +517,6 @@ function compute(){
   players.slice().sort(function(a,b){return b.price-a.price;}).forEach(function(p,i){p.salRank=i+1;});
   players.slice().sort(function(a,b){return b.implMon-a.implMon;}).forEach(function(p,i){p.oddsRank=i+1;});
 
-  // Strength normalization
   players.forEach(function(p){p._raw=p.implLive||p.implMon;});
   var sMin=Math.min.apply(null,players.map(function(p){return p._raw;}));
   var sMax=Math.max.apply(null,players.map(function(p){return p._raw;}));
@@ -615,6 +623,7 @@ function showTab(t){
   document.querySelectorAll('.nav-tab').forEach(function(el,i){el.classList.toggle('on',['arb','prebuilt','build','data','intel'][i]===t);});
   if(t==='prebuilt') buildPrebuilt();
 }
+
 function setFilter(m,el){filterMode=m;document.querySelectorAll('.fchip').forEach(function(c){c.classList.remove('on');});el.classList.add('on');renderArb();}
 function getFiltered(){
   switch(filterMode){
@@ -631,11 +640,47 @@ function getFiltered(){
 function srt(col){if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}renderArb();}
 function setMode(m){luMode=m;document.getElementById('m-cash').classList.toggle('on',m==='cash');document.getElementById('m-gpp').classList.toggle('on',m==='gpp');}
 function setWave(w){waveStack=w;['off','AM','PM'].forEach(function(x){document.getElementById('w-'+x).classList.remove('on');});document.getElementById('w-'+w).classList.add('on');}
-function toggleLock(name){var p=players.find(function(x){return x.name===name;});if(!p)return;var n=players.filter(function(x){return x.locked;}).length;if(!p.locked&&n>=6)return;p.locked=!p.locked;updateBadge();renderArb();}
-function clearLocks(){players.forEach(function(p){p.locked=false;});updateBadge();renderArb();document.getElementById('lu-card').innerHTML='<div style="padding:20px;text-align:center"><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div><div style="color:var(--muted);font-size:12px">Tap + on any player, then Build.</div></div>';}
-function updateBadge(){document.getElementById('lu-badge').textContent=players.filter(function(p){return p.locked;}).length+'/6';}
 
-function renderAll(){compute();renderPods();renderArb();}
+function toggleLock(name){
+  var p=players.find(function(x){return x.name===name;});
+  if(!p)return;
+  var n=players.filter(function(x){return x.locked;}).length;
+  if(!p.locked&&n>=6)return;
+  p.locked=!p.locked;
+  updateBadge();
+  renderArb();
+  renderCurrentCore();
+}
+
+function clearLocks(){
+  players.forEach(function(p){p.locked=false;});
+  updateBadge();
+  renderArb();
+  renderCurrentCore();
+}
+
+function updateBadge(){
+  var locked = players.filter(function(p){return p.locked;});
+  var count = locked.length;
+  document.getElementById('lu-badge').textContent= count+'/6';
+
+  var spent = locked.reduce(function(s,p){return s+p.price;}, 0);
+  var rem = SAL_CAP - spent;
+  var remSlots = 6 - count;
+  var avg = remSlots > 0 ? Math.floor(rem / remSlots) : 0;
+
+  var rs = document.getElementById('roster-strip');
+  if(count > 0) {
+      rs.classList.add('on');
+      document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
+      document.getElementById('rs-avg').textContent = '$' + avg.toLocaleString();
+      document.getElementById('rs-avg').style.color = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
+  } else {
+      rs.classList.remove('on');
+  }
+}
+
+function renderAll(){compute();renderPods();renderArb();renderCurrentCore();}
 
 function renderPods(){
   if(!players.length){document.getElementById('pods').innerHTML='<div class="pod" style="grid-column:1/-1;text-align:center;padding:20px"><div style="color:var(--gold);font-family:var(--disp);font-size:16px;font-weight:900">Go to Data tab to load players</div></div>';return;}
@@ -664,7 +709,6 @@ function renderArb(){
     var isSteam=vel>VEL_THRESHOLD&&p.delta>0;
     var cutC=p.cut>=.70?'cut-g':p.cut>=.55?'cut-a':'cut-r';
     
-    // Stat Conditional Colors
     var t2gC = p.t2g >= 1.0 ? 'color:var(--teal-bright)' : p.t2g < 0.0 ? 'color:var(--red)' : 'color:var(--text)';
     var girC = p.gir >= 69.0 ? 'color:var(--teal-bright)' : p.gir < 64.0 && p.gir > 0 ? 'color:var(--red)' : 'color:var(--text)';
     var scrC = p.scram >= 64.0 ? 'color:var(--teal-bright)' : p.scram < 59.0 && p.scram > 0 ? 'color:var(--red)' : 'color:var(--text)';
@@ -682,23 +726,51 @@ function renderArb(){
   document.getElementById('arb-tbody').innerHTML=html;
 }
 
+function renderCurrentCore() {
+  var locked = players.filter(function(p){return p.locked;});
+  var el = document.getElementById('lu-card');
+  
+  if(locked.length === 0) {
+      el.innerHTML = '<div style="padding:20px;text-align:center"><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div><div style="color:var(--muted);font-size:12px">Tap + on any player to add them to your core.</div></div>';
+      return;
+  }
+
+  var total = locked.reduce(function(s,p){return s+p.price;}, 0);
+  var rem = SAL_CAP - total;
+  var remSlots = 6 - locked.length;
+  var avg = remSlots > 0 ? Math.floor(rem / remSlots) : 0;
+
+  var html = '<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><span class="pb-tag pb-steam" style="background:var(--teal);color:#081118">Current Core</span><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--teal-bright);margin-top:4px">Locked Players ('+locked.length+'/6)</div></div>';
+
+  locked.forEach(function(p, i){
+      html += '<div class="lu-slot"><div class="lu-slot-num">L'+(i+1)+'</div><div style="flex:1;min-width:0"><div class="lu-slot-name"><div class="del-btn" onclick="toggleLock(\''+p.name.replace(/'/g,"\\'")+'\')">✕</div>'+p.name+'</div><div class="lu-slot-meta">Tap X to unlock</div></div><div class="lu-slot-sal">$'+p.price.toLocaleString()+'</div></div>';
+  });
+
+  for(var i=locked.length; i<6; i++) {
+      html += '<div class="lu-slot" style="opacity:0.4"><div class="lu-slot-num">G'+(i+1)+'</div><div style="flex:1;min-width:0"><div class="lu-slot-name" style="margin-left:32px;">Empty Slot</div></div><div class="lu-slot-sal">--</div></div>';
+  }
+
+  var avgC = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
+
+  html += '<div class="lu-totals"><div><div class="lu-total-val" style="color:var(--teal-bright)">$'+total.toLocaleString()+'</div><div class="lu-total-lbl">Spent</div></div><div><div class="lu-total-val" style="color:var(--sub)">$'+rem.toLocaleString()+'</div><div class="lu-total-lbl">Remaining</div></div><div><div class="lu-total-val" style="color:'+avgC+'">$'+avg.toLocaleString()+'</div><div class="lu-total-lbl">Avg / Player</div></div><div><div class="lu-total-val" style="color:var(--sub)">'+remSlots+'</div><div class="lu-total-lbl">Slots Open</div></div></div>';
+
+  el.innerHTML = html;
+}
+
 function buildLineup(locked, pool, type, wave) {
   var avail = pool.filter(function(p){ return p.price >= MIN_PRICE; });
 
-  // Apply wave stacking if selected and enough players exist in that wave
   if (wave && wave !== 'off') {
     var wp = avail.filter(function(p){ return p.wave === wave; });
     if (wp.length >= 6 - locked.length) avail = wp; 
   }
 
-  // Dynamic sorting based on lineup type
   var sortFn;
   if (type === 'steam') {
     sortFn = function(a,b){ return ((b.velocity>VEL_THRESHOLD?10:0)+b.dlta) - ((a.velocity>VEL_THRESHOLD?10:0)+a.dlta); };
   } else if (type === 'gpp') {
     sortFn = function(a,b){ return b.dlta - a.dlta; };
   } else {
-    // Cash: Balanced weighting between Delta, Cut Equity, and Conviction
     sortFn = function(a,b){ return (b.dlta*0.5 + b.cut*100*0.3 + b.convSort*10*0.2) - (a.dlta*0.5 + a.cut*100*0.3 + a.convSort*10*0.2); };
   }
 
@@ -707,10 +779,8 @@ function buildLineup(locked, pool, type, wave) {
   var bestLineup = [];
   var bestScore = -1;
 
-  // Helper array to find the absolute minimum cost remaining in the pool
   var sortedByPrice = avail.slice().sort(function(a,b){ return a.price - b.price; });
 
-  // Multi-pass solver: Tries different starting points to ensure a valid 6-man roster under $50k
   for (var skip = 0; skip < avail.length; skip++) {
     var lineup = locked.slice();
     var ln = {};
@@ -718,7 +788,6 @@ function buildLineup(locked, pool, type, wave) {
     var o10 = lineup.filter(function(p){ return p.price >= 10000; }).length;
 
     for (var i = 0; i < avail.length && lineup.length < 6; i++) {
-      // Force variations by skipping top heavy players if previous loops failed
       if (skip > 0 && i < skip && locked.length === 0) continue; 
       
       var c = avail[i];
@@ -727,7 +796,6 @@ function buildLineup(locked, pool, type, wave) {
       var sp = lineup.reduce(function(s,p){ return s + p.price; }, 0);
       var rem = 5 - lineup.length;
 
-      // Check if picking this player makes it mathematically impossible to finish the lineup
       var minCostRemaining = 0;
       var found = 0;
       for (var j = 0; j < sortedByPrice.length && found < rem; j++) {
@@ -738,26 +806,21 @@ function buildLineup(locked, pool, type, wave) {
         }
       }
 
-      // If we don't have enough players to fill the roster, or adding them busts the $50k cap, skip
       if (found < rem || c.price + sp + minCostRemaining > SAL_CAP) continue;
       
-      // Cash game constraint: Max one $10k+ player for safer floor builds
       if (type === 'cash' && c.price >= 10000 && o10 >= 1) continue;
 
-      // Player fits all constraints, add to roster
       lineup.push(c);
       ln[c.name] = true;
       if (c.price >= 10000) o10++;
     }
 
-    // Evaluate valid 6-man builds and keep the highest scoring one
     if (lineup.length === 6) {
       var score = lineup.reduce(function(s,p){ return s + p.dlta; }, 0);
       if (score > bestScore) {
         bestScore = score;
         bestLineup = lineup.slice();
       }
-      // If the absolute greedy best worked on the first try, exit the loop early
       if (skip === 0) break;
     }
   }
@@ -775,7 +838,7 @@ function buildPrebuilt(){
 
 function renderLUCard(elId,lineup,type){
   var el=document.getElementById(elId);
-  if(!lineup||!lineup.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted)">Not enough data</div>';return;}
+  if(!lineup||!lineup.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted)">Not enough data to complete build</div>';return;}
   var total=lineup.reduce(function(s,p){return s+p.price;},0),left=SAL_CAP-total;
   var tagC=type==='steam'?'pb-steam':type==='gpp'?'pb-gpp':'pb-cash';
   var tagL=type==='steam'?'Steam Line':type==='gpp'?'GPP · Wave':'Cash · Balanced';
@@ -798,7 +861,6 @@ function buildAndRender(){
   renderLUCard('lu-card',buildLineup(locked,pool,luMode,waveStack),luMode);
 }
 
-// Initialize the engine with the default data instantly
 loadData(DEFAULT_DATA.trim());
 
 </script>
