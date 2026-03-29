@@ -37,16 +37,15 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .logo{font-family:var(--disp);font-size:22px;font-weight:900;color:var(--gold-bright);line-height:1;letter-spacing:-.5px}
 .logo-sub{font-size:10px;color:var(--teal-bright);font-family:var(--mono);margin-top:2px;letter-spacing:.5px}
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:var(--mono);letter-spacing:.3px}
-.badge-gold{background:rgba(212, 175, 55, 0.15);color:var(--gold);border:1px solid rgba(212, 175, 55, 0.3)}
 .badge-teal{background:rgba(125, 154, 59, 0.15);color:var(--teal-bright);border:1px solid rgba(125, 154, 59, 0.3)}
 
 .nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:fixed;bottom:0;width:100%;z-index:1000}
-.nav-tab{flex:1;padding:14px 6px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
+.nav-tab{flex:1;padding:14px 2px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(212, 175, 55, 0.04)}
 .nav-tab:hover:not(.on){color:var(--sub)}
 
-.roster-strip {position:fixed;bottom:52px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);display:flex;justify-content:space-between;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;transform:translateY(100%);transition:transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
-.roster-strip.on {transform:translateY(0);}
+/* Permanent Roster Strip */
+.roster-strip {position:fixed;bottom:44px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
 .rs-val {color:var(--text);font-size:14px;margin-left:6px;}
 
 .panel{display:none;flex:1;overflow-y:auto}
@@ -175,10 +174,11 @@ textarea::placeholder{color:var(--muted)}
     <div class="logo-sub">VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO · APR 2–5</div>
   </div>
   <div style="display:flex;gap:6px;align-items:center">
-    <span class="badge badge-gold" id="lu-badge">0/6</span>
     <span class="badge badge-teal" id="status-badge">Loading...</span>
   </div>
 </div>
+
+<!-- ═══ ARB ═══ -->
 
 <div class="panel on" id="panel-arb">
   <div class="pods" id="pods"></div>
@@ -201,26 +201,28 @@ textarea::placeholder{color:var(--muted)}
   <div class="tw">
     <table>
       <thead><tr>
-        <th onclick="srt('salRank')">#</th>
-        <th onclick="srt('name')">Player</th>
-        <th onclick="srt('price')">Sal</th>
-        <th onclick="srt('delta')" style="color:var(--teal)">Δ</th>
-        <th onclick="srt('velocity')" style="color:var(--teal-bright)">Vel</th>
-        <th onclick="srt('dlta')" style="color:var(--gold)">$DLTA</th>
-        <th onclick="srt('t2g')" style="color:var(--teal)">T2G</th>
-        <th onclick="srt('gir')">GIR%</th>
-        <th onclick="srt('scram')">Scram%</th>
-        <th onclick="srt('app')">APP</th>
-        <th onclick="srt('putt')">Putt</th>
-        <th onclick="srt('convSort')">Conv</th>
-        <th onclick="srt('cut')">Cut%</th>
-        <th onclick="srt('fitSort')">Fit</th>
+        <th title="Salary Rank" onclick="srt('salRank')">#</th>
+        <th title="Player Name" onclick="srt('name')">Player</th>
+        <th title="DraftKings Salary" onclick="srt('price')">Sal</th>
+        <th title="Delta: Salary Rank minus Odds Rank. Positive means they are cheaper than their win probability suggests." onclick="srt('delta')" style="color:var(--teal)">Δ</th>
+        <th title="Velocity: Line movement between opening odds and live odds. Up arrow = odds improving." onclick="srt('velocity')" style="color:var(--teal-bright)">Vel</th>
+        <th title="Master Value Score: Blends Odds, Delta, Movement, and Course Fit into a single metric." onclick="srt('dlta')" style="color:var(--gold)">$DLTA</th>
+        <th title="Strokes Gained: Tee-to-Green" onclick="srt('t2g')" style="color:var(--teal)">T2G</th>
+        <th title="Greens in Regulation %" onclick="srt('gir')">GIR%</th>
+        <th title="Scrambling %" onclick="srt('scram')">Scram%</th>
+        <th title="Strokes Gained: Approach" onclick="srt('app')">APP</th>
+        <th title="Strokes Gained: Putting" onclick="srt('putt')">Putt</th>
+        <th title="Algorithm's Conviction Level based on value and course fit." onclick="srt('convSort')">Conv</th>
+        <th title="Probability of making the cut." onclick="srt('cut')">Cut%</th>
+        <th title="Course Fit specifically for TPC San Antonio." onclick="srt('fitSort')">Fit</th>
         <th>+</th>
       </tr></thead>
       <tbody id="arb-tbody"></tbody>
     </table>
   </div>
 </div>
+
+<!-- ═══ PRE-BUILT ═══ -->
 
 <div class="panel" id="panel-prebuilt">
   <div class="insight">
@@ -231,6 +233,8 @@ textarea::placeholder{color:var(--muted)}
   <div id="pb-cash-card" class="lu-card"></div>
 </div>
 
+<!-- ═══ BUILD ═══ -->
+
 <div class="panel" id="panel-build">
   <div class="mode-row">
     <button class="mode-btn on" id="m-cash" onclick="setMode('cash')">Cash 50/50</button>
@@ -240,7 +244,6 @@ textarea::placeholder{color:var(--muted)}
     <button class="wave-btn" id="w-PM" onclick="setWave('PM')">PM</button>
   </div>
   
-  <!-- Dynamic Current Core Card -->
   <div id="lu-card" class="lu-card">
     <div style="padding:20px;text-align:center">
       <div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div>
@@ -253,6 +256,8 @@ textarea::placeholder{color:var(--muted)}
     <button class="clear-btn" onclick="clearLocks()">Clear Entire Roster</button>
   </div>
 </div>
+
+<!-- ═══ DATA ═══ -->
 
 <div class="panel" id="panel-data">
   <div class="card" style="margin-top:12px">
@@ -284,6 +289,8 @@ textarea::placeholder{color:var(--muted)}
     </div>
   </div>
 </div>
+
+<!-- ═══ COURSE INTEL ═══ -->
 
 <div class="panel" id="panel-intel">
   <div style="padding:16px 12px 8px">
@@ -330,24 +337,84 @@ textarea::placeholder{color:var(--muted)}
   <div class="insight">
     <strong>TPC San Antonio pattern:</strong> GIR is king — 3 of last 5 winners ranked 1st in GIR that week. Wind is the great equalizer — scoring avg 72.51 (2024) was 7th hardest on Tour. Charley Hoffman has 17 cuts in 18 starts with 7 top-10s. Corey Conners is a 2× winner. Course history matters more than season-long stats here.
   </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">Course Scoring History</span></div>
+    <div style="padding:4px 0">
+      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>Lowest Avg Score (2018–24)</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Conners 69.75</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>2nd Lowest</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Spieth 69.75</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>3rd Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">McCarthy 70.11</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>4th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Kuchar 70.18</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 14px;font-size:12px"><span>5th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Bhatia 70.20</span></div>
+    </div>
+  </div>
 </div>
 
-<!-- Sticky Running Salary Bar -->
+<!-- ═══ GUIDE & INFO ═══ -->
+
+<div class="panel" id="panel-guide">
+  <div style="padding:16px 12px 8px">
+    <div style="font-family:var(--disp);font-size:24px;font-weight:900;color:var(--gold-bright);line-height:1">User Guide</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:var(--mono)">HOW TO USE THE TEXAS VALUE ENGINE</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">Step-by-Step Instructions</span></div>
+    <div class="card-body">
+      <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
+        <li><strong>Analyze the Arb Tab:</strong> Review the field sorted by our master value metric ($DLTA) to find golfers whose DraftKings salaries are mispriced compared to their win probability and course fit.</li>
+        <li><strong>Lock Your Core:</strong> Tap the <strong style="color:#fff">+</strong> button next to a player to lock them into your roster. Keep an eye on your remaining salary in the bottom HUD strip.</li>
+        <li><strong>Build Your Lineup:</strong> Switch to the <strong>Build</strong> tab. Select Cash or GPP, set your wave stacking preference (AM/PM), and tap "Auto-Fill Lineup" to calculate the mathematically optimal lineup around your locks.</li>
+        <li><strong>Review Pre-Built:</strong> Need quick action? The <strong>Pre-Built</strong> tab automatically generates optimal Cash, GPP, and Line-Movement (Steam) rosters for the current field.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">Glossary / Key terms</span></div>
+    <div style="padding:4px 0">
+      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank minus Odds Rank. A positive number means a player is cheaper than their win probability suggests.</div>
+      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--teal-bright)">Vel (Velocity):</strong> Real-time betting line movement. "▲" means odds are shortening (improving).</div>
+      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--gold)">$DLTA:</strong> The Engine's Master Score. Blends Odds, Delta, Velocity, Cut Equity, and Course Fit into one number.</div>
+      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:#fff">Conviction:</strong> LOCK (>8 score), STRONG (>5), CONSIDER (>2), FADE (<2 or neg Delta).</div>
+      <div style="padding:9px 14px;font-size:11px"><strong style="color:#fff">Fit:</strong> Course fit specifically evaluated for TPC San Antonio (Greg Norman design, high winds, Poa Trivialis).</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--red);background:rgba(217,83,79,0.03)">
+    <div class="card-head" style="border-color:rgba(217,83,79,0.3)"><span class="card-title" style="color:var(--red)">Bankroll & Disclaimer</span></div>
+    <div class="card-body">
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">Daily Fantasy Golf is high variance. Practice strict bankroll management to ensure long-term profitability.</p>
+      <ul style="padding-left:14px;font-size:11px;line-height:1.6;color:var(--muted);margin-bottom:12px">
+        <li><strong>The 10% Rule:</strong> Never put more than 10% of your total bankroll into play in a single week.</li>
+        <li><strong>The 80/20 Split:</strong> Allocate 80% of your weekly play to Cash games (50/50s, Head-to-Heads, Double Ups) and 20% to GPPs (Tournaments).</li>
+        <li><strong>Trust the Process:</strong> This tool utilizes mathematical probabilities and statistical modeling, but golf is inherently unpredictable. Play within your means.</li>
+      </ul>
+      <p style="font-size:10px;font-weight:700;color:var(--red)">If you or someone you know has a gambling problem and wants help, call 1-800-GAMBLER.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Permanent Roster Strip HUD -->
 <div class="roster-strip" id="roster-strip">
+  <div style="display:flex;align-items:center;">
+    PLYRS: <span class="rs-val" id="rs-count" style="color:var(--text)">0/6</span>
+  </div>
   <div style="display:flex;align-items:center;">
     REM: <span class="rs-val" id="rs-rem" style="color:var(--teal-bright)">$50,000</span>
   </div>
   <div style="display:flex;align-items:center;">
-    AVG/PLYR: <span class="rs-val" id="rs-avg" style="color:var(--gold)">$8,333</span>
+    AVG: <span class="rs-val" id="rs-avg" style="color:var(--gold)">$8,333</span>
   </div>
 </div>
 
 <div class="nav">
   <div class="nav-tab on" onclick="showTab('arb')">Arb</div>
-  <div class="nav-tab" onclick="showTab('prebuilt')">Pre-Built</div>
+  <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('build')">Build</div>
   <div class="nav-tab" onclick="showTab('data')">Data</div>
   <div class="nav-tab" onclick="showTab('intel')">Course</div>
+  <div class="nav-tab" onclick="showTab('guide')">Guide</div>
 </div>
 
 <script>
@@ -619,8 +686,8 @@ function loadWaves(){
 }
 
 function showTab(t){
-  ['arb','prebuilt','build','data','intel'].forEach(function(x){document.getElementById('panel-'+x).classList.toggle('on',x===t);});
-  document.querySelectorAll('.nav-tab').forEach(function(el,i){el.classList.toggle('on',['arb','prebuilt','build','data','intel'][i]===t);});
+  ['arb','prebuilt','build','data','intel','guide'].forEach(function(x){document.getElementById('panel-'+x).classList.toggle('on',x===t);});
+  document.querySelectorAll('.nav-tab').forEach(function(el,i){el.classList.toggle('on',['arb','prebuilt','build','data','intel','guide'][i]===t);});
   if(t==='prebuilt') buildPrebuilt();
 }
 
@@ -662,25 +729,19 @@ function clearLocks(){
 function updateBadge(){
   var locked = players.filter(function(p){return p.locked;});
   var count = locked.length;
-  document.getElementById('lu-badge').textContent= count+'/6';
-
+  
+  // Update HUD Strip
+  document.getElementById('rs-count').textContent= count+'/6';
   var spent = locked.reduce(function(s,p){return s+p.price;}, 0);
   var rem = SAL_CAP - spent;
   var remSlots = 6 - count;
   var avg = remSlots > 0 ? Math.floor(rem / remSlots) : 0;
-
-  var rs = document.getElementById('roster-strip');
-  if(count > 0) {
-      rs.classList.add('on');
-      document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
-      document.getElementById('rs-avg').textContent = '$' + avg.toLocaleString();
-      document.getElementById('rs-avg').style.color = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
-  } else {
-      rs.classList.remove('on');
-  }
+  document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
+  document.getElementById('rs-avg').textContent = '$' + avg.toLocaleString();
+  document.getElementById('rs-avg').style.color = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
 }
 
-function renderAll(){compute();renderPods();renderArb();renderCurrentCore();}
+function renderAll(){compute();renderPods();renderArb();renderCurrentCore();updateBadge();}
 
 function renderPods(){
   if(!players.length){document.getElementById('pods').innerHTML='<div class="pod" style="grid-column:1/-1;text-align:center;padding:20px"><div style="color:var(--gold);font-family:var(--disp);font-size:16px;font-weight:900">Go to Data tab to load players</div></div>';return;}
