@@ -54,7 +54,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-tab{flex:1;padding:14px 2px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(244, 162, 97, 0.05)}
 
-.roster-strip {position:fixed;bottom:44px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
+.roster-strip {position:fixed;bottom:44px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
 .rs-val {color:var(--text);font-size:14px;margin-left:6px;}
 
 .panel{display:none;flex:1;overflow-y:auto}
@@ -111,11 +111,14 @@ td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .d-slight{background:rgba(0, 180, 216, 0.12);color:var(--teal)}
 .d-neg{background:var(--red-bg);color:var(--red)}
 
-.grade{font-size:9px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.5px;font-family:var(--mono);white-space:nowrap; display:inline-block; text-align:center;}
-.grade-core{background:var(--gold-bright);color:#0B131E}
-.grade-play{background:rgba(0, 180, 216, 0.2);color:var(--teal-bright)}
-.grade-pool{background:var(--surface3);color:var(--sub)}
-.grade-fade{background:var(--red-bg);color:var(--red)}
+.conv{font-size:9px;font-weight:800;padding:2px 7px;border-radius:3px;letter-spacing:.3px;font-family:var(--mono);white-space:nowrap}
+.conv-lock{background:var(--gold-bright);color:#0B131E}
+.conv-strong{background:rgba(0, 180, 216, 0.2);color:var(--teal-bright)}
+.conv-consider{background:var(--amber-bg);color:var(--amber)}
+.conv-fade{background:var(--red-bg);color:var(--red)}
+
+.vel-up{font-weight:700;font-size:11px;color:var(--teal-bright);font-family:var(--mono)}
+.vel-dn{font-weight:700;font-size:11px;color:var(--red);font-family:var(--mono)}
 
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 12px 10px}
 .card-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
@@ -151,6 +154,11 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 .pb-cash{background:rgba(17, 138, 178, 0.15);color:var(--blue)}
 
 .insight{background:rgba(244, 162, 97, 0.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 14px;font-size:11px;color:var(--sub);line-height:1.7;margin:0 12px 10px}
+
+.fit-elite{color:var(--gold-bright);font-weight:800;}
+.fit-strong{color:var(--teal-bright);font-weight:700;}
+.fit-mid{color:var(--sub);}
+.fit-weak{color:var(--red);font-weight:700;}
 
 @media(max-width:700px){
   .pods{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 8px}
@@ -205,12 +213,12 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
       <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
         <li><strong>Simulate:</strong> The engine scores players using a Composite Alpha: Win Equity, Value ($DLTA), Course Fit (SG), and Velocity.</li>
         <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for <strong>CORE</strong> grade players and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
-        <li><strong>Optimize:</strong> The <strong>Build</strong> tab executes a Search Procedure to return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
+        <li><strong>Optimize:</strong> Tap the floating <strong>AUTO</strong> button to execute a Search Procedure and return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
       </ol>
     </div>
   </div>
   <div class="insight">
-    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage.
+    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds, Fit, and SG are statically locked.
   </div>
 </div>
 
@@ -276,16 +284,18 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 </div>
 
 <div class="roster-strip" id="roster-strip">
-  <div>PLYRS: <span class="rs-val" id="rs-count">0/6</span></div>
-  <div>REM: <span class="rs-val" id="rs-rem">$50,000</span></div>
-  <div>AVG: <span class="rs-val" id="rs-avg">$8,333</span></div>
+  <div style="display:flex; gap:14px; align-items:center;">
+    <div><span style="color:var(--muted)">PLYRS:</span> <span class="rs-val" id="rs-count">0/6</span></div>
+    <div><span style="color:var(--muted)">REM:</span> <span class="rs-val" id="rs-rem">$50,000</span></div>
+  </div>
+  <button onclick="showTab('build'); buildAndRender();" style="background:linear-gradient(135deg,var(--gold) 0%,var(--gold-bright) 100%); color:#0B131E; border:none; border-radius:4px; font-weight:900; font-family:var(--mono); padding:5px 12px; font-size:11px; cursor:pointer; box-shadow:0 2px 10px rgba(244, 162, 97, 0.2);">AUTO</button>
 </div>
 
 <div class="nav">
   <div class="nav-tab on" onclick="showTab('guide')">Guide</div>
   <div class="nav-tab" onclick="showTab('arb')">Arb</div>
-  <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('build')">Build</div>
+  <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('data')">Data</div>
 </div>
 
@@ -459,13 +469,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v13', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v14', JSON.stringify(players.map(p => ({
     name: p.name, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v13');
+  const stored = localStorage.getItem('tve_players_v14');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -538,7 +548,7 @@ function compute() {
 
     // --- COMPOSITE ALPHA GRADE (Merges Conviction and Fit) ---
     let composite = p.dlta + (p.sg * 2.5);
-    if (p.velocity > VEL_THRESHOLD) composite += 5; // Reward line movement
+    if (p.velocity > VEL_THRESHOLD) composite += 5; 
     
     if (composite > 10 && p.delta >= 0) {
         p.grade = 'CORE'; p.gradeSort = 4;
@@ -769,7 +779,7 @@ function srt(col) {
 function setFilter(f, btn) {
   filterMode = f;
   document.querySelectorAll('.fchip').forEach(c => c.classList.remove('on'));
-  btn.classList.add('on');
+  if(btn) btn.classList.add('on');
   renderArb();
 }
 
@@ -812,7 +822,6 @@ function updateBadge() {
   const count = locked.length;
   document.getElementById('rs-count').textContent = count + '/6';
   document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
-  document.getElementById('rs-avg').textContent = '$' + (count < 6 ? Math.floor(rem/(6-count)) : 0).toLocaleString();
 }
 
 function renderPods() {
