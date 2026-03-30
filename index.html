@@ -7,23 +7,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* San Antonio / Texas Theme Palette */
-  --bg:#0B1116; /* Deep Texas Night */
+  --bg:#0B1116; 
   --surface:#151F28; 
   --surface2:#1E2D3A;
   --surface3:#2A3F52;
   --border:#2A3A4C;
   --border2:#3D5065;
-  --text:#FDFBF7; /* Limestone White */
+  --text:#FDFBF7; 
   --sub:#B8C5D1;
   --muted:#7D93A8;
-  --teal:#00B4D8; /* Riverwalk Turquoise */
+  --teal:#00B4D8; 
   --teal-bright:#48CAE4; 
-  --gold:#F4A261; /* Fiesta Sunset */
-  --gold-bright:#E76F51; /* Alamo Terracotta */
-  --red:#EF476F; /* Fiesta Pink/Red */
+  --gold:#F4A261; 
+  --gold-bright:#E76F51; 
+  --red:#EF476F; 
   --red-bg:rgba(239, 71, 111, 0.12);
-  --amber:#FFD166; /* Bright Texas Sun */
+  --amber:#FFD166; 
   --amber-bg:rgba(255, 209, 102, 0.12);
   --blue:#118AB2;
   --steam-bg:rgba(0, 180, 216, 0.08); 
@@ -188,16 +187,16 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   <div class="card">
     <div class="card-head"><span class="card-title">Framework Overview</span></div>
     <div class="card-body">
-      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses advanced simulations and market data to build mathematically optimal lineups.</p>
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses a multi-factor quantitative model to build mathematically optimal lineups.</p>
       <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
-        <li><strong>Simulate:</strong> The engine runs 1,000 simulations per player using live odds and SG data to project true upside.</li>
-        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for value plays and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
-        <li><strong>Optimize:</strong> The <strong>Build</strong> tab tests 5,000 combinations to find the highest-scoring roster between $48,500 and $50,000.</li>
+        <li><strong>Simulate:</strong> The engine scores players using 4 pillars: Win Equity, Value ($DLTA), Course Fit (SG), and Velocity. Overpriced traps are mathematically eliminated.</li>
+        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for top $DLTA plays and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
+        <li><strong>Optimize:</strong> The <strong>Build</strong> tab executes a Greedy Randomized Adaptive Search Procedure to return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
       </ol>
     </div>
   </div>
   <div class="insight">
-    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds, Fit, and SG are statically locked to prevent accidental deletion.
+    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds, Fit, and SG are statically locked.
   </div>
 </div>
 
@@ -387,7 +386,7 @@ const MASTER_DB = [
     {name: "C. Blanchet", sal: 6600, monOdds: 22500, sg: -0.55, fit: 'Mid'},
     {name: "K. Ventura", sal: 6600, monOdds: 16500, sg: -0.10, fit: 'Mid'},
     {name: "J. Vegas", sal: 6600, monOdds: 19000, sg: -0.77, fit: 'Strong'},
-    {name: "A. Saddier", sal: 6600, monOdds: 20000, sg: -0.39, fit: 'Mid'},
+    {name: "A. Saddier", 6600, monOdds: 20000, sg: -0.39, fit: 'Mid'},
     {name: "B. Burgoon", sal: 6600, monOdds: 24000, sg: 0.00, fit: 'Mid'},
     {name: "D. Lipsky", sal: 6600, monOdds: 25000, sg: 0.72, fit: 'Mid'},
     {name: "W. Simpson", sal: 6500, monOdds: 19000, sg: -0.09, fit: 'Weak'},
@@ -452,13 +451,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v9', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v10', JSON.stringify(players.map(p => ({
     name: p.name, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v9');
+  const stored = localStorage.getItem('tve_players_v10');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -517,8 +516,10 @@ function compute() {
     p.delta = p.salRank - p.oddsRank;
     p.velocity = (p.implLive || p.implMon) - p.implMon;
     
-    const fm = {Elite:1.2, Strong:1.1, Mid:1.0, Weak:0.8}[p.fit] || 1.0;
+    const fm = {Elite:1.15, Strong:1.05, Mid:1.0, Weak:0.85}[p.fit] || 1.0;
     const velB = p.velocity > VEL_THRESHOLD ? 1 + (p.velocity * 30) : 1.0;
+    
+    // UI Display $DLTA keeps its standard format
     p.dlta = p.delta > 0 ? (p.delta * p.implMon * 100 * velB * fm) : 0;
     p.cut = Math.min(0.9, Math.max(0.15, (p.implLive || p.implMon) * 6 + 0.20));
 
@@ -529,13 +530,21 @@ function compute() {
 
     p.fitSort = {Elite:4, Strong:3, Mid:2, Weak:1}[p.fit] || 0;
 
-    // --- SALARY-ANCHORED PROJECTION MATH ---
-    const sgBoost = p.sg * 8; 
-    const salaryBase = (p.price / 100) * 0.75; 
-    const dltaBoost = p.dlta * 1.2;
+    // --- NEW QUANTITATIVE SCORING MODEL ---
+    const equityPts = p.implLive * 500; 
     
-    const baseProj = salaryBase + dltaBoost + sgBoost; 
-    const volatility = 10 + ((1 - p.cut) * 35); 
+    // Heavy mathematical penalty for negative delta (overpriced traps)
+    const valuePts = p.delta > 0 ? (p.dlta * 1.5) : (p.delta * 2.5); 
+    
+    const sgPts = p.sg * 8;
+    const salaryBase = (p.price / 100) * 0.5; 
+
+    let baseProj = (salaryBase + equityPts + valuePts + sgPts) * fm;
+    
+    // Velocity multiplier for raw point boost
+    if (p.velocity > VEL_THRESHOLD) baseProj += (p.velocity * 1000); 
+
+    const volatility = 8 + ((1 - p.cut) * 35);
 
     const sims = [];
     for(let i=0; i<1000; i++) {
@@ -568,6 +577,7 @@ function buildQuantLineup(locked, type) {
     let lineup = [...locked];
     let spent = lineup.reduce((s, p) => s + p.price, 0);
     
+    // Constructive Phase seeded purely by multi-factor score value
     let cands = [...avail].sort((a,b) => (getPlayerScore(b, type)/b.price) - (getPlayerScore(a, type)/a.price));
     cands.sort(() => Math.random() - 0.2); 
     
