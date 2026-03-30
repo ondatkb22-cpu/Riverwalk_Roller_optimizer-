@@ -164,15 +164,7 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 <div class="hdr">
   <div>
     <div class="logo">
-      <svg width="40" height="32" viewBox="0 0 100 80" style="margin-right:8px; margin-bottom:2px;">
-        <rect x="5" y="10" width="3" height="65" fill="#B8C5D1" rx="1.5" />
-        <path d="M8,12 L85,12 C88,12 90,14 90,17 L90,45 C90,48 88,50 85,50 L8,50 Z" fill="#002D62" />
-        <path d="M45,12 L85,12 C88,12 90,14 90,17 L90,45 C90,48 88,50 85,50 L45,50 Z" fill="#E31837" />
-        <path d="M8,12 L45,12 L45,50 L8,50 Z" fill="#002D62" />
-        <path d="M45,31 L85,31 L85,50 L45,50 Z" fill="#FFFFFF" />
-        <polygon points="26,20 32,38 38,20" fill="#FFFFFF"/>
-        <path d="M12,28 C25,24 38,36 50,28" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.8"/>
-      </svg>
+      <span style="font-size:24px; margin-right:8px; margin-bottom:2px;">🌮</span>
       Riverwalk Roller
     </div>
     <div class="logo-sub">⛳ VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO 🌵</div>
@@ -301,7 +293,7 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 <script>
 // --- CONFIG & STATE ---
 const SAL_CAP = 50000;
-const MIN_PRICE = 6000; 
+const MIN_PRICE = 6900; 
 
 let players = [];
 let sortCol = 'dlta';
@@ -465,13 +457,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v21', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v23', JSON.stringify(players.map(p => ({
     name: p.name, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v21');
+  const stored = localStorage.getItem('tve_players_v23');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -558,7 +550,7 @@ function compute() {
     let composite = p.dlta + (p.sg * 2.5);
     
     // Reward Course History and/or Velocity
-    if (p.ch > 1.0) composite += (p.ch - 1.0) * 20; // +4 for Elite history, +2 for Strong history
+    if (p.ch > 1.0) composite += (p.ch - 1.0) * 20; 
     if (p.isSteam) composite += 4; 
     
     if (composite > 10 && p.cut >= 0.40) {
