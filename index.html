@@ -117,9 +117,6 @@ td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .grade-pool{background:var(--surface3);color:var(--sub)}
 .grade-fade{background:var(--red-bg);color:var(--red)}
 
-.vel-up{font-weight:700;font-size:11px;color:var(--teal-bright);font-family:var(--mono)}
-.vel-dn{font-weight:700;font-size:11px;color:var(--red);font-family:var(--mono)}
-
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 12px 10px}
 .card-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.6px;text-transform:uppercase}
@@ -172,8 +169,22 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 <div class="hdr">
   <div>
     <div class="logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; margin-bottom:2px;">
-        <path d="M2 12h4l3-9 5 18 3-9h5"/>
+      <svg width="40" height="32" viewBox="0 0 100 80" style="margin-right:8px; margin-bottom:2px;">
+        <defs>
+          <linearGradient id="flag-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#E11D2D" />
+            <stop offset="25%" stop-color="white" />
+            <stop offset="75%" stop-color="white" />
+            <stop offset="100%" stop-color="#005697" />
+          </linearGradient>
+        </defs>
+        <rect x="10" y="5" width="2" height="70" fill="#7D93A8" rx="1" />
+        <rect x="13" y="5" width="82" height="60" rx="4" fill="url(#flag-gradient)" stroke="#2A3A4C" stroke-width="0.5"/>
+        <g transform="translate(13, 15)">
+          <path d="M25,15 C35,5 45,15" fill="none" stroke="#005697" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M35,25 C37,23 39,25 35,31" fill="#E11D2D" />
+          <text x="36" y="45" text-anchor="middle" font-family="'DM Sans', sans-serif" font-weight="700" font-size="8px" fill="#005697">VALERO TEXAS OPEN</text>
+        </g>
       </svg>
       Riverwalk Roller
     </div>
@@ -207,19 +218,19 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-title">Framework Overview</span></div>
+    <div class="card-head"><span class="card-title">Quant Audit Complete</span></div>
     <div class="card-body">
-      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses a multi-factor composite algorithm to build mathematically optimal lineups.</p>
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses Deterministic Z-Score Probability Modeling to build mathematically optimal lineups.</p>
       <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
-        <li><strong>Simulate:</strong> The engine scores players using a Composite Alpha: Win Equity, Value ($DLTA), Course Fit (SG), and Velocity.</li>
-        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for <strong>CORE</strong> grade players and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
-        <li><strong>Pre:</strong> Instantly view 3 dynamically pre-built optimal lineups (Steam, GPP, Cash) perfectly tailored to the latest live odds.</li>
+        <li><strong>Simulate:</strong> The engine scores players using an Expected Value baseline multiplied by True SG, producing exact statistical percentiles for Floor and Ceiling.</li>
+        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for top $DLTA plays and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
+        <li><strong>Pre:</strong> Instantly view 3 dynamically pre-built optimal lineups perfectly tailored to the latest live odds data.</li>
         <li><strong>Optimize:</strong> Tap the floating <strong>AUTO</strong> button to execute a Search Procedure and return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
       </ol>
     </div>
   </div>
   <div class="insight">
-    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds, Fit, and SG are statically locked.
+    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds and SG are statically locked.
   </div>
 </div>
 
@@ -234,10 +245,10 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   </div>
   
   <div class="key-strip">
-    <span><strong>Odds:</strong> Current Implied Line</span>
+    <span><strong>Odds:</strong> Current Line (Teal=Steam, Red=Drift)</span>
     <span><strong style="color:var(--teal)">Δ:</strong> Sal vs Odds Rank</span>
-    <span><strong style="color:var(--gold)">$DLTA:</strong> Raw Value</span>
-    <span><strong>Grade:</strong> SG Fit + $DLTA Composite</span>
+    <span><strong style="color:var(--gold)">$DLTA:</strong> Exp. Value vs Salary</span>
+    <span><strong>Grade:</strong> Composite Algorithm</span>
   </div>
 
   <div class="tw">
@@ -247,7 +258,7 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
           <th onclick="srt('salRank')">#<span class="sort-icon"></span></th>
           <th onclick="srt('name')">Player<span class="sort-icon"></span></th>
           <th onclick="srt('price')">Sal<span class="sort-icon"></span></th>
-          <th onclick="srt('implLive')">Odds<span class="sort-icon"></span></th>
+          <th onclick="srt('liveOdds')">Odds<span class="sort-icon"></span></th>
           <th onclick="srt('delta')" style="color:var(--teal)">Δ<span class="sort-icon"></span></th>
           <th onclick="srt('dlta')" style="color:var(--gold)">$DLTA<span class="sort-icon"></span></th>
           <th onclick="srt('gradeSort')">Grade<span class="sort-icon"></span></th>
@@ -313,7 +324,6 @@ let filterMode = 'all';
 let searchQuery = '';
 let currentLineup = [];
 
-// --- UTILS ---
 const toImp = (o) => o > 0 ? 100 / (o + 100) : Math.abs(o) / (Math.abs(o) + 100);
 
 const randomNormal = (mean, stdDev) => {
@@ -324,6 +334,7 @@ const randomNormal = (mean, stdDev) => {
 };
 
 // --- IMMUTABLE MASTER DATABASE ---
+// Live Odds synced from latest odds dump
 const MASTER_DB = [
     {name: "T. Fleetwood", sal: 10500, monOdds: 1400, liveOdds: 1400, sg: 2.04, fit: 'Elite'},
     {name: "L. Aberg", sal: 10100, monOdds: 1550, liveOdds: 1600, sg: 1.61, fit: 'Elite'},
@@ -459,7 +470,8 @@ function loadInitialData() {
   players = MASTER_DB.map(p => ({
     name: p.name, price: p.sal, monOdds: p.monOdds, liveOdds: p.liveOdds, sg: p.sg,
     fit: p.fit, locked: false, implMon: toImp(p.monOdds), implLive: toImp(p.liveOdds),
-    salRank:0, oddsRank:0, delta:0, dlta:0, velocity:0, grade:'POOL', gradeSort:2, strengthScore:0, cut:.50
+    salRank:0, oddsRank:0, delta:0, dlta:0, grade:'POOL', gradeSort:2, cut:.50,
+    isSteam: false, isDrift: false
   }));
 
   compute();
@@ -468,13 +480,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v17', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v19', JSON.stringify(players.map(p => ({
     name: p.name, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v17');
+  const stored = localStorage.getItem('tve_players_v19');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -485,7 +497,8 @@ function loadFromLocal() {
         name: masterP.name, price: masterP.sal, monOdds: masterP.monOdds, liveOdds: liveOdds, sg: masterP.sg,
         fit: masterP.fit || 'Mid', locked: savedP.locked || false, 
         implMon: toImp(masterP.monOdds), implLive: toImp(liveOdds),
-        salRank:0, oddsRank:0, delta:0, dlta:0, velocity:0, grade:'POOL', gradeSort:2, strengthScore:0, cut:.50
+        salRank:0, oddsRank:0, delta:0, dlta:0, grade:'POOL', gradeSort:2, cut:.50,
+        isSteam: false, isDrift: false
       };
     });
 
@@ -537,53 +550,47 @@ function compute() {
 
   players.forEach(p => {
     p.delta = p.salRank - p.oddsRank;
-    p.velocity = (p.implLive || p.implMon) - p.implMon;
     
-    const fm = {Elite:1.15, Strong:1.05, Mid:1.0, Weak:0.85}[p.fit] || 1.0;
-    const velB = p.velocity > VEL_THRESHOLD ? 1 + (p.velocity * 30) : 1.0;
-    
-    p.dlta = p.delta > 0 ? (p.delta * p.implMon * 100 * velB * fm) : 0;
+    // Odds movement logic
+    p.isSteam = p.liveOdds < p.monOdds; // Odds got shorter (better)
+    p.isDrift = p.liveOdds > p.monOdds; // Odds got longer (worse)
+
     p.cut = Math.min(0.9, Math.max(0.15, (p.implLive || p.implMon) * 6 + 0.20));
 
-    // --- COMPOSITE ALPHA GRADE ---
-    let composite = p.dlta + (p.sg * 2.5);
-    if (p.velocity > VEL_THRESHOLD) composite += 5; 
+    // --- TRUE EXPECTED VALUE (EV) ALGORITHM ---
+    const expectedPoints = (p.price / 1000) * 6.5; 
+    const winEquity = p.implLive * 600; 
+    const sgPts = p.sg * 3.5;
     
-    if (composite > 10 && p.delta >= 0) {
+    let baseProj = 30 + winEquity + sgPts;
+    if (p.isSteam) baseProj += 2.5; // Sharp line movement bonus
+    
+    p.dlta = baseProj - expectedPoints;
+
+    // --- COMPOSITE ALPHA GRADE ---
+    if (p.dlta > 5 && (p.fit === 'Elite' || p.fit === 'Strong')) {
         p.grade = 'CORE'; p.gradeSort = 4;
-    } else if (composite > 4 && p.delta >= 0) {
+    } else if (p.dlta > 2) {
         p.grade = 'PLAY'; p.gradeSort = 3;
-    } else if (p.delta < 0 && p.sg < 0.5) {
+    } else if (p.dlta < -3) {
         p.grade = 'FADE'; p.gradeSort = 1;
     } else {
         p.grade = 'POOL'; p.gradeSort = 2;
     }
 
-    const equityPts = p.implLive * 500; 
-    const valuePts = p.delta > 0 ? (p.dlta * 1.5) : (p.delta * 2.5); 
-    const sgPts = p.sg * 8;
-    const salaryBase = (p.price / 100) * 0.5; 
-
-    let baseProj = (salaryBase + equityPts + valuePts + sgPts) * fm;
-    if (p.velocity > VEL_THRESHOLD) baseProj += (p.velocity * 1000); 
-
-    const volatility = 8 + ((1 - p.cut) * 35);
-
-    const sims = [];
-    for(let i=0; i<1000; i++) {
-        sims.push(randomNormal(baseProj, volatility));
-    }
-    sims.sort((a,b) => a - b);
-    p.simFloor = sims[200];
-    p.simMean = sims[500];
-    p.simCeil = sims[850];
+    // --- DETERMINISTIC Z-SCORE MODELING ---
+    const volatility = 12 + ((1 - p.cut) * 30);
+    
+    p.simMean = baseProj;
+    p.simFloor = baseProj - (volatility * 0.84); 
+    p.simCeil = baseProj + (volatility * 1.04); 
   });
 }
 
 const getPlayerScore = (p, buildType) => {
     if (buildType === 'cash') return p.simFloor;
     if (buildType === 'gpp') return p.simCeil;
-    if (buildType === 'steam') return p.simMean + (p.velocity > VEL_THRESHOLD ? 500 : 0); 
+    if (buildType === 'steam') return p.simMean + (p.isSteam ? 25 : 0); 
     return p.simMean;
 };
 
@@ -680,7 +687,7 @@ function renderArb() {
   const tbody = document.getElementById('arb-tbody');
   const filtered = players.filter(p => {
     if (searchQuery && !p.name.toLowerCase().includes(searchQuery)) return false;
-    if (filterMode === 'steam') return p.velocity > VEL_THRESHOLD;
+    if (filterMode === 'steam') return p.isSteam;
     if (filterMode === 'lockconv') return p.locked;
     if (filterMode === 'grade') return p.grade === 'CORE';
     return true;
@@ -692,23 +699,28 @@ function renderArb() {
   });
 
   tbody.innerHTML = filtered.map(p => {
-    let oddsDisplay = `+${p.liveOdds}`;
-    if (p.velocity > VEL_THRESHOLD) oddsDisplay = `<span style="color:var(--teal-bright)">▲ +${p.liveOdds}</span>`;
-    else if (p.velocity < -VEL_THRESHOLD) oddsDisplay = `<span style="color:var(--red)">▼ +${p.liveOdds}</span>`;
+    let oddsDisplay = `<span style="color:var(--muted)">+${p.monOdds}</span>`;
+    if (p.isSteam) {
+        const drop = p.monOdds - p.liveOdds;
+        oddsDisplay = `<span style="color:var(--teal-bright)">+${p.liveOdds} <span style="font-size:9px; color:var(--muted)">(-${drop})</span></span>`;
+    } else if (p.isDrift) {
+        const rise = p.liveOdds - p.monOdds;
+        oddsDisplay = `<span style="color:var(--red)">+${p.liveOdds} <span style="font-size:9px; color:var(--muted)">(+${rise})</span></span>`;
+    }
 
     return `
-    <tr class="${p.locked ? 'lock-row' : (p.velocity > VEL_THRESHOLD ? 'steam-row' : '')}">
+    <tr class="${p.locked ? 'lock-row' : (p.isSteam ? 'steam-row' : '')}">
       <td style="color:var(--muted)">${p.salRank}</td>
       <td>
         <div style="display:flex; align-items:center;">
           <button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')" style="margin-right:8px;">${p.locked ? '✓' : '+'}</button>
-          <strong>${p.name}</strong>${p.velocity > VEL_THRESHOLD ? '<span class="stm-badge">👢</span>' : ''}
+          <strong>${p.name}</strong>${p.isSteam ? '<span class="stm-badge">👢</span>' : ''}
         </div>
       </td>
       <td style="font-family:var(--mono)">$${(p.price/1000).toFixed(1)}K</td>
-      <td style="color:var(--muted); font-weight:700; font-family:var(--mono)">${oddsDisplay}</td>
+      <td style="font-weight:700; font-family:var(--mono); white-space:nowrap;">${oddsDisplay}</td>
       <td><span class="db ${p.delta > 5 ? 'd-elite' : p.delta > 0 ? 'd-slight' : 'd-neg'}">${p.delta > 0 ? '+' : ''}${p.delta}</span></td>
-      <td style="font-weight:800; color:var(--gold)">${p.dlta.toFixed(1)}</td>
+      <td style="font-weight:800; color:${p.dlta >= 0 ? 'var(--gold)' : 'var(--red)'}">${p.dlta > 0 ? '+' : ''}${p.dlta.toFixed(1)}</td>
       <td><span class="grade grade-${p.grade.toLowerCase()}">${p.grade}</span></td>
     </tr>
   `}).join('');
@@ -818,15 +830,14 @@ function updateBadge() {
   const locked = players.filter(p => p.locked);
   const spent = locked.reduce((s,p) => s + p.price, 0);
   const rem = SAL_CAP - spent;
-  const count = locked.length;
-  document.getElementById('rs-count').textContent = count + '/6';
+  document.getElementById('rs-count').textContent = locked.length + '/6';
   document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
 }
 
 function renderPods() {
   const pods = document.getElementById('pods');
   const pos = players.filter(p => p.delta > 0).length;
-  const steam = players.filter(p => p.velocity > VEL_THRESHOLD).length;
+  const steam = players.filter(p => p.isSteam).length;
   pods.innerHTML = `
     <div class="pod"><div class="pod-val" style="color:var(--teal-bright)">${pos}</div><div class="pod-lbl">+ Delta</div></div>
     <div class="pod"><div class="pod-val" style="color:var(--teal)">${steam}</div><div class="pod-lbl">Steam</div></div>
