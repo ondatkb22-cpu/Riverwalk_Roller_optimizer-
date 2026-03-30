@@ -468,13 +468,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v16', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v17', JSON.stringify(players.map(p => ({
     name: p.name, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v16');
+  const stored = localStorage.getItem('tve_players_v17');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -680,7 +680,7 @@ function renderArb() {
   const tbody = document.getElementById('arb-tbody');
   const filtered = players.filter(p => {
     if (searchQuery && !p.name.toLowerCase().includes(searchQuery)) return false;
-    if (filterMode === 'steam') return p.velocity > VEL_THRESHOLD && p.delta > 0;
+    if (filterMode === 'steam') return p.velocity > VEL_THRESHOLD;
     if (filterMode === 'lockconv') return p.locked;
     if (filterMode === 'grade') return p.grade === 'CORE';
     return true;
@@ -697,12 +697,12 @@ function renderArb() {
     else if (p.velocity < -VEL_THRESHOLD) oddsDisplay = `<span style="color:var(--red)">▼ +${p.liveOdds}</span>`;
 
     return `
-    <tr class="${p.locked ? 'lock-row' : (p.velocity > VEL_THRESHOLD && p.delta > 0 ? 'steam-row' : '')}">
+    <tr class="${p.locked ? 'lock-row' : (p.velocity > VEL_THRESHOLD ? 'steam-row' : '')}">
       <td style="color:var(--muted)">${p.salRank}</td>
       <td>
         <div style="display:flex; align-items:center;">
           <button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')" style="margin-right:8px;">${p.locked ? '✓' : '+'}</button>
-          <strong>${p.name}</strong>${p.velocity > VEL_THRESHOLD && p.delta > 0 ? '<span class="stm-badge">👢</span>' : ''}
+          <strong>${p.name}</strong>${p.velocity > VEL_THRESHOLD ? '<span class="stm-badge">👢</span>' : ''}
         </div>
       </td>
       <td style="font-family:var(--mono)">$${(p.price/1000).toFixed(1)}K</td>
