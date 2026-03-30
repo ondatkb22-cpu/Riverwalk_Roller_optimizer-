@@ -42,9 +42,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:fixed;bottom:0;width:100%;z-index:1000}
 .nav-tab{flex:1;padding:14px 2px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(212, 175, 55, 0.04)}
-.nav-tab:hover:not(.on){color:var(--sub)}
 
-/* Permanent Roster Strip */
 .roster-strip {position:fixed;bottom:44px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
 .rs-val {color:var(--text);font-size:14px;margin-left:6px;}
 
@@ -57,25 +55,20 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .pod-lbl{font-size:9px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
 .key-strip{display:flex;flex-wrap:wrap;gap:3px 12px;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border);font-size:10px;color:var(--muted)}
-.key-strip strong{color:var(--sub)}
-
 .filters{padding:8px 12px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.fchip{padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .12s;font-family:var(--sans)}
+.fchip{padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .12s}
 .fchip.on{background:var(--teal);color:#0B131E;border-color:var(--teal)}
-.fchip:hover:not(.on){border-color:var(--border2);color:var(--sub)}
 
 .tw{overflow-x:auto;padding:0 12px 12px}
 table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
-thead th{background:var(--surface2);color:var(--muted);padding:8px 7px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;cursor:pointer;border-bottom:1px solid var(--border)}
-thead th:hover{color:var(--text)}
+thead th{background:var(--surface2);color:var(--muted);padding:10px 7px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;cursor:pointer;border-bottom:1px solid var(--border);transition: background 0.2s;}
+thead th:hover{background:var(--surface3);color:var(--text)}
 tbody tr{border-bottom:1px solid rgba(42, 58, 76, 0.6)}
-tbody tr:last-child{border:none}
-tbody tr:hover td{background:rgba(125, 154, 59, 0.06)}
-tbody tr.steam-row td{background:var(--steam-bg)}
 tbody tr.lock-row td{background:var(--lock-bg)}
-tbody tr.fade-row td{opacity:.35}
-td{padding:7px;vertical-align:middle;white-space:nowrap}
+tbody tr.steam-row td{background:var(--steam-bg)}
+td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
+
+.sort-icon { display:inline-block; margin-left:4px; font-size:8px; opacity:0.6; }
 
 .db{display:inline-flex;align-items:center;justify-content:center;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:32px;font-family:var(--mono)}
 .d-elite{background:var(--gold);color:#0B131E}
@@ -92,15 +85,6 @@ td{padding:7px;vertical-align:middle;white-space:nowrap}
 
 .vel-up{font-weight:700;font-size:11px;color:var(--teal-bright);font-family:var(--mono)}
 .vel-dn{font-weight:700;font-size:11px;color:var(--red);font-family:var(--mono)}
-.vel-flat{font-size:11px;color:var(--muted)}
-
-.fit-elite{color:var(--gold-bright);font-weight:800;font-size:11px}
-.fit-strong{color:var(--teal);font-weight:700;font-size:11px}
-.fit-mid{color:var(--sub);font-size:11px}
-.fit-weak{color:var(--muted);font-size:11px}
-.cut-g{color:var(--teal-bright);font-weight:700}
-.cut-a{color:var(--amber);font-weight:700}
-.cut-r{color:var(--red);font-weight:700}
 
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 12px 10px}
 .card-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
@@ -122,48 +106,28 @@ td{padding:7px;vertical-align:middle;white-space:nowrap}
 .del-btn:hover{background:var(--red);color:#fff;}
 
 textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;font-family:var(--mono);outline:none;resize:vertical;white-space:pre}
-textarea:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(125, 154, 59, 0.15)}
-textarea::placeholder{color:var(--muted)}
 
 .btn{width:100%;padding:14px;border-radius:8px;font-size:15px;font-weight:900;font-family:var(--disp);cursor:pointer;border:none;background:linear-gradient(135deg,var(--teal) 0%,var(--teal-bright) 100%);color:#0B131E;letter-spacing:.3px;transition:all .2s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(125, 154, 59, 0.3)}
-.btn-sm{padding:8px 14px;font-size:12px;font-weight:700;font-family:var(--sans);width:auto}
 .btn-gold{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-bright) 100%)}
 .clear-btn{width:100%;background:var(--surface);color:var(--muted);border:1px solid var(--border);padding:10px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
 
-.mode-row{display:flex;gap:6px;padding:12px;flex-wrap:wrap}
-.mode-btn{flex:1;min-width:70px;padding:10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);text-align:center;transition:all .12s}
-.mode-btn.on{background:var(--teal);color:#0B131E;border-color:var(--teal)}
-.wave-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .12s}
-.wave-btn.on{background:var(--gold);color:#0B131E;border-color:var(--gold)}
-
 .add-btn{padding:4px 8px;border-radius:4px;border:none;font-size:10px;font-weight:800;cursor:pointer;background:var(--surface3);color:var(--text);transition:all .1s}
 .add-btn.is-locked{background:var(--teal-bright);color:#0B131E}
-.add-btn.is-full{background:var(--muted);cursor:not-allowed;opacity:.4}
 
 .stm-badge{font-size:9px;background:var(--teal);color:#0B131E;padding:1px 5px;border-radius:3px;font-weight:800;margin-left:6px}
-.wave-badge{font-size:9px;background:rgba(91, 192, 222, 0.2);color:var(--blue);padding:1px 5px;border-radius:3px;font-weight:700;margin-left:6px}
 .pb-tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.5px}
 .pb-steam{background:rgba(125, 154, 59, 0.2);color:var(--teal-bright)}
 .pb-gpp{background:rgba(212, 175, 55, 0.15);color:var(--gold)}
 .pb-cash{background:rgba(91, 192, 222, 0.15);color:var(--blue)}
 
 .insight{background:rgba(212, 175, 55, 0.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 14px;font-size:11px;color:var(--sub);line-height:1.7;margin:0 12px 10px}
-.insight strong{color:var(--gold)}
 
 @media(max-width:700px){
-.pods{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 8px}
-.pod-val{font-size:16px}
-.tw{padding:0 8px 10px}
-.card{margin:0 8px 8px}
-.lu-card{margin:0 8px 8px}
-.lu-totals{grid-template-columns:repeat(2,1fr)}
-.insight{margin:0 8px 8px}
-.mode-row{padding:10px 8px}
+  .pods{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 8px}
+  .pod-val{font-size:16px}
+  .lu-totals{grid-template-columns:repeat(2,1fr)}
 }
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-::-webkit-scrollbar-track{background:transparent}
 </style>
 </head>
 <body>
@@ -171,228 +135,92 @@ textarea::placeholder{color:var(--muted)}
 <div class="hdr">
   <div>
     <div class="logo">Texas Value Engine</div>
-    <div class="logo-sub">VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO · APR 2–5</div>
+    <div class="logo-sub">VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO</div>
   </div>
   <div style="display:flex;gap:6px;align-items:center">
-    <span class="badge badge-teal" id="status-badge">Loading Data & Sims...</span>
+    <span class="badge badge-teal" id="status-badge">Engine Ready</span>
   </div>
 </div>
 
 <div class="panel on" id="panel-guide">
   <div style="padding:16px 12px 8px">
     <div style="font-family:var(--disp);font-size:24px;font-weight:900;color:var(--gold-bright);line-height:1">User Guide</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:var(--mono)">HOW TO USE THE TEXAS VALUE ENGINE</div>
   </div>
-
   <div class="card">
-    <div class="card-head"><span class="card-title">HQC Optimization Framework</span></div>
+    <div class="card-head"><span class="card-title">Framework Overview</span></div>
     <div class="card-body">
-      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool replaces standard linear programming with a Hybrid Quantum-Classical architecture.</p>
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool replaces standard linear programming with a Hybrid Stochastic architecture.</p>
       <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
-        <li><strong>Gaussian Mixture Modeling:</strong> The engine automatically runs 1,000 Monte Carlo iterations per player on load, adjusting variance based on course fit and cut probability.</li>
-        <li><strong>Stochastic Combinatorial Search:</strong> Rather than taking greedy local maximums, the Build and Pre-Built algorithms run 5,000 wide-net randomized searches to optimize the knapsack problem, seeking the 85th percentile ceiling for GPPs and 20th percentile floor for Cash.</li>
-        <li><strong>Lock & Build:</strong> Navigate to the <strong>Arb</strong> tab to find mathematical values. Tap the <strong style="color:#fff">+</strong> to lock your core. Then navigate to <strong>Build</strong> to automatically surround them with the stochastically optimal plays.</li>
+        <li><strong>Monte Carlo Sims:</strong> 1,000 iterations per player on load.</li>
+        <li><strong>Lock & Build:</strong> Use the <strong>Arb</strong> tab to find value, tap <strong style="color:#fff">+</strong> to lock.</li>
+        <li><strong>Auto-Optimize:</strong> The <strong>Build</strong> tab runs 5,000 randomized combinatorial searches to find the global maximum.</li>
       </ol>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Glossary / Key terms</span></div>
-    <div style="padding:4px 0">
-      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank minus Odds Rank. A positive number indicates the field/market is pricing them cheaper than their win probability suggests.</div>
-      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--teal-bright)">Vel (Velocity):</strong> Real-time betting line movement. "▲" means odds are shortening (money is coming in).</div>
-      <div style="padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px"><strong style="color:var(--gold)">$DLTA:</strong> The master value metric prior to simulation. Blends Odds, Delta, Velocity, Cut Equity, and Course Fit.</div>
-      <div style="padding:9px 14px;font-size:11px"><strong style="color:#fff">Proj Ceil / Proj Floor:</strong> The 85th percentile and 20th percentile outputs of the 1,000-run Monte Carlo simulations, replacing raw average projections.</div>
-    </div>
-  </div>
-
-  <div class="card" style="border-color:var(--red);background:rgba(217,83,79,0.03)">
-    <div class="card-head" style="border-color:rgba(217,83,79,0.3)"><span class="card-title" style="color:var(--red)">Bankroll & Disclaimer</span></div>
-    <div class="card-body">
-      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">Daily Fantasy Golf is inherently high variance. Practice strict bankroll management to ensure long-term profitability.</p>
-      <ul style="padding-left:14px;font-size:11px;line-height:1.6;color:var(--muted);margin-bottom:12px">
-        <li><strong>The 10% Rule:</strong> Never put more than 10% of your total bankroll into play in a single tournament week.</li>
-        <li><strong>The 80/20 Split:</strong> Allocate 80% of your weekly play to Cash games (50/50s, Double Ups) and 20% to GPPs (Tournaments).</li>
-        <li><strong>Trust the Process:</strong> This tool utilizes mathematical probabilities and statistical modeling, but golf guarantees nothing. Play within your means.</li>
-      </ul>
-      <p style="font-size:10px;font-weight:700;color:var(--red)">If you or someone you know has a gambling problem and wants help, call 1-800-GAMBLER.</p>
-    </div>
+  <div class="insight">
+    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage.
   </div>
 </div>
 
 <div class="panel" id="panel-arb">
   <div class="pods" id="pods"></div>
-  <div class="key-strip" id="key-strip">
-    <span><strong style="color:var(--gold)">$DLTA</strong> sort this</span>
-    <span><strong style="color:var(--teal)">Δ</strong> sal − odds rank</span>
-    <span><strong style="color:var(--teal-bright)">Vel</strong> live − open movement</span>
-    <span><strong style="color:var(--gold)">Conv</strong> Lock / Strong / Consider / Fade</span>
-  </div>
   <div class="filters">
-    <button class="fchip on" onclick="setFilter('all',this)">All</button>
-    <button class="fchip" onclick="setFilter('steam',this)">Steam</button>
-    <button class="fchip" onclick="setFilter('lockconv',this)">Lock</button>
-    <button class="fchip" onclick="setFilter('pos',this)">+ Delta</button>
-    <button class="fchip" onclick="setFilter('elite',this)">$9K+</button>
-    <button class="fchip" onclick="setFilter('mid',this)">$7.5–9K</button>
-    <button class="fchip" onclick="setFilter('value',this)">$6.8–7.5K</button>
-    <button class="fchip" onclick="setFilter('fit',this)">Fit</button>
+    <button class="fchip on" data-filter="all" onclick="setFilter('all',this)">All</button>
+    <button class="fchip" data-filter="steam" onclick="setFilter('steam',this)">Steam</button>
+    <button class="fchip" data-filter="lockconv" onclick="setFilter('lockconv',this)">Locks</button>
+    <button class="fchip" data-filter="elite" onclick="setFilter('elite',this)">$9K+</button>
+    <button class="fchip" data-filter="fit" onclick="setFilter('fit',this)">Fit</button>
   </div>
   <div class="tw">
     <table>
-      <thead><tr>
-        <th title="Salary Rank" onclick="srt('salRank')">#</th>
-        <th title="Player Name" onclick="srt('name')">Player</th>
-        <th title="DraftKings Salary" onclick="srt('price')">Sal</th>
-        <th title="Delta: Salary Rank minus Odds Rank. Positive means they are cheaper than their win probability suggests." onclick="srt('delta')" style="color:var(--teal)">Δ</th>
-        <th title="Velocity: Line movement between opening odds and live odds. Up arrow = odds improving." onclick="srt('velocity')" style="color:var(--teal-bright)">Vel</th>
-        <th title="Master Value Score: Blends Odds, Delta, Movement, and Course Fit into a single metric." onclick="srt('dlta')" style="color:var(--gold)">$DLTA</th>
-        <th title="Strokes Gained: Tee-to-Green" onclick="srt('t2g')" style="color:var(--teal)">T2G</th>
-        <th title="Greens in Regulation %" onclick="srt('gir')">GIR%</th>
-        <th title="Scrambling %" onclick="srt('scram')">Scram%</th>
-        <th title="Strokes Gained: Approach" onclick="srt('app')">APP</th>
-        <th title="Strokes Gained: Putting" onclick="srt('putt')">Putt</th>
-        <th title="Algorithm's Conviction Level based on value and course fit." onclick="srt('convSort')">Conv</th>
-        <th title="Probability of making the cut." onclick="srt('cut')">Cut%</th>
-        <th title="Course Fit specifically for TPC San Antonio." onclick="srt('fitSort')">Fit</th>
-        <th>+</th>
-      </tr></thead>
+      <thead>
+        <tr id="arb-thead">
+          <th onclick="srt('salRank')">#<span class="sort-icon"></span></th>
+          <th onclick="srt('name')">Player<span class="sort-icon"></span></th>
+          <th onclick="srt('price')">Sal<span class="sort-icon"></span></th>
+          <th onclick="srt('delta')" style="color:var(--teal)">Δ<span class="sort-icon"></span></th>
+          <th onclick="srt('velocity')" style="color:var(--teal-bright)">Vel<span class="sort-icon"></span></th>
+          <th onclick="srt('dlta')" style="color:var(--gold)">$DLTA<span class="sort-icon"></span></th>
+          <th onclick="srt('convSort')">Conv<span class="sort-icon"></span></th>
+          <th onclick="srt('cut')">Cut%<span class="sort-icon"></span></th>
+          <th onclick="srt('fitSort')">Fit<span class="sort-icon"></span></th>
+          <th>+</th>
+        </tr>
+      </thead>
       <tbody id="arb-tbody"></tbody>
     </table>
   </div>
 </div>
 
 <div class="panel" id="panel-prebuilt">
-  <div class="insight">
-    <strong>TPC San Antonio rules:</strong> SG:T2G + SG:APP = non-negotiable. Wind exposure makes Scrambling & Around the Green critical.<br><br>
-    <em>Powered by Monte Carlo Gaussian Modeling (1,000 iterations per player). Pre-Built logic executes 5,000 stochastic randomized searches to find the mathematically optimal 85th Percentile Ceiling (GPP) and 20th Percentile Floor (Cash).</em>
-  </div>
   <div id="pb-steam-card" class="lu-card"></div>
   <div id="pb-gpp-card" class="lu-card"></div>
   <div id="pb-cash-card" class="lu-card"></div>
 </div>
 
 <div class="panel" id="panel-build">
-  <div class="mode-row">
-    <button class="mode-btn on" id="m-cash" onclick="setMode('cash')">Cash 50/50</button>
-    <button class="mode-btn" id="m-gpp" onclick="setMode('gpp')">GPP</button>
-    <button class="wave-btn on" id="w-off" onclick="setWave('off')">All</button>
-    <button class="wave-btn" id="w-AM" onclick="setWave('AM')">AM</button>
-    <button class="wave-btn" id="w-PM" onclick="setWave('PM')">PM</button>
-  </div>
-  
-  <div id="lu-card" class="lu-card">
-    <div style="padding:20px;text-align:center">
-      <div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div>
-      <div style="color:var(--muted);font-size:12px">Tap + on any player to add them to your core.</div>
-    </div>
-  </div>
-
-  <div style="padding:0 12px">
+  <div id="lu-card" class="lu-card" style="margin-top:12px"></div>
+  <div style="padding:0 12px; display:flex; flex-direction:column; gap:8px;">
     <button class="btn btn-gold" onclick="buildAndRender()">Auto-Fill Optimal Lineup</button>
+    <button class="btn" style="background:var(--surface2); color:var(--sub); font-size:12px; padding:10px" onclick="copyLineupToClipboard()">Copy Lineup to Clipboard</button>
     <button class="clear-btn" onclick="clearLocks()">Clear Entire Roster</button>
   </div>
 </div>
 
 <div class="panel" id="panel-data">
   <div class="card" style="margin-top:12px">
-    <div class="card-head"><span class="card-title">Update Data / Load New Field</span></div>
+    <div class="card-head"><span class="card-title">Update Data</span></div>
     <div class="card-body">
-      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">Format: <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--sub)">Name, Sal, Open, Live, Fit, T2G, GIR, Scram, APP, Dist, Putt, DA</code></p>
-      <textarea id="csv-input" placeholder="Paste updated player data here..."></textarea>
-      <button class="btn" onclick="parseCSV()">Load & Compute</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Update Live Odds</span></div>
-    <div class="card-body">
-      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">Format: <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--sub)">Player Name +3500</code> one per line</p>
-      <textarea id="odds-paste" placeholder="Ludvig Aberg +1000&#10;Tommy Fleetwood +1600&#10;..." style="min-height:100px"></textarea>
-      <button class="btn" onclick="updateOdds()" style="margin-top:8px">Update Odds</button>
-      <span id="odds-result" style="font-size:11px;color:var(--muted);display:block;margin-top:6px"></span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Paste Wave Assignments</span></div>
-    <div class="card-body">
-      <p style="font-size:11px;color:var(--muted);margin-bottom:8px">Format: <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--sub)">Player Name AM</code></p>
-      <textarea id="wave-paste" placeholder="Ludvig Aberg AM&#10;Tommy Fleetwood PM&#10;..." style="min-height:80px"></textarea>
-      <button class="btn" onclick="loadWaves()" style="margin-top:8px">Set Waves</button>
-      <span id="wave-result" style="font-size:11px;color:var(--muted);display:block;margin-top:6px"></span>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-intel">
-  <div style="padding:16px 12px 8px">
-    <div style="font-family:var(--disp);font-size:24px;font-weight:900;color:var(--gold-bright);line-height:1">TPC San Antonio</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:var(--mono)">Oaks Course · Par 72 · 7,438 yds · Greg Norman design · Poa Trivialis greens · 132 players</div>
-  </div>
-
-  <div class="pods" style="grid-template-columns:repeat(2,1fr)">
-    <div class="pod"><div class="pod-val" style="color:var(--teal)">GIR</div><div class="pod-lbl">3/5 winners led GIR that week</div></div>
-    <div class="pod"><div class="pod-val" style="color:var(--gold-bright)">Wind</div><div class="pod-lbl">25 mph gusts — scrambling key</div></div>
-    <div class="pod"><div class="pod-val" style="color:var(--blue)">7th</div><div class="pod-lbl">Hardest course on Tour (2024)</div></div>
-    <div class="pod"><div class="pod-val" style="color:var(--red)">56.5%</div><div class="pod-lbl">Field GIR avg — 5th lowest</div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Key Stats to Target</span></div>
-    <div style="padding:4px 0">
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">SG: Tee-to-Green</span><span class="conv conv-lock">NON-NEGOTIABLE</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">Greens in Regulation</span><span class="conv conv-lock">CRITICAL</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">Scrambling</span><span class="conv conv-lock">CRITICAL</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">SG: Approach</span><span class="conv conv-strong">HIGH</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">Ball Speed / Distance</span><span class="conv conv-strong">HIGH</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)"><span style="font-size:12px;font-weight:700">SG: Putting</span><span class="conv conv-consider">MEDIUM</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px"><span style="font-size:12px;font-weight:700">Driving Accuracy (wide FW)</span><span class="conv conv-fade">LOW</span></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Recent Winners</span></div>
-    <div class="tw" style="padding:0">
-      <table>
-        <thead><tr><th>Year</th><th>Winner</th><th>Score</th><th>Key Stat</th></tr></thead>
-        <tbody>
-          <tr><td>2025</td><td style="font-weight:700">Harman</td><td style="color:var(--teal);font-weight:700">−9</td><td style="font-size:10px;color:var(--muted)">Wind mgmt + scrambling</td></tr>
-          <tr><td>2024</td><td style="font-weight:700">Bhatia</td><td style="color:var(--teal);font-weight:700">−20</td><td style="font-size:10px;color:var(--muted)">1st GIR + 1st SG:T2G</td></tr>
-          <tr><td>2023</td><td style="font-weight:700">Conners</td><td style="color:var(--teal);font-weight:700">−20</td><td style="font-size:10px;color:var(--muted)">1st GIR + elite approach</td></tr>
-          <tr><td>2022</td><td style="font-weight:700">Spaun</td><td style="color:var(--teal);font-weight:700">−13</td><td style="font-size:10px;color:var(--muted)">Scrambling + putting</td></tr>
-          <tr><td>2021</td><td style="font-weight:700">Spieth</td><td style="color:var(--teal);font-weight:700">−18</td><td style="font-size:10px;color:var(--muted)">Putting + short game</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="insight">
-    <strong>TPC San Antonio pattern:</strong> GIR is king — 3 of last 5 winners ranked 1st in GIR that week. Wind is the great equalizer — scoring avg 72.51 (2024) was 7th hardest on Tour. Charley Hoffman has 17 cuts in 18 starts with 7 top-10s. Corey Conners is a 2× winner. Course history matters more than season-long stats here.
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Course Scoring History</span></div>
-    <div style="padding:4px 0">
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>Lowest Avg Score (2018–24)</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Conners 69.75</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>2nd Lowest</span><span style="color:var(--teal);font-weight:700;font-family:var(--mono)">Spieth 69.75</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>3rd Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">McCarthy 70.11</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px"><span>4th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Kuchar 70.18</span></div>
-      <div style="display:flex;justify-content:space-between;padding:9px 14px;font-size:12px"><span>5th Lowest</span><span style="color:var(--sub);font-weight:700;font-family:var(--mono)">Bhatia 70.20</span></div>
+      <textarea id="csv-input" placeholder="Name, Sal, Open, Live, Fit..."></textarea>
+      <button class="btn" onclick="handleCSVUpload()">Load & Compute</button>
     </div>
   </div>
 </div>
 
 <div class="roster-strip" id="roster-strip">
-  <div style="display:flex;align-items:center;">
-    PLYRS: <span class="rs-val" id="rs-count" style="color:var(--text)">0/6</span>
-  </div>
-  <div style="display:flex;align-items:center;">
-    REM: <span class="rs-val" id="rs-rem" style="color:var(--teal-bright)">$50,000</span>
-  </div>
-  <div style="display:flex;align-items:center;">
-    AVG: <span class="rs-val" id="rs-avg" style="color:var(--gold)">$8,333</span>
-  </div>
+  <div>PLYRS: <span class="rs-val" id="rs-count">0/6</span></div>
+  <div>REM: <span class="rs-val" id="rs-rem">$50,000</span></div>
+  <div>AVG: <span class="rs-val" id="rs-avg">$8,333</span></div>
 </div>
 
 <div class="nav">
@@ -401,535 +229,302 @@ textarea::placeholder{color:var(--muted)}
   <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('build')">Build</div>
   <div class="nav-tab" onclick="showTab('data')">Data</div>
-  <div class="nav-tab" onclick="showTab('intel')">Course</div>
 </div>
 
 <script>
-var SAL_CAP=50000, MIN_PRICE=6800, VEL_THRESHOLD=0.003;
-var SWEET_LO=7500, SWEET_HI=8500; // TPC SA sweet spot
+// --- CONFIG & STATE ---
+const SAL_CAP = 50000;
+const MIN_PRICE = 6800;
+const VEL_THRESHOLD = 0.003;
 
-var TPC_FIT={
-  "Corey Conners":"Elite","Jordan Spieth":"Elite","Charley Hoffman":"Elite",
-  "Matt Kuchar":"Elite","Denny McCarthy":"Elite","Si Woo Kim":"Elite",
-  "Akshay Bhatia":"Elite","Brian Harman":"Strong","Chris Kirk":"Strong",
-  "Sam Stevens":"Strong","J.J. Spaun":"Strong","Rickie Fowler":"Strong",
-  "Daniel Berger":"Strong","Russell Henley":"Strong","Tommy Fleetwood":"Strong",
-  "Hideki Matsuyama":"Strong","Maverick McNealy":"Strong","Tony Finau":"Strong",
-  "Collin Morikawa":"Strong","Alex Noren":"Mid","Max Homa":"Mid",
-  "Ludvig Aberg":"Mid","Will Zalatoris":"Mid","Sepp Straka":"Mid",
-  "Robert MacIntyre":"Mid","Justin Rose":"Mid","Billy Horschel":"Mid",
-  "Gary Woodland":"Mid","Beau Hossler":"Mid","Eric Cole":"Mid",
-  "Christiaan Bezuidenhout":"Mid","Mac Meissner":"Mid","Bud Cauley":"Mid",
-};
+let players = [];
+let sortCol = 'dlta';
+let sortDir = -1;
+let filterMode = 'all';
+let currentLineup = [];
 
-const DEFAULT_DATA = `Ludvig Aberg, 8000, 10000, 10000, Mid, 1.77, 0, 0, 0.81, 0, 0.24, 0
-Zach Bauchou, 8000, 10000, 10000, Mid, 0.22, 0, 0, 0.40, 0, 0.02, 0
-Daniel Berger, 8000, 10000, 10000, Mid, 0.95, 0, 0, 1.05, 0, -0.01, 0
-Christiaan Bezuidenhout, 8000, 10000, 10000, Mid, 0.23, 0, 0, 0.20, 0, 0.55, 0
-Chandler Blanchet, 8000, 10000, 10000, Mid, 0.02, 0, 0, 0.36, 0, -0.82, 0
-Dan Brown, 8000, 10000, 10000, Mid, 0.30, 0, 0, 0.33, 0, 0.09, 0
-Rafael Campos, 8000, 10000, 10000, Mid, -1.83, 0, 0, -0.51, 0, -0.10, 0
-Ricky Castillo, 8000, 10000, 10000, Mid, 0.28, 0, 0, 0.01, 0, 0.27, 0
-Bud Cauley, 8000, 10000, 10000, Mid, 0.62, 0, 0, 0.39, 0, -0.39, 0
-Davis Chatfield, 8000, 10000, 10000, Mid, -0.00, 0, 0, -0.49, 0, -0.78, 0
-Luke Clanton, 8000, 10000, 10000, Mid, -0.53, 0, 0, -0.36, 0, -1.62, 0
-Eric Cole, 8000, 10000, 10000, Mid, -0.30, 0, 0, 0.15, 0, 0.22, 0
-Pierceson Coody, 8000, 10000, 10000, Mid, 0.73, 0, 0, 0.55, 0, 0.09, 0
-Zecheng Dou, 8000, 10000, 10000, Mid, 0.59, 0, 0, 0.66, 0, -0.01, 0
-Adrien Dumont de Chassart, 8000, 10000, 10000, Mid, 0.59, 0, 0, -0.09, 0, -0.21, 0
-Nick Dunlap, 8000, 10000, 10000, Mid, -1.88, 0, 0, 0.18, 0, 0.29, 0
-Austin Eckroat, 8000, 10000, 10000, Mid, -0.19, 0, 0, 0.57, 0, -0.50, 0
-A.J. Ewart, 8000, 10000, 10000, Mid, 0.03, 0, 0, 0.18, 0, 0.39, 0
-Tony Finau, 8000, 10000, 10000, Mid, 0.39, 0, 0, 0.24, 0, 0.13, 0
-Patrick Fishburn, 8000, 10000, 10000, Mid, -0.63, 0, 0, -0.54, 0, 0.27, 0
-Steven Fisk, 8000, 10000, 10000, Mid, -0.24, 0, 0, -0.10, 0, -0.04, 0
-Tommy Fleetwood, 8000, 10000, 10000, Mid, 2.19, 0, 0, 0.60, 0, -0.15, 0
-David Ford, 8000, 10000, 10000, Mid, 0.73, 0, 0, 0.52, 0, -0.07, 0
-Rickie Fowler, 8000, 10000, 10000, Mid, 0.78, 0, 0, 0.59, 0, 0.90, 0
-Brice Garnett, 8000, 10000, 10000, Mid, -0.78, 0, 0, -0.45, 0, 0.19, 0
-Doug Ghim, 8000, 10000, 10000, Mid, 0.35, 0, 0, -0.44, 0, 0.07, 0
-Lucas Glover, 8000, 10000, 10000, Mid, 0.19, 0, 0, 0.21, 0, -0.53, 0
-Emiliano Grillo, 8000, 10000, 10000, Mid, -0.38, 0, 0, -0.03, 0, -0.40, 0
-Brian Harman, 8000, 10000, 10000, Mid, 0.11, 0, 0, 0.02, 0, -0.27, 0
-Russell Henley, 8000, 10000, 10000, Mid, 1.18, 0, 0, 0.66, 0, 0.78, 0
-Garrick Higgo, 8000, 10000, 10000, Mid, -1.25, 0, 0, -0.74, 0, -0.53, 0
-Joe Highsmith, 8000, 10000, 10000, Mid, -0.52, 0, 0, 0.17, 0, -0.45, 0
-Kensei Hirata, 8000, 10000, 10000, Mid, -0.47, 0, 0, -0.64, 0, 0.18, 0
-Ryo Hisatsune, 8000, 10000, 10000, Mid, 1.68, 0, 0, 0.63, 0, -0.07, 0
-Lee Hodges, 8000, 10000, 10000, Mid, 0.09, 0, 0, 0.04, 0, 0.48, 0
-Rico Hoey, 8000, 10000, 10000, Mid, 0.02, 0, 0, 0.07, 0, -0.47, 0
-Charley Hoffman, 8000, 10000, 10000, Mid, -1.63, 0, 0, -0.82, 0, -0.73, 0
-Tom Hoge, 8000, 10000, 10000, Mid, -0.54, 0, 0, 0.22, 0, 0.29, 0
-Nicolai Hojgaard, 8000, 10000, 10000, Mid, 1.07, 0, 0, 0.69, 0, 0.57, 0
-Max Homa, 8000, 10000, 10000, Mid, 0.32, 0, 0, 0.48, 0, 0.05, 0
-Billy Horschel, 8000, 10000, 10000, Mid, -0.33, 0, 0, 0.11, 0, 0.17, 0
-Beau Hossler, 8000, 10000, 10000, Mid, -0.10, 0, 0, -0.67, 0, 0.41, 0
-Mark Hubbard, 8000, 10000, 10000, Mid, -0.77, 0, 0, -0.26, 0, -0.47, 0
-Mackenzie Hughes, 8000, 10000, 10000, Mid, 0.30, 0, 0, 0.20, 0, 0.14, 0
-Stephan Jaeger, 8000, 10000, 10000, Mid, 0.24, 0, 0, -0.06, 0, 0.37, 0
-Takumi Kanaya, 8000, 10000, 10000, Mid, -0.29, 0, 0, -0.82, 0, 0.39, 0
-Jeffrey Kang, 8000, 10000, 10000, Mid, -1.96, 0, 0, -0.30, 0, -0.73, 0
-Johnny Keefer, 8000, 10000, 10000, Mid, 0.20, 0, 0, 0.19, 0, -0.64, 0
-Michael Kim, 8000, 10000, 10000, Mid, -0.34, 0, 0, -0.09, 0, 0.29, 0
-S.H. Kim, 8000, 10000, 10000, Mid, -0.15, 0, 0, -0.59, 0, 0.56, 0
-Si Woo Kim, 8000, 10000, 10000, Mid, 2.13, 0, 0, 1.12, 0, -0.42, 0
-Tom Kim, 8000, 10000, 10000, Mid, 0.54, 0, 0, 0.33, 0, -0.21, 0
-Chris Kirk, 8000, 10000, 10000, Mid, 0.48, 0, 0, 0.58, 0, -0.36, 0
-Patton Kizzire, 8000, 10000, 10000, Mid, -0.29, 0, 0, 0.42, 0, 0.12, 0
-Matt Kuchar, 8000, 10000, 10000, Mid, -1.62, 0, 0, -1.26, 0, 0.66, 0
-Christo Lamprecht, 8000, 10000, 10000, Mid, -1.21, 0, 0, -0.91, 0, -0.69, 0
-Hank Lebioda, 8000, 10000, 10000, Mid, 0.26, 0, 0, 0.22, 0, -0.43, 0
-K.H. Lee, 8000, 10000, 10000, Mid, 1.59, 0, 0, 0.35, 0, 0.54, 0
-Haotong Li, 8000, 10000, 10000, Mid, 0.91, 0, 0, 0.50, 0, -0.12, 0
-David Lipsky, 8000, 10000, 10000, Mid, 0.86, 0, 0, 0.43, 0, 0.89, 0
-Justin Lower, 8000, 10000, 10000, Mid, -1.04, 0, 0, -1.12, 0, 0.16, 0
-Robert MacIntyre, 8000, 10000, 10000, Mid, 0.73, 0, 0, -0.30, 0, 1.01, 0
-Peter Malnati, 8000, 10000, 10000, Mid, -1.82, 0, 0, -1.12, 0, 0.44, 0
-Hideki Matsuyama, 8000, 10000, 10000, Mid, 1.33, 0, 0, 0.79, 0, 0.42, 0
-Denny McCarthy, 8000, 10000, 10000, Mid, 0.01, 0, 0, 0.19, 0, 0.12, 0
-Matt McCarty, 8000, 10000, 10000, Mid, -0.22, 0, 0, 0.02, 0, 0.42, 0
-Max McGreevy, 8000, 10000, 10000, Mid, 0.96, 0, 0, 0.46, 0, -0.48, 0
-Maverick McNealy, 8000, 10000, 10000, Mid, 1.29, 0, 0, 0.42, 0, 0.20, 0
-Mac Meissner, 8000, 10000, 10000, Mid, 0.45, 0, 0, 0.33, 0, -0.21, 0
-Keith Mitchell, 8000, 10000, 10000, Mid, 1.20, 0, 0, 0.47, 0, -0.32, 0
-Taylor Moore, 8000, 10000, 10000, Mid, 0.27, 0, 0, -0.60, 0, 0.23, 0
-Collin Morikawa, 8000, 10000, 10000, Mid, 2.18, 0, 0, 1.33, 0, 0.01, 0
-William Mouw, 8000, 10000, 10000, Mid, -0.29, 0, 0, 0.13, 0, 0.13, 0
-Alex Noren, 8000, 10000, 10000, Mid, 0.98, 0, 0, 0.41, 0, 0.51, 0
-Andrew Novak, 8000, 10000, 10000, Mid, 0.26, 0, 0, 0.12, 0, -0.25, 0
-Pontus Nyholm, 8000, 10000, 10000, Mid, -1.46, 0, 0, -0.65, 0, -0.04, 0
-Thorbjorn Olesen, 8000, 10000, 10000, Mid, 0.49, 0, 0, 0.35, 0, -0.67, 0
-John Parry, 8000, 10000, 10000, Mid, 0.33, 0, 0, 0.21, 0, -0.07, 0
-Matthieu Pavon, 8000, 10000, 10000, Mid, -0.54, 0, 0, -0.61, 0, 1.00, 0
-Marco Penge, 8000, 10000, 10000, Mid, 0.32, 0, 0, -0.42, 0, -0.06, 0
-Chandler Phillips, 8000, 10000, 10000, Mid, -1.14, 0, 0, -0.89, 0, 0.54, 0
-J.T. Poston, 8000, 10000, 10000, Mid, -0.29, 0, 0, -0.25, 0, 0.25, 0
-Seamus Power, 8000, 10000, 10000, Mid, 0.04, 0, 0, -0.16, 0, 0.44, 0
-Andrew Putnam, 8000, 10000, 10000, Mid, 0.64, 0, 0, 0.34, 0, -0.33, 0
-Chad Ramey, 8000, 10000, 10000, Mid, -0.26, 0, 0, -0.10, 0, 0.65, 0
-Kristoffer Reitan, 8000, 10000, 10000, Mid, -0.29, 0, 0, -0.73, 0, -0.15, 0
-Patrick Rodgers, 8000, 10000, 10000, Mid, 0.83, 0, 0, 0.50, 0, 0.46, 0
-Kevin Roy, 8000, 10000, 10000, Mid, 0.20, 0, 0, -0.27, 0, 0.45, 0
-Marcelo Rozo, 8000, 10000, 10000, Mid, -0.68, 0, 0, 0.09, 0, -1.74, 0
-Adrien Saddier, 8000, 10000, 10000, Mid, -0.15, 0, 0, -0.35, 0, -0.03, 0
-Gordon Sargent, 8000, 10000, 10000, Mid, -1.14, 0, 0, -1.43, 0, -0.69, 0
-Adam Schenk, 8000, 10000, 10000, Mid, -0.55, 0, 0, -0.62, 0, -0.92, 0
-Matti Schmid, 8000, 10000, 10000, Mid, -0.42, 0, 0, -0.54, 0, 0.23, 0
-Neal Shipley, 8000, 10000, 10000, Mid, -0.51, 0, 0, -0.71, 0, -1.10, 0
-Webb Simpson, 8000, 10000, 10000, Mid, -0.56, 0, 0, 0.15, 0, 0.47, 0
-Alex Smalley, 8000, 10000, 10000, Mid, 0.92, 0, 0, 0.41, 0, 0.03, 0
-Jordan Smith, 8000, 10000, 10000, Mid, 0.89, 0, 0, 0.37, 0, -0.11, 0
-Austin Smotherman, 8000, 10000, 10000, Mid, 1.38, 0, 0, 1.14, 0, -0.50, 0
-Brandt Snedeker, 8000, 10000, 10000, Mid, -0.68, 0, 0, -1.03, 0, 0.39, 0
-J.J. Spaun, 8000, 10000, 10000, Mid, 0.85, 0, 0, 0.57, 0, -0.78, 0
-Jordan Spieth, 8000, 10000, 10000, Mid, 0.90, 0, 0, 0.63, 0, 0.62, 0
-Jimmy Stanger, 8000, 10000, 10000, Mid, -0.32, 0, 0, -1.03, 0, 0.33, 0
-Sepp Straka, 8000, 10000, 10000, Mid, 1.69, 0, 0, 1.00, 0, 0.08, 0
-Kevin Streelman, 8000, 10000, 10000, Mid, -0.61, 0, 0, -0.41, 0, 0.47, 0
-Adam Svensson, 8000, 10000, 10000, Mid, 0.01, 0, 0, -0.04, 0, -1.00, 0
-Jesper Svensson, 8000, 10000, 10000, Mid, 0.91, 0, 0, 0.07, 0, -1.01, 0
-Nick Taylor, 8000, 10000, 10000, Mid, 1.00, 0, 0, 0.52, 0, 0.04, 0
-Davis Thompson, 8000, 10000, 10000, Mid, 0.52, 0, 0, 0.41, 0, -0.63, 0
-Michael Thorbjornsen, 8000, 10000, 10000, Mid, 0.66, 0, 0, 0.07, 0, -0.27, 0
-Brendon Todd, 8000, 10000, 10000, Mid, 0, 0, 0, 0, 0, 0, 0
-Alejandro Tosti, 8000, 10000, 10000, Mid, -1.63, 0, 0, -1.16, 0, -1.02, 0
-Sami Valimaki, 8000, 10000, 10000, Mid, -0.35, 0, 0, -0.01, 0, 0.10, 0
-Erik van Rooyen, 8000, 10000, 10000, Mid, -1.63, 0, 0, -1.28, 0, 0.12, 0
-John VanDerLaan, 8000, 10000, 10000, Mid, -0.26, 0, 0, 0.05, 0, -0.02, 0
-Jhonattan Vegas, 8000, 10000, 10000, Mid, -0.61, 0, 0, -0.65, 0, -0.27, 0
-Kris Ventura, 8000, 10000, 10000, Mid, -0.47, 0, 0, -0.90, 0, 0.77, 0
-Karl Vilips, 8000, 10000, 10000, Mid, -1.31, 0, 0, -0.33, 0, 0.88, 0
-Camilo Villegas, 8000, 10000, 10000, Mid, -0.25, 0, 0, 0.20, 0, 0.27, 0
-Danny Walker, 8000, 10000, 10000, Mid, -0.50, 0, 0, -0.17, 0, 0.20, 0
-Jimmy Walker, 8000, 10000, 10000, Mid, -0.50, 0, 0, -0.17, 0, 0.20, 0
-Matt Wallace, 8000, 10000, 10000, Mid, -0.11, 0, 0, -0.23, 0, -0.06, 0
-Paul Waring, 8000, 10000, 10000, Mid, 0, 0, 0, 0, 0, 0, 0
-Vince Whaley, 8000, 10000, 10000, Mid, -1.78, 0, 0, -0.84, 0, 1.17, 0
-Gary Woodland, 8000, 10000, 10000, Mid, -0.11, 0, 0, -0.30, 0, 0.06, 0
-Dylan Wu, 8000, 10000, 10000, Mid, 0.21, 0, 0, 0.10, 0, -0.17, 0
-Austin Wylie, 8000, 10000, 10000, Mid, 0, 0, 0, 0, 0, 0, 0
-Sudarshan Yellamaraju, 8000, 10000, 10000, Mid, 0.72, 0, 0, 0.58, 0, 0.60, 0
-Kevin Yu, 8000, 10000, 10000, Mid, -0.17, 0, 0, -0.26, 0, -0.95, 0
-Will Zalatoris, 8000, 10000, 10000, Mid, 0, 0, 0, 0, 0, 0, 0`;
+// --- UTILS ---
+const toImp = (o) => o > 0 ? 100 / (o + 100) : Math.abs(o) / (Math.abs(o) + 100);
 
-var players=[], sortCol='dlta', sortDir=-1, filterMode='all', luMode='cash', waveStack='off';
-
-function toImp(o){return o>0?100/(o+100):Math.abs(o)/(Math.abs(o)+100);}
-
-function fuzzyFind(name){
-  var nl=name.trim().toLowerCase();
-  var ex=players.find(function(p){return p.name.toLowerCase()===nl;});
-  if(ex) return ex;
-  var last=nl.split(' ').pop();
-  var m=players.filter(function(p){return p.name.toLowerCase().split(' ').pop()===last;});
-  if(m.length===1) return m[0];
-  return null;
-}
-
-// Simple Box-Muller transform for Monte Carlo Sims
-function randomNormal(mean, stdDev) {
-  var u = 0, v = 0;
+const randomNormal = (mean, stdDev) => {
+  let u = 0, v = 0;
   while(u === 0) u = Math.random();
   while(v === 0) v = Math.random();
   return mean + stdDev * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+};
+
+// --- DATA PERSISTENCE ---
+function saveToLocal() {
+  localStorage.setItem('tve_players', JSON.stringify(players.map(p => ({
+    name: p.name, price: p.price, monOdds: p.monOdds, liveOdds: p.liveOdds, 
+    fit: p.fit, locked: p.locked, implMon: p.implMon, implLive: p.implLive
+  }))));
 }
 
-function compute(){
-  if(!players.length) return;
-  players.slice().sort(function(a,b){return b.price-a.price;}).forEach(function(p,i){p.salRank=i+1;});
-  players.slice().sort(function(a,b){return b.implMon-a.implMon;}).forEach(function(p,i){p.oddsRank=i+1;});
-
-  players.forEach(function(p){p._raw=p.implLive||p.implMon;});
-  var sMin=Math.min.apply(null,players.map(function(p){return p._raw;}));
-  var sMax=Math.max.apply(null,players.map(function(p){return p._raw;}));
-  var sRng=sMax-sMin||1;
-  players.forEach(function(p){p.strengthScore=+((p._raw-sMin)/sRng*100).toFixed(1);});
-
-  players.forEach(function(p){
-    p.delta=p.salRank-p.oddsRank;
-    p.velocity=(p.implLive||p.implMon)-(p.implMon);
-
-    var fm={Elite:1.18,Strong:1.10,Mid:1.0,Weak:0.88}[p.fit]||1;
-    var tier=p.price>=9000?1.0:p.price>=7500?0.9:p.price>=6500?0.8:0.7;
-    var sweetB=(p.price>=SWEET_LO&&p.price<=SWEET_HI)?1.10:1.0;
-    var capE=Math.log(SAL_CAP/p.price+1);
-    var velB=p.velocity>VEL_THRESHOLD?1+(p.velocity*25):1.0;
-    var strMul=0.5+(p.strengthScore/100)*1.5;
-
-    p.dlta=p.delta>0?parseFloat((p.delta*p.implMon*100*capE*tier*strMul*velB*fm*sweetB).toFixed(2)):0;
-    p.cut=Math.min(0.88,Math.max(0.18,(p.implLive||p.implMon)*5.5+0.20));
-    if(p.fit==='Weak') p.cut=Math.min(p.cut,0.52);
-
-    var isSteam=p.velocity>VEL_THRESHOLD&&p.delta>0;
-    if(p.dlta>8&&(p.fit==='Elite'||p.fit==='Strong')&&p.delta>=3){p.conviction='LOCK';p.convSort=4;}
-    else if(p.dlta>5&&p.delta>=2&&(isSteam||p.fit!=='Weak')){p.conviction='STRONG';p.convSort=3;}
-    else if(p.dlta>2&&p.delta>=1){p.conviction='CONSIDER';p.convSort=2;}
-    else if(p.delta<0||(p.fit==='Weak'&&p.dlta<2)){p.conviction='FADE';p.convSort=0;}
-    else{p.conviction='CONSIDER';p.convSort=2;}
-    p.fitSort={Elite:4,Strong:3,Mid:2,Weak:1}[p.fit]||0;
-
-    // --- MONTE CARLO GAUSSIAN MIXTURE SIMULATION ---
-    var mu = p.dlta * 10; 
-    var sigma = 12 + (1 - p.cut) * 20; 
-    if(p.fit === 'Elite') sigma *= 0.85; 
-    if(p.fit === 'Weak') sigma *= 1.25;
-
-    var sims = [];
-    for(var i=0; i<1000; i++) sims.push(randomNormal(mu, sigma));
-    sims.sort(function(a,b){return a-b;});
-
-    p.simFloor = sims[Math.floor(1000 * 0.20)]; // 20th Percentile
-    p.simMean = sims[Math.floor(1000 * 0.50)];  // 50th Percentile
-    p.simCeil = sims[Math.floor(1000 * 0.85)];  // 85th Percentile
-  });
+function loadFromLocal() {
+  const stored = localStorage.getItem('tve_players');
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    players = parsed.map(p => ({
+      ...p,
+      salRank:0, oddsRank:0, delta:0, dlta:0, velocity:0, conviction:'CONSIDER', convSort:2, fitSort:0, strengthScore:0, cut:.50
+    }));
+    compute();
+    renderAll();
+  } else {
+    loadInitialData();
+  }
 }
 
-function loadData(csvString){
-  var raw = csvString.split('\n');
-  players = [];
-  raw.forEach(function(line){
-    var p = line.split(',');
-    if(p.length < 4) return;
+// --- ENGINE LOGIC ---
+function compute() {
+  if (!players.length) return;
+
+  // Ranks
+  players.slice().sort((a,b) => b.price - a.price).forEach((p,i) => p.salRank = i+1);
+  players.slice().sort((a,b) => b.implMon - a.implMon).forEach((p,i) => p.oddsRank = i+1);
+
+  players.forEach(p => {
+    p.delta = p.salRank - p.oddsRank;
+    p.velocity = (p.implLive || p.implMon) - p.implMon;
     
-    var name = p[0].trim(), sal = parseInt(p[1]), open = parseInt(p[2]), live = parseInt(p[3]), fit = (p[4]||'').trim()||'Mid';
-    var t2g = p.length > 5 ? parseFloat(p[5]) : 0;
-    var gir = p.length > 6 ? parseFloat(p[6]) : 0;
-    var scram = p.length > 7 ? parseFloat(p[7]) : 0;
-    var app = p.length > 8 ? parseFloat(p[8]) : 0;
-    var dist = p.length > 9 ? parseFloat(p[9]) : 0;
-    var putt = p.length > 10 ? parseFloat(p[10]) : 0;
-    var da = p.length > 11 ? parseFloat(p[11]) : 0;
+    // DLTA Calculation
+    const fm = {Elite:1.2, Strong:1.1, Mid:1.0, Weak:0.8}[p.fit] || 1.0;
+    const velB = p.velocity > VEL_THRESHOLD ? 1 + (p.velocity * 30) : 1.0;
+    p.dlta = p.delta > 0 ? (p.delta * p.implMon * 100 * velB * fm) : 0;
+    p.cut = Math.min(0.9, Math.max(0.15, (p.implLive || p.implMon) * 6 + 0.20));
 
-    if(isNaN(sal)||isNaN(open)||isNaN(live)) return;
-    if(!TPC_FIT[name]&&fit) TPC_FIT[name]=fit;
-    var impO=toImp(open),impL=toImp(live);
+    if(p.dlta > 8 && (p.fit === 'Elite' || p.fit === 'Strong')) { p.conviction = 'LOCK'; p.convSort = 4; }
+    else if(p.dlta > 4) { p.conviction = 'STRONG'; p.convSort = 3; }
+    else if(p.delta < 0) { p.conviction = 'FADE'; p.convSort = 0; }
+    else { p.conviction = 'CONSIDER'; p.convSort = 2; }
+
+    p.fitSort = {Elite:4, Strong:3, Mid:2, Weak:1}[p.fit] || 0;
+
+    // Monte Carlo
+    const sims = [];
+    for(let i=0; i<1000; i++) sims.push(randomNormal(p.dlta * 10, 15 + (1-p.cut)*20));
+    sims.sort((a,b) => a - b);
+    p.simFloor = sims[200];
+    p.simMean = sims[500];
+    p.simCeil = sims[850];
+  });
+}
+
+// --- LINEUP OPTIMIZER ---
+function buildStochasticLineup(locked, type) {
+  const avail = players.filter(p => !p.locked && p.price >= MIN_PRICE);
+  let bestLineup = [];
+  let bestScore = -Infinity;
+
+  // Faster sorting for the stochastic seed
+  avail.sort((a,b) => (type === 'gpp' ? b.simCeil - a.simCeil : b.simFloor - a.simFloor));
+
+  for (let i = 0; i < 5000; i++) {
+    let lineup = [...locked];
+    let spent = lineup.reduce((s, p) => s + p.price, 0);
     
-    players.push({
-      name:name,price:sal,monOdds:open,liveOdds:live,implMon:impO,implLive:impL,fit:TPC_FIT[name]||fit,wave:null,
-      t2g:t2g, gir:gir, scram:scram, app:app, dist:dist, putt:putt, da:da,
-      salRank:0,oddsRank:0,delta:0,dlta:0,velocity:0,conviction:'CONSIDER',convSort:2,fitSort:0,strengthScore:0,cut:.50,locked:false,_raw:0
-    });
-  });
-  document.getElementById('status-badge').textContent=players.length+' loaded';
-  renderAll();
-}
-
-function parseCSV(){
-  var rawStr = document.getElementById('csv-input').value;
-  if (rawStr.trim()) {
-    loadData(rawStr);
-    showTab('arb');
-  }
-}
-
-function updateOdds(){
-  var raw=document.getElementById('odds-paste').value.trim();
-  if(!raw||!players.length) return;
-  var lines=raw.split('\n'),matched=0;
-  lines.forEach(function(line){
-    var t=line.trim().split(/\s+/);if(t.length<2)return;
-    var os=t[t.length-1].replace('+',''),odds=parseInt(os);
-    if(isNaN(odds)||Math.abs(odds)<100) return;
-    var nm=t.slice(0,t.length-1).join(' ');
-    var p=fuzzyFind(nm);
-    if(p){p.implLive=toImp(odds);p.liveOdds=odds;matched++;}
-  });
-  document.getElementById('odds-result').textContent=matched>0?'✓ '+matched+' updated':'No matches';
-  document.getElementById('odds-result').style.color=matched>0?'var(--teal-bright)':'var(--red)';
-  renderAll();
-}
-
-function loadWaves(){
-  var raw=document.getElementById('wave-paste').value.trim();
-  if(!raw||!players.length) return;
-  var lines=raw.split('\n'),matched=0;
-  lines.forEach(function(line){
-    var t=line.trim().split(/\s+/);if(t.length<2)return;
-    var w=t[t.length-1].toUpperCase();if(w!=='AM'&&w!=='PM')return;
-    var nm=t.slice(0,t.length-1).join(' ');
-    var p=fuzzyFind(nm);if(p){p.wave=w;matched++;}
-  });
-  document.getElementById('wave-result').textContent=matched>0?'✓ '+matched+' set':'No matches';
-  document.getElementById('wave-result').style.color=matched>0?'var(--teal-bright)':'var(--red)';
-  renderAll();
-}
-
-function showTab(t){
-  ['guide','arb','prebuilt','build','data','intel'].forEach(function(x){document.getElementById('panel-'+x).classList.toggle('on',x===t);});
-  document.querySelectorAll('.nav-tab').forEach(function(el,i){el.classList.toggle('on',['guide','arb','prebuilt','build','data','intel'][i]===t);});
-  if(t==='prebuilt') buildPrebuilt();
-}
-
-function setFilter(m,el){filterMode=m;document.querySelectorAll('.fchip').forEach(function(c){c.classList.remove('on');});el.classList.add('on');renderArb();}
-function getFiltered(){
-  switch(filterMode){
-    case 'steam':return players.filter(function(p){return p.velocity>VEL_THRESHOLD&&p.delta>0;});
-    case 'lockconv':return players.filter(function(p){return p.conviction==='LOCK';});
-    case 'pos':return players.filter(function(p){return p.delta>0;});
-    case 'elite':return players.filter(function(p){return p.price>=9000;});
-    case 'mid':return players.filter(function(p){return p.price>=7500&&p.price<9000;});
-    case 'value':return players.filter(function(p){return p.price>=6800&&p.price<7500;});
-    case 'fit':return players.filter(function(p){return p.fit==='Elite'||p.fit==='Strong';});
-    default:return players;
-  }
-}
-function srt(col){if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}renderArb();}
-function setMode(m){luMode=m;document.getElementById('m-cash').classList.toggle('on',m==='cash');document.getElementById('m-gpp').classList.toggle('on',m==='gpp');}
-function setWave(w){waveStack=w;['off','AM','PM'].forEach(function(x){document.getElementById('w-'+x).classList.remove('on');});document.getElementById('w-'+w).classList.add('on');}
-
-function toggleLock(name){
-  var p=players.find(function(x){return x.name===name;});
-  if(!p)return;
-  var n=players.filter(function(x){return x.locked;}).length;
-  if(!p.locked&&n>=6)return;
-  p.locked=!p.locked;
-  updateBadge();
-  renderArb();
-  renderCurrentCore();
-}
-
-function clearLocks(){
-  players.forEach(function(p){p.locked=false;});
-  updateBadge();
-  renderArb();
-  renderCurrentCore();
-}
-
-function updateBadge(){
-  var locked = players.filter(function(p){return p.locked;});
-  var count = locked.length;
-  
-  document.getElementById('rs-count').textContent= count+'/6';
-  var spent = locked.reduce(function(s,p){return s+p.price;}, 0);
-  var rem = SAL_CAP - spent;
-  var remSlots = 6 - count;
-  var avg = remSlots > 0 ? Math.floor(rem / remSlots) : 0;
-  document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
-  document.getElementById('rs-avg').textContent = '$' + avg.toLocaleString();
-  document.getElementById('rs-avg').style.color = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
-}
-
-function renderAll(){compute();renderPods();renderArb();renderCurrentCore();updateBadge();}
-
-function renderPods(){
-  if(!players.length){document.getElementById('pods').innerHTML='<div class="pod" style="grid-column:1/-1;text-align:center;padding:20px"><div style="color:var(--gold);font-family:var(--disp);font-size:16px;font-weight:900">Go to Data tab to load players</div></div>';return;}
-  var pos=players.filter(function(p){return p.delta>0;}).length;
-  var steam=players.filter(function(p){return p.velocity>VEL_THRESHOLD&&p.delta>0;}).length;
-  var locks=players.filter(function(p){return p.conviction==='LOCK';}).length;
-  var top=players.slice().sort(function(a,b){return b.dlta-a.dlta;})[0];
-  document.getElementById('pods').innerHTML=
-    '<div class="pod"><div class="pod-val" style="color:var(--teal-bright)">'+pos+'</div><div class="pod-lbl">+ Delta</div></div>'+
-    '<div class="pod"><div class="pod-val" style="color:var(--teal)">'+steam+'</div><div class="pod-lbl">Steam</div></div>'+
-    '<div class="pod"><div class="pod-val" style="color:var(--gold-bright)">'+locks+'</div><div class="pod-lbl">Lock Conv</div></div>'+
-    '<div class="pod"><div class="pod-val" style="color:var(--gold);font-size:14px">'+top.name.split(' ').pop()+'</div><div class="pod-lbl">Top $DLTA</div></div>';
-}
-
-function renderArb(){
-  if(!players.length){document.getElementById('arb-tbody').innerHTML='<tr><td colspan="15" style="text-align:center;padding:40px;color:var(--muted)">Load data via Data tab</td></tr>';return;}
-  var fitCls={Elite:'fit-elite',Strong:'fit-strong',Mid:'fit-mid',Weak:'fit-weak'};
-  var convCls={LOCK:'conv-lock',STRONG:'conv-strong',CONSIDER:'conv-consider',FADE:'conv-fade'};
-  var src=getFiltered().slice().sort(function(a,b){var av=a[sortCol],bv=b[sortCol];if(typeof av==='string')return sortDir*(av<bv?-1:av>bv?1:0);return sortDir*(bv-av);});
-  var lc=players.filter(function(p){return p.locked;}).length;
-  var html='';
-  src.forEach(function(p){
-    var dc=p.delta>=10?'d-elite':p.delta>=5?'d-solid':p.delta>=1?'d-slight':p.delta===0?'d-zero':'d-neg';
-    var vel=p.velocity,pp=(vel*100).toFixed(2);
-    var velH=vel>VEL_THRESHOLD?'<span class="vel-up">▲+'+pp+'</span>':vel<-VEL_THRESHOLD?'<span class="vel-dn">▼'+pp+'</span>':'<span class="vel-flat">—</span>';
-    var isSteam=vel>VEL_THRESHOLD&&p.delta>0;
-    var cutC=p.cut>=.70?'cut-g':p.cut>=.55?'cut-a':'cut-r';
-    
-    var t2gC = p.t2g >= 1.0 ? 'color:var(--teal-bright)' : p.t2g < 0.0 ? 'color:var(--red)' : 'color:var(--text)';
-    var girC = p.gir >= 69.0 ? 'color:var(--teal-bright)' : p.gir < 64.0 && p.gir > 0 ? 'color:var(--red)' : 'color:var(--text)';
-    var scrC = p.scram >= 64.0 ? 'color:var(--teal-bright)' : p.scram < 59.0 && p.scram > 0 ? 'color:var(--red)' : 'color:var(--text)';
-    var appC = p.app >= 0.7 ? 'color:var(--teal-bright)' : p.app < 0 ? 'color:var(--red)' : 'color:var(--text)';
-    var putC = p.putt >= 0.5 ? 'color:var(--teal-bright)' : p.putt < 0 ? 'color:var(--red)' : 'color:var(--text)';
-
-    var btnC=p.locked?'is-locked':lc>=6?'is-full':'';
-    var btnT=p.locked?'✓':lc>=6?'—':'+';
-    var trC=p.locked?'lock-row':isSteam?'steam-row':p.conviction==='FADE'?'fade-row':'';
-    var stm=isSteam?'<span class="stm-badge">STM</span>':'';
-    var wav=p.wave?'<span class="wave-badge">'+p.wave+'</span>':'';
-    
-    html+='<tr class="'+trC+'"><td style="color:var(--muted);font-size:10px">'+p.salRank+'</td><td><strong>'+p.name+'</strong>'+stm+wav+'</td><td style="font-weight:700;font-family:var(--mono)">$'+(p.price/1000).toFixed(1)+'K</td><td><span class="db '+dc+'">'+(p.delta>0?'+':'')+p.delta+'</span></td><td>'+velH+'</td><td style="font-weight:800;font-family:var(--mono);color:'+(p.dlta>10?'var(--gold-bright)':p.dlta>5?'var(--gold)':'var(--muted)')+'">'+(p.dlta>0?p.dlta.toFixed(1):'—')+'</td><td style="font-weight:700;'+t2gC+'">'+(p.t2g>0?'+':'')+(p.t2g!==0?p.t2g.toFixed(2):'—')+'</td><td style="font-family:var(--mono);'+girC+'">'+(p.gir!==0?p.gir.toFixed(1)+'%':'—')+'</td><td style="font-family:var(--mono);'+scrC+'">'+(p.scram!==0?p.scram.toFixed(1)+'%':'—')+'</td><td style="font-weight:700;'+appC+'">'+(p.app>0?'+':'')+(p.app!==0?p.app.toFixed(2):'—')+'</td><td style="font-weight:700;'+putC+'">'+(p.putt>0?'+':'')+(p.putt!==0?p.putt.toFixed(2):'—')+'</td><td><span class="conv '+(convCls[p.conviction]||'conv-consider')+'">'+p.conviction+'</span></td><td class="'+cutC+'" style="font-family:var(--mono)">'+(p.cut*100).toFixed(0)+'%</td><td class="'+(fitCls[p.fit]||'fit-weak')+'">'+p.fit+'</td><td><button class="add-btn '+btnC+'" onclick="toggleLock(\''+p.name.replace(/'/g,"\\'")+'\')">'+btnT+'</button></td></tr>';
-  });
-  document.getElementById('arb-tbody').innerHTML=html;
-}
-
-function renderCurrentCore() {
-  var locked = players.filter(function(p){return p.locked;});
-  var el = document.getElementById('lu-card');
-  
-  if(locked.length === 0) {
-      el.innerHTML = '<div style="padding:20px;text-align:center"><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--gold);margin-bottom:6px">Lock players in Arb tab</div><div style="color:var(--muted);font-size:12px">Tap + on any player to add them to your core.</div></div>';
-      return;
-  }
-
-  var total = locked.reduce(function(s,p){return s+p.price;}, 0);
-  var rem = SAL_CAP - total;
-  var remSlots = 6 - locked.length;
-  var avg = remSlots > 0 ? Math.floor(rem / remSlots) : 0;
-
-  var html = '<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><span class="pb-tag pb-steam" style="background:var(--teal);color:#081118">Current Core</span><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:var(--teal-bright);margin-top:4px">Locked Players ('+locked.length+'/6)</div></div>';
-
-  locked.forEach(function(p, i){
-      html += '<div class="lu-slot"><div class="lu-slot-num">L'+(i+1)+'</div><div style="flex:1;min-width:0"><div class="lu-slot-name"><div class="del-btn" onclick="toggleLock(\''+p.name.replace(/'/g,"\\'")+'\')">✕</div>'+p.name+'</div><div class="lu-slot-meta">Tap X to unlock</div></div><div class="lu-slot-sal">$'+p.price.toLocaleString()+'</div></div>';
-  });
-
-  for(var i=locked.length; i<6; i++) {
-      html += '<div class="lu-slot" style="opacity:0.4"><div class="lu-slot-num">G'+(i+1)+'</div><div style="flex:1;min-width:0"><div class="lu-slot-name" style="margin-left:32px;">Empty Slot</div></div><div class="lu-slot-sal">--</div></div>';
-  }
-
-  var avgC = avg >= MIN_PRICE ? 'var(--gold)' : 'var(--red)';
-
-  html += '<div class="lu-totals"><div><div class="lu-total-val" style="color:var(--teal-bright)">$'+total.toLocaleString()+'</div><div class="lu-total-lbl">Spent</div></div><div><div class="lu-total-val" style="color:var(--sub)">$'+rem.toLocaleString()+'</div><div class="lu-total-lbl">Remaining</div></div><div><div class="lu-total-val" style="color:'+avgC+'">$'+avg.toLocaleString()+'</div><div class="lu-total-lbl">Avg / Player</div></div><div><div class="lu-total-val" style="color:var(--sub)">'+remSlots+'</div><div class="lu-total-lbl">Slots Open</div></div></div>';
-
-  el.innerHTML = html;
-}
-
-// --- STOCHASTIC COMBINATORIAL SEARCH (QAOA Proxy) ---
-function buildLineup(locked, pool, type, wave) {
-  var avail = pool.filter(function(p){ return p.price >= MIN_PRICE; });
-
-  if (wave && wave !== 'off') {
-    var wp = avail.filter(function(p){ return p.wave === wave; });
-    if (wp.length >= 6 - locked.length) avail = wp; 
-  }
-
-  var bestLineup = [];
-  var bestScore = -999999;
-  
-  // Run 5,000 stochastic combinations to bypass local minima
-  for(var iter=0; iter<5000; iter++) {
-    var lineup = locked.slice();
-    var ln = {};
-    locked.forEach(function(p){ ln[p.name] = true; });
-    var o10 = lineup.filter(function(p){ return p.price >= 10000; }).length;
-    var spent = lineup.reduce(function(s,p){ return s + p.price; }, 0);
-
-    // Shuffle pool stochastically, weighted slightly by type
-    var shuffled = avail.slice().sort(function(a,b){ 
-        var weightA = type==='gpp'? a.simCeil : type==='cash'? a.simFloor : a.simMean;
-        var weightB = type==='gpp'? b.simCeil : type==='cash'? b.simFloor : b.simMean;
-        return (weightB - weightA) + (Math.random() * 40 - 20); 
-    });
-
-    for(var i=0; i<shuffled.length && lineup.length<6; i++) {
-       var c = shuffled[i];
-       if(ln[c.name]) continue;
-       if(spent + c.price + (5 - lineup.length)*MIN_PRICE > SAL_CAP) continue;
-       if(type === 'cash' && c.price >= 10000 && o10 >= 1) continue;
-
-       lineup.push(c);
-       ln[c.name] = true;
-       spent += c.price;
-       if(c.price >= 10000) o10++;
+    // Stochastic selection
+    for (let p of avail) {
+      if (lineup.length >= 6) break;
+      if (spent + p.price + (5 - lineup.length) * MIN_PRICE > SAL_CAP) continue;
+      
+      // Random "wide net" gate
+      if (Math.random() > 0.15) {
+        lineup.push(p);
+        spent += p.price;
+      }
     }
 
-    if(lineup.length === 6) {
-        var score = 0;
-        if(type === 'cash') {
-            score = lineup.reduce(function(s,p){ return s + p.simFloor + (p.cut*20); }, 0);
-            if(spent < 48500) score -= 100; // Penalize leaving too much salary in cash
-        } else if(type === 'gpp') {
-            score = lineup.reduce(function(s,p){ return s + p.simCeil; }, 0);
-        } else { // steam
-            score = lineup.reduce(function(s,p){ return s + p.simMean + (p.velocity>VEL_THRESHOLD?50:0); }, 0);
-        }
-
-        if(score > bestScore) {
-            bestScore = score;
-            bestLineup = lineup.slice();
-        }
+    if (lineup.length === 6) {
+      const score = lineup.reduce((s, p) => s + (type === 'gpp' ? p.simCeil : p.simFloor), 0);
+      if (score > bestScore) {
+        bestScore = score;
+        bestLineup = lineup;
+      }
     }
   }
   return bestLineup;
 }
 
-function buildPrebuilt(){
-  if(!players.length){['pb-steam-card','pb-gpp-card','pb-cash-card'].forEach(function(id){document.getElementById(id).innerHTML='<div style="padding:30px;text-align:center;color:var(--muted)">Load data first</div>';});return;}
+// --- UI RENDERING ---
+function renderArb() {
+  const tbody = document.getElementById('arb-tbody');
+  const filtered = players.filter(p => {
+    if (filterMode === 'steam') return p.velocity > VEL_THRESHOLD && p.delta > 0;
+    if (filterMode === 'lockconv') return p.conviction === 'LOCK';
+    if (filterMode === 'elite') return p.price >= 9000;
+    if (filterMode === 'fit') return p.fit === 'Elite' || p.fit === 'Strong';
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    let valA = a[sortCol], valB = b[sortCol];
+    return sortDir * (valA < valB ? -1 : valA > valB ? 1 : 0);
+  });
+
+  tbody.innerHTML = filtered.map(p => `
+    <tr class="${p.locked ? 'lock-row' : (p.velocity > VEL_THRESHOLD && p.delta > 0 ? 'steam-row' : '')}">
+      <td style="color:var(--muted)">${p.salRank}</td>
+      <td><strong>${p.name}</strong>${p.velocity > VEL_THRESHOLD && p.delta > 0 ? '<span class="stm-badge">STM</span>' : ''}</td>
+      <td style="font-family:var(--mono)">$${(p.price/1000).toFixed(1)}K</td>
+      <td><span class="db ${p.delta > 5 ? 'd-elite' : p.delta > 0 ? 'd-slight' : 'd-neg'}">${p.delta > 0 ? '+' : ''}${p.delta}</span></td>
+      <td class="${p.velocity > 0 ? 'vel-up' : 'vel-dn'}">${p.velocity > 0 ? '▲' : '▼'}${(Math.abs(p.velocity)*100).toFixed(2)}%</td>
+      <td style="font-weight:800; color:var(--gold)">${p.dlta.toFixed(1)}</td>
+      <td><span class="conv conv-${p.conviction.toLowerCase()}">${p.conviction}</span></td>
+      <td>${(p.cut*100).toFixed(0)}%</td>
+      <td class="fit-${p.fit.toLowerCase()}">${p.fit}</td>
+      <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
+    </tr>
+  `).join('');
+
+  updateSortIcons();
+}
+
+function updateSortIcons() {
+  const headers = document.querySelectorAll('#arb-thead th');
+  headers.forEach(th => {
+    const icon = th.querySelector('.sort-icon');
+    if (!icon) return;
+    const col = th.getAttribute('onclick').match(/'([^']+)'/)[1];
+    icon.textContent = col === sortCol ? (sortDir === 1 ? '▲' : '▼') : '';
+  });
+}
+
+function renderLUCard(elId, lineup, type) {
+  const el = document.getElementById(elId);
+  if (!lineup.length) { el.innerHTML = '<div style="padding:20px; text-align:center">No Lineup Generated</div>'; return; }
+  
+  const total = lineup.reduce((s,p) => s + p.price, 0);
+  el.innerHTML = `
+    <div style="padding:14px 16px; border-bottom:1px solid var(--border)">
+      <span class="pb-tag pb-${type}">${type.toUpperCase()} OPTIMAL</span>
+    </div>
+    ${lineup.map((p,i) => `
+      <div class="lu-slot">
+        <div class="lu-slot-num">G${i+1}</div>
+        <div style="flex:1">
+          <div class="lu-slot-name">${p.name}</div>
+          <div class="lu-slot-meta">${p.fit} · Δ${p.delta}</div>
+        </div>
+        <div class="lu-slot-sal">$${p.price.toLocaleString()}</div>
+      </div>
+    `).join('')}
+    <div class="lu-totals">
+      <div><div class="lu-total-val">$${total.toLocaleString()}</div><div class="lu-total-lbl">Spent</div></div>
+      <div><div class="lu-total-val" style="color:var(--gold)">$${(SAL_CAP-total).toLocaleString()}</div><div class="lu-total-lbl">Rem.</div></div>
+    </div>
+  `;
+}
+
+// --- INTERACTION ---
+function showTab(t) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('panel-' + t).classList.add('on');
+  document.querySelectorAll('.nav-tab').forEach(n => n.classList.toggle('on', n.textContent.toLowerCase() === t));
+  if (t === 'prebuilt') buildPrebuilt();
+  if (t === 'build') renderCurrentCore();
+}
+
+function srt(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = -1; }
+  renderArb();
+}
+
+function setFilter(f, btn) {
+  filterMode = f;
+  document.querySelectorAll('.fchip').forEach(c => c.classList.remove('on'));
+  btn.classList.add('on');
+  renderArb();
+}
+
+function toggleLock(name) {
+  const p = players.find(x => x.name === name);
+  if (!p) return;
+  if (!p.locked && players.filter(x => x.locked).length >= 6) return;
+  p.locked = !p.locked;
+  saveToLocal();
+  renderAll();
+}
+
+function clearLocks() {
+  players.forEach(p => p.locked = false);
+  saveToLocal();
+  renderAll();
+}
+
+function buildPrebuilt() {
+  renderLUCard('pb-steam-card', buildStochasticLineup([], 'gpp'), 'steam');
+  renderLUCard('pb-gpp-card', buildStochasticLineup([], 'gpp'), 'gpp');
+  renderLUCard('pb-cash-card', buildStochasticLineup([], 'cash'), 'cash');
+}
+
+function buildAndRender() {
+  const locked = players.filter(p => p.locked);
+  currentLineup = buildStochasticLineup(locked, 'gpp');
+  renderLUCard('lu-card', currentLineup, 'gpp');
+}
+
+function renderCurrentCore() {
+  const locked = players.filter(p => p.locked);
+  renderLUCard('lu-card', locked, 'steam');
+}
+
+function updateBadge() {
+  const locked = players.filter(p => p.locked);
+  const spent = locked.reduce((s,p) => s + p.price, 0);
+  const rem = SAL_CAP - spent;
+  const count = locked.length;
+  document.getElementById('rs-count').textContent = count + '/6';
+  document.getElementById('rs-rem').textContent = '$' + rem.toLocaleString();
+  document.getElementById('rs-avg').textContent = '$' + (count < 6 ? Math.floor(rem/(6-count)) : 0).toLocaleString();
+}
+
+function renderPods() {
+  const pods = document.getElementById('pods');
+  const pos = players.filter(p => p.delta > 0).length;
+  const steam = players.filter(p => p.velocity > VEL_THRESHOLD).length;
+  pods.innerHTML = `
+    <div class="pod"><div class="pod-val" style="color:var(--teal-bright)">${pos}</div><div class="pod-lbl">+ Delta</div></div>
+    <div class="pod"><div class="pod-val" style="color:var(--teal)">${steam}</div><div class="pod-lbl">Steam</div></div>
+    <div class="pod"><div class="pod-val" style="color:var(--gold-bright)">${players.filter(p => p.conviction === 'LOCK').length}</div><div class="pod-lbl">Locks</div></div>
+    <div class="pod"><div class="pod-val" style="color:var(--gold)">$${(players.reduce((a,b) => a + b.dlta, 0)/players.length).toFixed(1)}</div><div class="pod-lbl">Avg $DLTA</div></div>
+  `;
+}
+
+function copyLineupToClipboard() {
+  if (!currentLineup.length) return alert("Build a lineup first!");
+  const text = currentLineup.map(p => `${p.name} ($${p.price})`).join(', ');
+  navigator.clipboard.writeText(text).then(() => alert("Lineup copied!"));
+}
+
+function handleCSVUpload() {
+  const csv = document.getElementById('csv-input').value;
+  if (!csv) return;
+  const lines = csv.trim().split('\n');
+  players = lines.map(line => {
+    const [name, sal, open, live, fit] = line.split(',').map(s => s.trim());
+    return {
+      name, price: parseInt(sal), monOdds: parseInt(open), liveOdds: parseInt(live),
+      fit: fit || 'Mid', locked: false, implMon: toImp(parseInt(open)), implLive: toImp(parseInt(live)),
+      salRank:0, oddsRank:0, delta:0, dlta:0, velocity:0, conviction:'CONSIDER', convSort:2, fitSort:0, strengthScore:0, cut:.50
+    };
+  }).filter(p => !isNaN(p.price));
   compute();
-  renderLUCard('pb-steam-card',buildLineup([],players,'steam','off'),'steam');
-  renderLUCard('pb-gpp-card',buildLineup([],players,'gpp','off'),'gpp');
-  renderLUCard('pb-cash-card',buildLineup([],players,'cash','off'),'cash');
+  saveToLocal();
+  renderAll();
+  showTab('arb');
 }
 
-function renderLUCard(elId,lineup,type){
-  var el=document.getElementById(elId);
-  if(!lineup||!lineup.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted)">Not enough data to complete build</div>';return;}
-  var total=lineup.reduce(function(s,p){return s+p.price;},0),left=SAL_CAP-total;
-  var tagC=type==='steam'?'pb-steam':type==='gpp'?'pb-gpp':'pb-cash';
-  var tagL=type==='steam'?'Steam Line':type==='gpp'?'GPP · Wave':'Cash · Balanced';
-  var titleC=type==='steam'?'var(--teal-bright)':type==='gpp'?'var(--gold)':'var(--blue)';
-  var wc={AM:0,PM:0};lineup.forEach(function(p){if(p.wave)wc[p.wave]++;});
-  var stackL=wc.AM===0&&wc.PM===0?'No waves':wc.AM===wc.PM?'Mixed':wc.AM>wc.PM?'AM ×'+wc.AM:'PM ×'+wc.PM;
-  var convCls={LOCK:'conv-lock',STRONG:'conv-strong',CONSIDER:'conv-consider',FADE:'conv-fade'};
-  var html='<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><span class="pb-tag '+tagC+'">'+tagL+'</span><div style="font-family:var(--disp);font-size:17px;font-weight:900;color:'+titleC+';margin-top:4px">'+tagL+' · '+stackL+'</div></div>';
-  lineup.forEach(function(p,i){var isSteam=p.velocity>VEL_THRESHOLD&&p.delta>0;var stm=isSteam?'<span class="stm-badge">STM</span>':'';html+='<div class="lu-slot"><div class="lu-slot-num">G'+(i+1)+'</div><div style="flex:1;min-width:0"><div class="lu-slot-name">'+p.name+stm+'</div><div class="lu-slot-meta">Δ'+(p.delta>0?'+':'')+p.delta+' · <span class="conv '+(convCls[p.conviction]||'')+'">'+p.conviction+'</span> · '+p.fit+(p.wave?' · '+p.wave:'')+'</div></div><div class="lu-slot-sal">$'+p.price.toLocaleString()+'</div></div>';});
-  
-  var totalC=total>=48500?'var(--teal-bright)':total>=46000?'var(--amber)':'var(--red)';
-  
-  var scoreLbl = type === 'gpp' ? 'Proj Ceiling' : type === 'cash' ? 'Proj Floor' : 'Proj Mean';
-  var scoreVal = 0;
-  if(type === 'gpp') scoreVal = lineup.reduce(function(s,p){return s+p.simCeil;},0);
-  else if(type === 'cash') scoreVal = lineup.reduce(function(s,p){return s+p.simFloor;},0);
-  else scoreVal = lineup.reduce(function(s,p){return s+p.simMean;},0);
-
-  var stCt=lineup.filter(function(p){return p.velocity>VEL_THRESHOLD&&p.delta>0;}).length;
-  html+='<div class="lu-totals"><div><div class="lu-total-val" style="color:'+totalC+'">$'+total.toLocaleString()+'</div><div class="lu-total-lbl">Total</div></div><div><div class="lu-total-val" style="color:var(--gold)">'+scoreVal.toFixed(1)+'</div><div class="lu-total-lbl">'+scoreLbl+'</div></div><div><div class="lu-total-val" style="color:var(--teal-bright)">'+stCt+'</div><div class="lu-total-lbl">Steam</div></div><div><div class="lu-total-val" style="color:var(--sub)">$'+left.toLocaleString()+'</div><div class="lu-total-lbl">Buffer</div></div></div>';
-  el.innerHTML=html;
+function renderAll() {
+  renderPods();
+  renderArb();
+  updateBadge();
 }
 
-function buildAndRender(){
-  if(!players.length){showTab('data');return;}
-  compute();var locked=players.filter(function(p){return p.locked;}),pool=players.filter(function(p){return !p.locked;});
-  renderLUCard('lu-card',buildLineup(locked,pool,luMode,waveStack),luMode);
-}
-
-// Initialize the engine with the default data instantly
-loadData(DEFAULT_DATA.trim());
-// Open the guide tab first automatically
-showTab('guide');
-
+// Start
+loadFromLocal();
 </script>
 </body>
 </html>
