@@ -66,7 +66,6 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .pod-val{font-family:var(--disp);font-size:18px;font-weight:900;line-height:1}
 .pod-lbl{font-size:9px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
-.key-strip{display:flex;flex-wrap:wrap;gap:3px 12px;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border);font-size:10px;color:var(--muted)}
 .filters{padding:8px 12px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
 .fchip{padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .12s}
 .fchip.on{background:var(--teal);color:#0B131E;border-color:var(--teal)}
@@ -86,7 +85,6 @@ td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .d-elite{background:var(--gold-bright);color:#0B131E}
 .d-solid{background:rgba(0, 180, 216, 0.25);color:var(--teal-bright)}
 .d-slight{background:rgba(0, 180, 216, 0.12);color:var(--teal)}
-.d-zero{background:rgba(122, 141, 159, 0.15);color:var(--muted)}
 .d-neg{background:var(--red-bg);color:var(--red)}
 
 .conv{font-size:9px;font-weight:800;padding:2px 7px;border-radius:3px;letter-spacing:.3px;font-family:var(--mono);white-space:nowrap}
@@ -113,9 +111,6 @@ td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .lu-totals{display:grid;grid-template-columns:repeat(4,1fr);padding:12px 16px;background:var(--surface2);border-top:1px solid var(--border);gap:4px}
 .lu-total-val{font-family:var(--disp);font-weight:900;font-size:17px}
 .lu-total-lbl{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
-
-.del-btn{background:var(--red-bg);color:var(--red);border:1px solid rgba(239, 71, 111, 0.3);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;font-weight:900;margin-right:10px;transition:all 0.1s;}
-.del-btn:hover{background:var(--red);color:#fff;}
 
 textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;font-family:var(--mono);outline:none;resize:vertical;white-space:pre}
 
@@ -160,7 +155,6 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
     <div style="font-family:var(--disp);font-size:24px;font-weight:900;color:var(--gold-bright);line-height:1">User Guide</div>
   </div>
   
-  <!-- Responsible Gambling Disclaimer -->
   <div class="card" style="border-color: var(--red); background: rgba(239, 71, 111, 0.03);">
     <div class="card-head" style="border-bottom-color: rgba(239, 71, 111, 0.2);">
       <span class="card-title" style="color: var(--red);">⚠️ Responsible Gambling</span>
@@ -239,16 +233,6 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   </div>
 </div>
 
-<div class="panel" id="panel-data">
-  <div class="card" style="margin-top:12px">
-    <div class="card-head"><span class="card-title">Update Data</span></div>
-    <div class="card-body">
-      <textarea id="csv-input" placeholder="Name, Sal, Open, Live, Fit..."></textarea>
-      <button class="btn" onclick="handleCSVUpload()">Load & Compute</button>
-    </div>
-  </div>
-</div>
-
 <div class="roster-strip" id="roster-strip">
   <div>PLYRS: <span class="rs-val" id="rs-count">0/6</span></div>
   <div>REM: <span class="rs-val" id="rs-rem">$50,000</span></div>
@@ -260,7 +244,6 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   <div class="nav-tab" onclick="showTab('arb')">Arb</div>
   <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('build')">Build</div>
-  <div class="nav-tab" onclick="showTab('data')">Data</div>
 </div>
 
 <script>
@@ -569,7 +552,8 @@ function renderLUCard(elId, lineup, type) {
 // --- INTERACTION ---
 function showTab(t) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
-  document.getElementById('panel-' + t).classList.add('on');
+  const targetPanel = document.getElementById('panel-' + t);
+  if (targetPanel) targetPanel.classList.add('on');
   document.querySelectorAll('.nav-tab').forEach(n => n.classList.toggle('on', n.textContent.toLowerCase() === t));
   if (t === 'prebuilt') buildPrebuilt();
   if (t === 'build') renderCurrentCore();
@@ -646,24 +630,6 @@ function copyLineupToClipboard() {
   if (!currentLineup.length) return alert("Build a lineup first!");
   const text = currentLineup.map(p => `${p.name} ($${p.price})`).join(', ');
   navigator.clipboard.writeText(text).then(() => alert("Lineup copied!"));
-}
-
-function handleCSVUpload() {
-  const csv = document.getElementById('csv-input').value;
-  if (!csv) return;
-  const lines = csv.trim().split('\n');
-  players = lines.map(line => {
-    const [name, sal, open, live, fit] = line.split(',').map(s => s.trim());
-    return {
-      name, price: parseInt(sal), monOdds: parseInt(open), liveOdds: parseInt(live),
-      fit: fit || 'Mid', locked: false, implMon: toImp(parseInt(open)), implLive: toImp(parseInt(live)),
-      salRank:0, oddsRank:0, delta:0, dlta:0, velocity:0, conviction:'CONSIDER', convSort:2, fitSort:0, strengthScore:0, cut:.50
-    };
-  }).filter(p => !isNaN(p.price));
-  compute();
-  saveToLocal();
-  renderAll();
-  showTab('arb');
 }
 
 function renderAll() {
