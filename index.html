@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Texas Value Engine — Valero 2026</title>
+<title>Riverwalk Roller — Valero 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0B1116; 
+  /* San Antonio / Texas Theme Palette */
+  --bg:#0B1116; /* Deep Texas Night */
   --surface:#151F28; 
   --surface2:#1E2D3A;
   --surface3:#2A3F52;
   --border:#2A3A4C;
   --border2:#3D5065;
-  --text:#FDFBF7; 
+  --text:#FDFBF7; /* Limestone White */
   --sub:#B8C5D1;
   --muted:#7D93A8;
-  --teal:#00B4D8; 
+  --teal:#00B4D8; /* Riverwalk Turquoise */
   --teal-bright:#48CAE4; 
-  --gold:#F4A261; 
-  --gold-bright:#E76F51; 
-  --red:#EF476F; 
+  --gold:#F4A261; /* Fiesta Sunset */
+  --gold-bright:#E76F51; /* Alamo Terracotta */
+  --red:#EF476F; /* Fiesta Pink/Red */
   --red-bg:rgba(239, 71, 111, 0.12);
-  --amber:#FFD166; 
+  --amber:#FFD166; /* Bright Texas Sun */
   --amber-bg:rgba(255, 209, 102, 0.12);
   --blue:#118AB2;
   --steam-bg:rgba(0, 180, 216, 0.08); 
@@ -45,8 +46,8 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
   justify-content:space-between;
   align-items:center
 }
-.logo{font-family:var(--disp);font-size:22px;font-weight:900;color:var(--gold-bright);line-height:1;letter-spacing:-.5px}
-.logo-sub{font-size:10px;color:var(--teal-bright);font-family:var(--mono);margin-top:2px;letter-spacing:.5px}
+.logo{font-family:var(--disp);font-size:22px;font-weight:900;color:var(--gold-bright);line-height:1;letter-spacing:-.5px; display:flex; align-items:center;}
+.logo-sub{font-size:10px;color:var(--teal-bright);font-family:var(--mono);margin-top:4px;letter-spacing:.5px; font-weight:600;}
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:var(--mono);letter-spacing:.3px}
 .badge-teal{background:rgba(0, 180, 216, 0.15);color:var(--teal-bright);border:1px solid rgba(0, 180, 216, 0.3)}
 
@@ -149,11 +150,16 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
 
 <div class="hdr">
   <div>
-    <div class="logo">★ Texas Value Engine</div>
-    <div class="logo-sub">VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO</div>
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; margin-bottom:2px;">
+        <path d="M2 12h4l3-9 5 18 3-9h5"/>
+      </svg>
+      Riverwalk Roller
+    </div>
+    <div class="logo-sub">⛳ VALERO TEXAS OPEN 2026 · TPC SAN ANTONIO 🌵</div>
   </div>
   <div style="display:flex;gap:6px;align-items:center">
-    <span class="badge badge-teal" id="status-badge">Engine Ready</span>
+    <span class="badge badge-teal" id="status-badge">Roller Ready</span>
   </div>
 </div>
 
@@ -182,11 +188,11 @@ textarea{width:100%;min-height:160px;font-size:11px;line-height:1.5;background:v
   <div class="card">
     <div class="card-head"><span class="card-title">Framework Overview</span></div>
     <div class="card-body">
-      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool utilizes a Salary-Anchored Hybrid MILP Metaheuristic architecture fueled by True SG Data.</p>
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses advanced simulations and market data to build mathematically optimal lineups.</p>
       <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
-        <li><strong>Salary-Anchored Projections:</strong> 1,000 iterations per player calculate true percentiles using a salary base, amplified by live odds and SG Total.</li>
-        <li><strong>Lock & Build:</strong> Use the <strong>Arb</strong> tab to find value, tap <strong style="color:#fff">+</strong> to lock players.</li>
-        <li><strong>Auto-Optimize (GRASP):</strong> The <strong>Build</strong> tab executes a Greedy Randomized Adaptive Search Procedure to return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
+        <li><strong>Simulate:</strong> The engine runs 1,000 simulations per player using live odds and SG data to project true upside.</li>
+        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for value plays and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
+        <li><strong>Optimize:</strong> The <strong>Build</strong> tab tests 5,000 combinations to find the highest-scoring roster between $48,500 and $50,000.</li>
       </ol>
     </div>
   </div>
@@ -663,7 +669,6 @@ function renderArb() {
       <td class="${p.velocity > 0 ? 'vel-up' : 'vel-dn'}">${p.velocity > 0 ? '▲' : '▼'}${(Math.abs(p.velocity)*100).toFixed(2)}%</td>
       <td style="font-weight:800; color:var(--gold)">${p.dlta.toFixed(1)}</td>
       <td><span class="conv conv-${p.conviction.toLowerCase()}">${p.conviction}</span></td>
-      <td>${(p.cut*100).toFixed(0)}%</td>
       <td class="fit-${p.fit.toLowerCase()}">${p.fit}</td>
       <td><button class="add-btn ${p.locked ? 'is-locked' : ''}" onclick="toggleLock('${p.name.replace(/'/g, "\\'")}')">${p.locked ? '✓' : '+'}</button></td>
     </tr>
