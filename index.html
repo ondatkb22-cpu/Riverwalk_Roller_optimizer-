@@ -487,13 +487,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v38', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v39', JSON.stringify(players.map(p => ({
     name: p.name, tueOdds: p.tueOdds, wedOdds: p.wedOdds, liveOdds: p.liveOdds, liveT5: p.liveT5, liveT10: p.liveT10, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v38');
+  const stored = localStorage.getItem('tve_players_v39');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -529,10 +529,7 @@ function handleLiveOddsUpload() {
   if (!csv) return;
   
   players.forEach(p => {
-     // Extract just the last name to match against the pasted text
      const lastName = p.name.split(' ').pop();
-     
-     // RegEx looks for: LastName followed by anything until it hits 3 consecutive betting odds numbers (Win, T5, T10)
      const regex = new RegExp(lastName + "[^\\d]*\\+?(\\d+)[^\\d]+\\+?(\\d+)[^\\d]+\\+?(\\d+)", "i");
      const match = csv.match(regex);
      
@@ -576,11 +573,7 @@ function compute() {
     p.delta = p.salRank - p.oddsRank;
     
     p.isDrift = p.liveOdds > p.monOdds; 
-    // Now pulling explicitly from trueCut loaded from DK event center
     p.cut = p.trueCut; 
-
-    // True sharp tracker: Any odds improvement + viable cut equity = STEAM (🌮)
-    p.isSteam = (p.liveOdds < p.monOdds) && (p.cut >= 0.35); 
 
     // Convert all tracking to implied probability for precise math
     let iMon = toImp(p.monOdds);
@@ -599,8 +592,14 @@ function compute() {
     // Time-Decay Weighted Velocity: Late shifts are 1.5x more predictive
     p.wVel = (earlyVel * 0.75) + (midVel * 1.0) + (lateVel * 1.5);
     
-    // Scale for display (makes 0.001 look like 1.0 for easier reading)
+    // Scale for display
     p.wVelDisp = p.wVel * 1000;
+
+    // --- PRO DFS AUDIT FIX: STRICT STEAM MAGNITUDE THRESHOLD ---
+    // Requires a true velocity spike (wVelDisp >= 1.2) OR a massive raw drop of 300+ points
+    const isSignificantMove = (p.wVelDisp >= 1.2) || (p.monOdds - p.liveOdds >= 300);
+    // Requires a trueCut of 50%+ to eliminate garbage longshots
+    p.isSteam = (p.liveOdds < p.monOdds) && isSignificantMove && (p.cut >= 0.50);
 
     // --- TRUE EXPECTED VALUE (EV) ALGORITHM W/ COURSE HISTORY & PLACEMENT BLEND ---
     const expectedPoints = (p.price / 1000) * 6.5; 
@@ -769,12 +768,10 @@ function renderArb() {
   });
 
   tbody.innerHTML = filtered.map(p => {
-    // Generate Breadcrumb string
     let breadcrumb = `Mon: ${p.monOdds > 0 ? '+' : ''}${p.monOdds}`;
     if (p.tueOdds) breadcrumb += ` | Tue: ${p.tueOdds > 0 ? '+' : ''}${p.tueOdds}`;
     if (p.wedOdds) breadcrumb += ` | Wed: ${p.wedOdds > 0 ? '+' : ''}${p.wedOdds}`;
 
-    // Highlight any positive velocity in teal, strict drift in red
     let oddsDisplay = `<span style="color:var(--text); font-weight: 800;">+${p.liveOdds}</span>`;
     if (p.wVelDisp > 0) oddsDisplay = `<span style="color:var(--teal-bright); font-weight: 800;">+${p.liveOdds}</span>`;
     else if (p.isDrift) oddsDisplay = `<span style="color:var(--red); font-weight: 800;">+${p.liveOdds}</span>`;
