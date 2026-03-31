@@ -487,13 +487,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v39', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v41', JSON.stringify(players.map(p => ({
     name: p.name, tueOdds: p.tueOdds, wedOdds: p.wedOdds, liveOdds: p.liveOdds, liveT5: p.liveT5, liveT10: p.liveT10, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v39');
+  const stored = localStorage.getItem('tve_players_v41');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -569,64 +569,62 @@ function compute() {
   players.slice().sort((a,b) => b.price - a.price).forEach((p,i) => p.salRank = i+1);
   players.slice().sort((a,b) => b.implMon - a.implMon).forEach((p,i) => p.oddsRank = i+1);
 
+  // PASS 1: Calculate raw probabilities and velocities
   players.forEach(p => {
     p.delta = p.salRank - p.oddsRank;
-    
     p.isDrift = p.liveOdds > p.monOdds; 
-    p.cut = p.trueCut; 
 
-    // Convert all tracking to implied probability for precise math
     let iMon = toImp(p.monOdds);
     let iTue = p.tueOdds ? toImp(p.tueOdds) : iMon;
     let iWed = p.wedOdds ? toImp(p.wedOdds) : iTue;
     let iLiv = toImp(p.liveOdds);
     
-    // Blended Placement Equity Probabilities
     let iT5 = p.liveT5 ? toImp(p.liveT5) : iLiv * 4; 
     let iT10 = p.liveT10 ? toImp(p.liveT10) : iLiv * 8; 
+
+    // THE FORM/MARKET BLEND FOR TRUE CUT PROBABILITY
+    // Blend their historical cut % (Form) with their Implied Market Safety (Top 10 Odds)
+    let impliedCut = Math.min(0.90, iT10 * 3.5 + 0.20); 
+    p.cut = (p.trueCut * 0.5) + (impliedCut * 0.5); 
 
     let earlyVel = iTue - iMon;
     let midVel = iWed - iTue;
     let lateVel = iLiv - iWed;
 
-    // Time-Decay Weighted Velocity: Late shifts are 1.5x more predictive
     p.wVel = (earlyVel * 0.75) + (midVel * 1.0) + (lateVel * 1.5);
-    
-    // Scale for display
     p.wVelDisp = p.wVel * 1000;
 
-    // --- PRO DFS AUDIT FIX: STRICT STEAM MAGNITUDE THRESHOLD ---
-    // Requires a true velocity spike (wVelDisp >= 1.2) OR a massive raw drop of 300+ points
-    const isSignificantMove = (p.wVelDisp >= 1.2) || (p.monOdds - p.liveOdds >= 300);
-    // Requires a trueCut of 50%+ to eliminate garbage longshots
-    p.isSteam = (p.liveOdds < p.monOdds) && isSignificantMove && (p.cut >= 0.50);
-
-    // --- TRUE EXPECTED VALUE (EV) ALGORITHM W/ COURSE HISTORY & PLACEMENT BLEND ---
     const expectedPoints = (p.price / 1000) * 6.5; 
-    
-    // DFS CALIBRATION: 10% Outright, 30% Top 5, 60% Top 10 (Highest correlation to DK points)
     const trueProb = (iLiv * 0.10) + (iT5 * 0.30) + (iT10 * 0.60);
     const winEquity = trueProb * 130; 
-    
     const sgPts = p.sg * 3.5;
     
-    let baseProj = (30 + winEquity + sgPts) * p.ch;
+    p.baseProj = (30 + winEquity + sgPts) * p.ch;
+    p.expPts = expectedPoints;
+  });
+
+  // --- PRO DFS AUDIT FIX: DYNAMIC PERCENTILE ISOLATION ---
+  // Lowered the cut filter to 45% because we are now using a blended Cut Equity model.
+  const sharpCandidates = players.filter(p => p.wVel > 0 && p.cut >= 0.45).sort((a,b) => b.wVel - a.wVel);
+  const eliteSteamers = sharpCandidates.slice(0, 9).map(p => p.name); 
+
+  // PASS 2: Apply dynamic Steam status and finalize projections
+  players.forEach(p => {
+    p.isSteam = eliteSteamers.includes(p.name);
     
     if (p.isSteam) {
-        baseProj += 2.5 + (p.wVel * 1000); 
+        p.baseProj += 2.5 + (p.wVel * 1000); 
     }
     
-    p.dlta = baseProj - expectedPoints;
+    p.dlta = p.baseProj - p.expPts;
 
-    // --- COMPOSITE ALPHA GRADE ---
     let composite = p.dlta + (p.sg * 2.5);
-    
     if (p.ch > 1.0) composite += (p.ch - 1.0) * 20; 
     if (p.isSteam) composite += 4; 
     
-    if (composite > 10 && p.cut >= 0.40) {
+    if (composite > 10 && p.cut >= 0.60) {
         p.grade = 'CORE'; p.gradeSort = 4;
-    } else if (composite > 3) {
+    } else if (composite > 3 && p.cut >= 0.50) {
         p.grade = 'PLAY'; p.gradeSort = 3;
     } else if (composite < -5 && p.cut < 0.40) {
         p.grade = 'FADE'; p.gradeSort = 1;
@@ -634,12 +632,10 @@ function compute() {
         p.grade = 'POOL'; p.gradeSort = 2;
     }
 
-    // --- DETERMINISTIC Z-SCORE MODELING ---
     const volatility = 12 + ((1 - p.cut) * 30); 
-    
-    p.simMean = baseProj;
-    p.simFloor = baseProj - (volatility * 0.84); 
-    p.simCeil = baseProj + (volatility * 1.04); 
+    p.simMean = p.baseProj;
+    p.simFloor = p.baseProj - (volatility * 0.84); 
+    p.simCeil = p.baseProj + (volatility * 1.04); 
   });
 }
 
@@ -647,8 +643,8 @@ const getPlayerScore = (p, buildType) => {
     let score = p.simMean;
     
     if (buildType === 'cash') {
-        // MAX CUT MAKING: Floor + massive premium on cut equity (120x)
-        score = p.simFloor + (p.cut * 120);
+        // MAX CUT MAKING: Floor + premium on cut equity (80x)
+        score = p.simFloor + (p.cut * 80);
     } else if (buildType === 'gpp') {
         // GPP: Ceiling + reward raw velocity (wVel) to capture sharp drift
         score = p.simCeil + (p.wVel > 0 ? p.wVel * 1000 : 0) + (p.isSteam ? 10 : 0);
