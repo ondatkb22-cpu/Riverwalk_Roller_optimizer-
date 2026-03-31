@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -30,59 +32,69 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:100px}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}.hdr{
-background:linear-gradient(135deg,#0B1116 0%,#151F28 60%,#242021 100%);
-border-bottom:2px solid transparent;
-border-image:linear-gradient(to right, var(--teal), var(--gold), var(--gold-bright)) 1;
-padding:14px 16px;
-position:sticky;
-top:0;
-z-index:100;
-display:flex;
-justify-content:space-between;
-align-items:center
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+
+.hdr{
+  background:linear-gradient(135deg,#0B1116 0%,#151F28 60%,#242021 100%);
+  border-bottom:2px solid transparent;
+  border-image:linear-gradient(to right, var(--teal), var(--gold), var(--gold-bright)) 1;
+  padding:14px 16px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
 }
 .logo{font-family:var(--disp);font-size:22px;font-weight:900;color:var(--gold-bright);line-height:1;letter-spacing:-.5px; display:flex; align-items:center;}
 .logo-sub{font-size:10px;color:var(--teal-bright);font-family:var(--mono);margin-top:4px;letter-spacing:.5px; font-weight:600;}
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:var(--mono);letter-spacing:.3px}
 .badge-teal{background:rgba(0, 180, 216, 0.15);color:var(--teal-bright);border:1px solid rgba(0, 180, 216, 0.3)}
+
 .nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:fixed;bottom:0;width:100%;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,0.4);}
 .nav-tab{flex:1;padding:14px 2px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(244, 162, 97, 0.05)}
+
 .roster-strip {position:fixed;bottom:44px;left:0;width:100%;background:var(--surface2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);z-index:990;box-shadow:0 -4px 15px rgba(0,0,0,0.3);}
 .rs-val {color:var(--text);font-size:14px;margin-left:6px;}
+
 .panel{display:none;flex:1;overflow-y:auto}
 .panel.on{display:block}
+
 .pods{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px}
 .pod{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
 .pod-val{font-family:var(--disp);font-size:18px;font-weight:900;line-height:1}
 .pod-lbl{font-size:9px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
 .filters{padding:8px 12px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none; align-items:center;}
 .fchip{padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .12s}
 .fchip.on{background:var(--teal);color:#0B131E;border-color:var(--teal)}
+
 .search-box {
-background: var(--surface);
-border: 1.5px solid var(--border);
-border-radius: 20px;
-padding: 5px 12px;
-color: var(--text);
-font-size: 11px;
-font-family: var(--sans);
-outline: none;
-width: 90px;
-transition: all 0.2s;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  color: var(--text);
+  font-size: 11px;
+  font-family: var(--sans);
+  outline: none;
+  width: 90px;
+  transition: all 0.2s;
 }
 .search-box:focus {
-border-color: var(--teal);
-width: 140px;
-background: var(--surface2);
+  border-color: var(--teal);
+  width: 140px;
+  background: var(--surface2);
 }
 .search-box::placeholder {
-color: var(--muted);
-font-weight: 700;
+  color: var(--muted);
+  font-weight: 700;
 }
+
 .key-strip{display:flex;flex-wrap:wrap;gap:4px 14px;padding:10px 12px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);margin:0 12px 10px;font-size:10px;color:var(--sub)}
 .key-strip span strong{color:var(--text);font-family:var(--mono);margin-right:2px}
+
 .tw{overflow-x:auto;padding:0 12px 12px}
 table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
 thead th{background:var(--surface2);color:var(--muted);padding:10px 7px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;cursor:pointer;border-bottom:1px solid var(--border);transition: background 0.2s;}
@@ -91,21 +103,26 @@ tbody tr{border-bottom:1px solid rgba(42, 58, 76, 0.6)}
 tbody tr.lock-row td{background:var(--lock-bg)}
 tbody tr.steam-row td{background:var(--steam-bg)}
 td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
+
 .sort-icon { display:inline-block; margin-left:4px; font-size:8px; opacity:0.6; }
+
 .db{display:inline-flex;align-items:center;justify-content:center;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:32px;font-family:var(--mono)}
 .d-elite{background:var(--gold-bright);color:#0B131E}
 .d-solid{background:rgba(0, 180, 216, 0.25);color:var(--teal-bright)}
 .d-slight{background:rgba(0, 180, 216, 0.12);color:var(--teal)}
 .d-neg{background:var(--red-bg);color:var(--red)}
+
 .grade{font-size:9px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.5px;font-family:var(--mono);white-space:nowrap; display:inline-block; text-align:center;}
 .grade-core{background:var(--gold-bright);color:#0B131E}
 .grade-play{background:rgba(0, 180, 216, 0.2);color:var(--teal-bright)}
 .grade-pool{background:var(--surface3);color:var(--sub)}
 .grade-fade{background:var(--red-bg);color:var(--red)}
+
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 12px 10px}
 .card-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.6px;text-transform:uppercase}
 .card-body{padding:14px}
+
 .lu-card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border2);border-radius:14px;overflow:hidden;margin:0 12px 10px}
 .lu-slot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(42, 58, 76, 0.4);gap:8px}
 .lu-slot:last-child{border:none}
@@ -116,30 +133,39 @@ td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .lu-totals{display:grid;grid-template-columns:repeat(4,1fr);padding:12px 16px;background:var(--surface2);border-top:1px solid var(--border);gap:4px}
 .lu-total-val{font-family:var(--disp);font-weight:900;font-size:17px}
 .lu-total-lbl{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+
 textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;font-family:var(--mono);outline:none;resize:vertical;white-space:pre}
+
 .btn{width:100%;padding:14px;border-radius:8px;font-size:15px;font-weight:900;font-family:var(--disp);cursor:pointer;border:none;background:linear-gradient(135deg,var(--teal) 0%,var(--teal-bright) 100%);color:#0B131E;letter-spacing:.3px;transition:all .2s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0, 180, 216, 0.3)}
 .btn-gold{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-bright) 100%)}
 .btn-gold:hover{box-shadow:0 4px 20px rgba(244, 162, 97, 0.3)}
 .clear-btn{width:100%;background:var(--surface);color:var(--muted);border:1px solid var(--border);padding:10px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
+
 .add-btn{padding:2px 6px;border-radius:4px;border:none;font-size:12px;font-weight:900;cursor:pointer;background:var(--surface3);color:var(--text);transition:all .1s; width: 26px; text-align: center;}
 .add-btn.is-locked{background:var(--teal-bright);color:#0B131E}
+
 .stm-badge{font-size:12px;background:transparent;padding:0;margin-left:4px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));}
 .pb-tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.5px}
 .pb-steam{background:rgba(0, 180, 216, 0.2);color:var(--teal-bright)}
 .pb-gpp{background:rgba(244, 162, 97, 0.15);color:var(--gold)}
 .pb-cash{background:rgba(17, 138, 178, 0.15);color:var(--blue)}
+
 .insight{background:rgba(244, 162, 97, 0.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 14px;font-size:11px;color:var(--sub);line-height:1.7;margin:0 12px 10px}
+
 .radio-group { display: flex; gap: 10px; margin-bottom: 12px; }
 .radio-label { font-size: 11px; color: var(--sub); display: flex; align-items: center; gap: 4px; cursor:pointer;}
+
 @media(max-width:700px){
-.pods{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 8px}
-.pod-val{font-size:16px}
-.lu-totals{grid-template-columns:repeat(2,1fr)}
+  .pods{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 8px}
+  .pod-val{font-size:16px}
+  .lu-totals{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
-<body><div class="hdr">
+<body>
+
+<div class="hdr">
   <div>
     <div class="logo">
       <span style="font-size:24px; margin-right:8px; margin-bottom:2px;">🌮</span>
@@ -157,35 +183,37 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <div style="font-family:var(--disp);font-size:24px;font-weight:900;color:var(--gold-bright);line-height:1">User Guide</div>
   </div>
   
-  <div class="card">
-    <div class="card-head"><span class="card-title">How to Roll</span></div>
+  <div class="card" style="border-color: var(--red); background: rgba(239, 71, 111, 0.03);">
+    <div class="card-head" style="border-bottom-color: rgba(239, 71, 111, 0.2);">
+      <span class="card-title" style="color: var(--red);">⚠️ Responsible Gambling</span>
+    </div>
     <div class="card-body">
-      <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
-        <li><strong>Review Arb:</strong> Browse the Arb tab to spot mispriced golfers using $DLTA and Steam (🌮) velocity.</li>
-        <li><strong>Lock:</strong> Tap <strong style="color:#fff">+</strong> next to a player to secure your favorite core plays.</li>
-        <li><strong>Build:</strong> Head to the Build tab and tap <strong>AUTO</strong> to generate the mathematically optimal lineup strictly around your locks.</li>
-        <li><strong>Pre-Builts:</strong> Unsure who to play? Check the <strong>Pre</strong> tab as a last step for fully automated, instantly generated optimal builds.</li>
-      </ol>
+      <p style="font-size:12px; color:var(--text); font-weight: 600; margin-bottom: 8px;">Bankroll Management is Key</p>
+      <ul style="padding-left:14px; font-size:11px; line-height:1.6; color:var(--sub); margin-bottom: 12px;">
+        <li>Never wager more than you can afford to lose.</li>
+        <li>Standard bankroll management suggests risking only <strong>1% to 5%</strong> of your total bankroll per slate.</li>
+        <li>Variance in golf DFS is extremely high. Stick to your process and do not chase losses.</li>
+      </ul>
+      <p style="font-size:10px; color:var(--muted); font-style: italic; border-top: 1px solid rgba(239,71,111,0.2); padding-top: 8px;">
+        If you or someone you know has a gambling problem, crisis counseling and referral services can be accessed by calling <strong>1-800-GAMBLER</strong> (1-800-426-2537).
+      </p>
     </div>
   </div>
 
-  <div class="insight">
-    <strong>Note:</strong> Your locks and data are automatically saved. Monday Odds, Fit, SG, and Course History are statically locked.
-  </div>
-  
-  <div class="card" style="border-color: var(--red); background: rgba(239, 71, 111, 0.03);">
-    <div class="card-head" style="border-bottom-color: rgba(239, 71, 111, 0.2);">
-      <span class="card-title" style="color: var(--red);">⚠️ Bankroll Management</span>
-    </div>
+  <div class="card">
+    <div class="card-head"><span class="card-title">Quant Audit Complete</span></div>
     <div class="card-body">
-      <ul style="padding-left:14px; font-size:11px; line-height:1.6; color:var(--sub); margin-bottom: 12px;">
-        <li>Risk only <strong>1% to 5%</strong> of your total bankroll per slate.</li>
-        <li>Golf DFS has extreme variance. Do not chase losses.</li>
-      </ul>
-      <p style="font-size:10px; color:var(--muted); font-style: italic; border-top: 1px solid rgba(239,71,111,0.2); padding-top: 8px;">
-        Gambling problem? Call <strong>1-800-GAMBLER</strong>.
-      </p>
+      <p style="font-size:11px;color:var(--sub);margin-bottom:8px">This tool uses a <strong>Time-Decay Velocity Algorithm</strong> and Deterministic Z-Score Modeling to build mathematically optimal lineups.</p>
+      <ol style="padding-left:14px;font-size:12px;line-height:1.8;color:var(--sub)">
+        <li><strong>Simulate:</strong> The engine scores players using an Expected Value baseline, Course History (CH), and applies a predictive multiplier to late-week sharp line movement.</li>
+        <li><strong>Lock:</strong> Browse the <strong>Arb</strong> tab for top $DLTA plays and tap <strong style="color:#fff">+</strong> to lock your favorites.</li>
+        <li><strong>Pre:</strong> Instantly view 3 dynamically pre-built optimal lineups perfectly tailored to the latest live odds data.</li>
+        <li><strong>Optimize:</strong> Tap the floating <strong>AUTO</strong> button to execute a Search Procedure and return the highest-scoring lineup strictly between $48,500 and $50,000.</li>
+      </ol>
     </div>
+  </div>
+  <div class="insight">
+    <strong>Note:</strong> Your locks and data are now <strong>saved automatically</strong> to your browser's local storage. Monday Odds, Fit, SG, and Course History are statically locked.
   </div>
 </div>
 
@@ -197,12 +225,16 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <button class="fchip" data-filter="lockconv" onclick="setFilter('lockconv',this)">Locks</button>
     <button class="fchip" data-filter="grade" onclick="setFilter('grade',this)">Core Plays</button>
     <input type="text" id="player-search" class="search-box" placeholder="🔍 Search" onkeyup="handleSearch(this.value)">
-  </div><div class="key-strip">
+  </div>
+  
+  <div class="key-strip">
     <span><strong>Odds:</strong> Current (vs Mon Baseline)</span>
     <span><strong style="color:var(--teal)">wVEL:</strong> Weighted Time-Decay Velocity</span>
     <span><strong style="color:var(--gold)">$DLTA:</strong> Exp. Value vs Salary</span>
     <span><strong>Grade:</strong> Composite Algorithm</span>
-  </div><div class="tw">
+  </div>
+
+  <div class="tw">
     <table>
       <thead>
         <tr id="arb-thead">
@@ -241,15 +273,17 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <div class="card-head"><span class="card-title">Daily Odds Tracker</span></div>
     <div class="card-body">
       <p style="font-size:11px; color:var(--sub); margin-bottom:12px;">Select the day, then paste "<strong>Name, Odds</strong>". The time-decay algorithm tracks movement against the Monday baseline automatically.</p>
-  <div class="radio-group">
-    <label class="radio-label"><input type="radio" name="oddsDay" value="tue"> Tuesday</label>
-    <label class="radio-label"><input type="radio" name="oddsDay" value="wed"> Wednesday</label>
-    <label class="radio-label"><input type="radio" name="oddsDay" value="live" checked> Final / Live</label>
+      
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="oddsDay" value="tue"> Tuesday</label>
+        <label class="radio-label"><input type="radio" name="oddsDay" value="wed"> Wednesday</label>
+        <label class="radio-label"><input type="radio" name="oddsDay" value="live" checked> Final / Live</label>
+      </div>
+
+      <textarea id="csv-input" placeholder="T. Fleetwood, 1200&#10;L. Aberg, 1400&#10;R. Henley, 1800..."></textarea>
+      <button class="btn" style="margin-top:8px" onclick="handleLiveOddsUpload()">Update Tracking & Compute</button>
+    </div>
   </div>
-  <textarea id="csv-input" placeholder="T. Fleetwood, 1200&#10;L. Aberg, 1400&#10;R. Henley, 1800..."></textarea>
-  <button class="btn" style="margin-top:8px" onclick="handleLiveOddsUpload()">Update Tracking & Compute</button>
-</div>
-</div>
 </div>
 
 <div class="roster-strip" id="roster-strip">
@@ -266,7 +300,9 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
   <div class="nav-tab" onclick="showTab('build')">Build</div>
   <div class="nav-tab" onclick="showTab('prebuilt')">Pre</div>
   <div class="nav-tab" onclick="showTab('data')">Data</div>
-</div><script>
+</div>
+
+<script>
 // --- CONFIG & STATE ---
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900; 
@@ -753,7 +789,7 @@ function renderLUCard(elId, lineup, type) {
       <div class="lu-slot">
         <div class="lu-slot-num">G${i+1}</div>
         <div style="flex:1">
-          <div class="lu-slot-name">${p.name}${p.isSteam ? '<span class="stm-badge">🌮</span>' : ''}</div>
+          <div class="lu-slot-name">${p.name}</div>
           <div class="lu-slot-meta">${p.grade} · Δ${p.delta}</div>
         </div>
         <div class="lu-slot-sal">$${p.price.toLocaleString()}</div>
@@ -862,5 +898,6 @@ function renderAll() {
 
 // Start
 loadFromLocal();
-</script></body>
+</script>
+</body>
 </html>
