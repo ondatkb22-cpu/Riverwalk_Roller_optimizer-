@@ -184,16 +184,32 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
   
   <div class="card" style="border-color: var(--teal); background: rgba(0, 180, 216, 0.03);">
     <div class="card-head" style="border-bottom-color: rgba(0, 180, 216, 0.2);">
-      <span class="card-title" style="color: var(--teal-bright);">Automated Pre-Builds</span>
+      <span class="card-title" style="color: var(--teal-bright);">How to Use This Tool</span>
     </div>
     <div class="card-body">
-      <p style="font-size:12px; color:var(--text); font-weight: 600; margin-bottom: 8px;">The math is done for you.</p>
-      <p style="font-size:11px; line-height:1.6; color:var(--sub); margin-bottom: 12px;">
-        This tool uses a <strong>Time-Decay Velocity Algorithm</strong> and Deterministic Z-Score Modeling to find optimal combinations. 
-        Instead of guessing, just tap the <strong>Pre</strong> tab below. The engine has automatically built 3 mathematically perfect lineups (Cash, GPP, and Steam) tailored to the latest sharp odds movement.
+      <p style="font-size:12px; color:var(--text); font-weight: 600; margin-bottom: 8px;">The math is already done for you.</p>
+      <ol style="padding-left:14px; font-size:11px; line-height:1.7; color:var(--sub); margin-bottom: 0;">
+        <li style="margin-bottom:6px;"><strong>Grab an Optimal:</strong> Tap the <strong>PRE</strong> tab at the bottom. The engine has automatically built 3 mathematically perfect lineups (Cash, GPP, Steam) using live odds and course history.</li>
+        <li style="margin-bottom:6px;"><strong>Hunt for Tacos:</strong> Check the <strong>ARB</strong> tab to see who is taking sharp money (🌮) and outperforming their DraftKings salary.</li>
+        <li><strong>Build Your Own:</strong> Want to force a player into your lineup? Tap the <strong>+</strong> next to their name on the ARB tab, go to the <strong>BUILD</strong> tab, and hit "Auto-Fill Optimal Lineup".</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card" style="border-color: var(--red); background: rgba(239, 71, 111, 0.03);">
+    <div class="card-head" style="border-bottom-color: rgba(239, 71, 111, 0.2);">
+      <span class="card-title" style="color: var(--red);">⚠️ Disclaimer & Responsibility</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:11px; line-height:1.6; color:var(--sub); margin-bottom: 10px;">
+        <strong>Disclaimer:</strong> This tool is for informational and entertainment purposes only. It does not guarantee winning lineups. Golf DFS has extreme, unpredictable variance.
       </p>
-      <p style="font-size:10px; color:var(--muted); font-style: italic; border-top: 1px solid rgba(0,180,216,0.2); padding-top: 8px;">
-        *Note: If you wish to manually override, tap "+" on the Arb board and hit the AUTO button.
+      <ul style="padding-left:14px; font-size:11px; line-height:1.6; color:var(--sub); margin-bottom: 12px;">
+        <li>Never wager more than you can afford to lose.</li>
+        <li>Stick to standard bankroll management (risk 1% to 5% per slate).</li>
+      </ul>
+      <p style="font-size:10px; color:var(--muted); font-style: italic; border-top: 1px solid rgba(239,71,111,0.2); padding-top: 8px; margin-bottom: 0;">
+        If you or someone you know has a gambling problem, call <strong>1-800-GAMBLER</strong>.
       </p>
     </div>
   </div>
@@ -456,13 +472,13 @@ function loadInitialData() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('tve_players_v29', JSON.stringify(players.map(p => ({
+  localStorage.setItem('tve_players_v31', JSON.stringify(players.map(p => ({
     name: p.name, tueOdds: p.tueOdds, wedOdds: p.wedOdds, liveOdds: p.liveOdds, locked: p.locked
   }))));
 }
 
 function loadFromLocal() {
-  const stored = localStorage.getItem('tve_players_v29');
+  const stored = localStorage.getItem('tve_players_v31');
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
     
@@ -599,7 +615,10 @@ const getPlayerScore = (p, buildType) => {
     let score = p.simMean;
     if (buildType === 'cash') score = p.simFloor;
     if (buildType === 'gpp') score = p.simCeil;
-    if (buildType === 'steam') score = p.simMean + (p.isSteam ? 25 : 0); 
+    if (buildType === 'steam') {
+        // PRO DFS AUDIT FIX: Strictly blacklist any non-steam player from the Steam Optimal
+        score = p.isSteam ? p.simMean + 1000 : p.simMean - 10000; 
+    }
 
     // Complete algorithmic blacklist for true FADEs
     if (p.grade === 'FADE') score -= 5000; 
@@ -771,7 +790,7 @@ function renderLUCard(elId, lineup, type) {
       <div class="lu-slot">
         <div class="lu-slot-num">G${i+1}</div>
         <div style="flex:1">
-          <div class="lu-slot-name">${p.name}</div>
+          <div class="lu-slot-name">${p.name}${p.isSteam ? '<span class="stm-badge" style="margin-left:4px; font-size:10px;">🌮</span>' : ''}</div>
           <div class="lu-slot-meta">${p.grade} · Δ${p.delta}</div>
         </div>
         <div class="lu-slot-sal">$${p.price.toLocaleString()}</div>
