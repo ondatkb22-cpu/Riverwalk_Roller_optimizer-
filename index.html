@@ -98,6 +98,27 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
 .sa-divider{height:2px;margin:12px 10px;border-radius:2px;background:linear-gradient(to right,var(--terracotta),var(--gold) 40%,var(--teal) 70%,var(--river))}
 .radio-group{display:flex;gap:10px;margin-bottom:12px}
 .radio-label{font-size:11px;color:var(--sub);display:flex;align-items:center;gap:4px;cursor:pointer}
+
+/* FIX: Clear button active/confirm state */
+.clear-btn-confirm{background:var(--red-bg) !important;color:var(--red) !important;border-color:var(--red) !important}
+
+/* FIX: Build tab empty roster visual polish */
+.build-empty-slot{
+  background:rgba(28,22,16,0.5);margin:0 12px 6px;border:1px dashed var(--border);
+  border-radius:8px;opacity:0.5;min-height:54px;display:flex;align-items:center;padding:8px 14px;
+  transition:opacity .2s;
+}
+.build-filled-slot{
+  background:var(--surface);margin:0 12px 6px;border:1px solid var(--border);
+  border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;
+  transition:all .15s;
+}
+.build-filled-slot:hover{border-color:var(--border2)}
+.build-remove-btn{
+  background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;
+  padding:2px 6px;border-radius:4px;transition:all .12s;line-height:1;
+}
+.build-remove-btn:hover{color:var(--red);background:var(--red-bg)}
 </style>
 </head>
 <body>
@@ -236,7 +257,7 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
     <button class="btn btn-gold" onclick="executeBuild()">⚡ Auto-Fill Optimal Lineup</button>
     <div style="display:flex;gap:8px">
       <button class="clear-btn" style="flex:1" onclick="copyLineupToClipboard()">Copy Text</button>
-      <button class="clear-btn" style="flex:1;color:var(--red);border-color:rgba(224,75,90,0.3)" onclick="clearLocks()">Clear Roster</button>
+      <button class="clear-btn" id="clear-roster-btn" style="flex:1;color:var(--red);border-color:rgba(224,75,90,0.3)" onclick="handleClearClick()">Clear Roster</button>
     </div>
   </div>
 </div>
@@ -256,6 +277,7 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
   </div>
 </div>
 
+<!-- FIX #1: Added id="nav-auto-btn" to the AUTO button -->
 <div class="nav">
   <div class="nav-tab on" data-tab="guide" onclick="showTab('guide')">Guide</div>
   <div class="nav-tab" data-tab="arb" onclick="showTab('arb')">Arb</div>
@@ -265,13 +287,13 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
   <div class="nav-roster" id="nav-roster">
     <span id="rs-count" style="color:var(--text);font-weight:800">0</span>/6
     <span style="color:var(--gold);font-weight:800;margin-left:6px;" id="rs-rem">$50K</span>
-    <button onclick="document.querySelector('.nav-tab[data-tab=\'build\']').click(); executeBuild();" class="nav-auto">AUTO</button>
+    <button id="nav-auto-btn" onclick="document.querySelector('.nav-tab[data-tab=\'build\']').click(); executeBuild();" class="nav-auto">AUTO</button>
   </div>
 </div>
 
 <script>
 // ============================================================
-//  CONFIG & STATE (v71 - BLENDED TRACKER RESTORED)
+//  CONFIG & STATE (v72 - BUILD TAB & ROSTER UI FIX)
 // ============================================================
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900;
@@ -283,6 +305,7 @@ let searchQuery = '';
 let currentLineup = [];
 let draftedLineup = [];
 let currentStrategy = 'gpp';
+let clearConfirmPending = false; // FIX: confirm-before-clear state
 
 const toImp = (o) => {
     let v = parseFloat(o);
@@ -660,7 +683,6 @@ function compute() {
     p.isDrift = parseInt(p.liveOdds) > parseInt(p.monOdds); 
     p.cut = p.trueCut; 
 
-    // STORM WEATHER MATRIX
     if(p.wave === "AM1") p.waveAdj = -1.0;
     else if(p.wave === "AM2") p.waveAdj = 1.5;
     else if(p.wave === "PM1") p.waveAdj = -3.5;
@@ -853,7 +875,6 @@ function renderArb() {
     if(p.tueOdds && p.tueOdds !== p.monOdds) breadcrumb+=` | T:${p.tueOdds>0?'+':''}${p.tueOdds}`;
     if(p.wedOdds && p.wedOdds !== (p.tueOdds || p.monOdds)) breadcrumb+=` | W:${p.wedOdds>0?'+':''}${p.wedOdds}`;
 
-    // Re-coupled to the Blended wVEL score
     let oddsDisplay=`<span style="color:var(--text);font-weight:800">+${p.liveOdds}</span>`;
     if(p.wVelDisp > 0) oddsDisplay=`<span style="color:var(--teal-bright);font-weight:800">+${p.liveOdds}</span>`;
     else if(p.wVelDisp < 0) oddsDisplay=`<span style="color:var(--red);font-weight:800">+${p.liveOdds}</span>`;
@@ -941,50 +962,60 @@ function executeBuild() {
   renderBuildTab();
 }
 
+// FIX #3: Completely rewritten renderBuildTab with improved roster UI
 function renderBuildTab() {
-  const container=document.getElementById('build-roster-container');
-  let baseLineup=draftedLineup.length>0?draftedLineup:players.filter(p=>p.locked);
-  let slotsHTML='',spent=0,totalDlta=0;
+  const container = document.getElementById('build-roster-container');
+  // Determine what to show: drafted lineup first, then just locked players
+  let baseLineup = draftedLineup.length > 0 ? draftedLineup : players.filter(p => p.locked);
+  let slotsHTML = '', spent = 0, totalDlta = 0;
 
-  for(let i=0;i<6;i++){
-    let p=baseLineup[i];
-    if(p){
-      spent+=p.price;totalDlta+=p.dlta;
-      slotsHTML+=`
-        <div class="lu-slot" style="background:var(--surface);margin:0 12px 6px;border:1px solid var(--border);border-radius:8px">
-          <div style="display:flex;align-items:center;gap:10px;flex:1">
-            <div style="color:var(--muted);font-weight:700;font-size:10px;width:14px">G${i+1}</div>
-            <div>
-              <div style="font-weight:700;font-size:13px;display:flex;align-items:center">
-                ${p.name} ${p.isSteam?'<span class="stm-badge" style="font-size:10px">🌮</span>':''}
+  for (let i = 0; i < 6; i++) {
+    let p = baseLineup[i];
+    if (p) {
+      spent += p.price;
+      totalDlta += p.dlta;
+      let isLocked = p.locked;
+      slotsHTML += `
+        <div class="build-filled-slot" ${isLocked ? 'style="border-left:2px solid var(--teal-bright)"' : ''}>
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <div style="color:var(--muted);font-weight:700;font-size:10px;width:18px;flex-shrink:0">G${i+1}</div>
+            <div style="min-width:0">
+              <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+                <span style="white-space:nowrap">${p.name}</span>
+                ${p.isSteam ? '<span class="stm-badge" style="font-size:10px">🌮</span>' : ''}
+                ${isLocked ? '<span style="font-size:8px;color:var(--teal-bright);font-family:var(--mono);font-weight:800">LOCK</span>' : ''}
               </div>
               <div style="font-size:9px;color:var(--sub);font-family:var(--mono);margin-top:2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
                 <span class="grade grade-${p.grade.toLowerCase()}" style="font-size:7px;padding:1px 4px">${p.grade}</span>
                 ${getWaveBadge(p.wave)}
-                <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
-                <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
+                <span>$DLTA:<strong style="color:${p.dlta >= 0 ? 'var(--gold)' : 'var(--red)'}">${p.dlta > 0 ? '+' + p.dlta.toFixed(1) : p.dlta.toFixed(1)}</strong></span>
+                <span>wVEL:<strong style="color:${p.wVelDisp > 0 ? 'var(--teal)' : (p.wVelDisp < 0 ? 'var(--red)' : 'var(--muted)')}">${p.wVelDisp > 0 ? '+' + p.wVelDisp.toFixed(2) : p.wVelDisp.toFixed(2)}</strong></span>
                 <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
               </div>
             </div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="font-family:var(--mono);font-weight:700;color:var(--gold)">$${p.price.toLocaleString()}</div>
-            <button onclick="removePlayerFromBuild('${p.name.replace(/'/g,"\\'")}')" style="background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px">&times;</button>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <div style="font-family:var(--mono);font-weight:700;color:var(--gold);font-size:12px">$${p.price.toLocaleString()}</div>
+            <button class="build-remove-btn" onclick="removePlayerFromBuild('${p.name.replace(/'/g, "\\'")}')" title="Remove">&times;</button>
           </div>
         </div>`;
     } else {
-      slotsHTML+=`
-        <div class="lu-slot" style="background:rgba(28,22,16,0.5);margin:0 12px 6px;border:1px dashed var(--border);border-radius:8px;opacity:0.6;min-height:54px">
+      slotsHTML += `
+        <div class="build-empty-slot">
           <div style="display:flex;align-items:center;gap:10px">
-            <div style="color:var(--muted);font-weight:700;font-size:10px;width:14px">G${i+1}</div>
-            <div style="font-weight:600;font-size:12px;color:var(--muted)">Empty Slot</div>
+            <div style="color:var(--muted);font-weight:700;font-size:10px;width:18px">G${i+1}</div>
+            <div style="font-weight:600;font-size:11px;color:var(--muted)">— Empty —</div>
           </div>
         </div>`;
     }
   }
 
-  let rem=SAL_CAP-spent,avgRem=baseLineup.length<6?rem/(6-baseLineup.length):0;
-  container.innerHTML=`
+  let rem = SAL_CAP - spent;
+  let avgRem = baseLineup.length < 6 ? rem / (6 - baseLineup.length) : 0;
+  let lockedCount = baseLineup.filter(p => p && p.locked).length;
+  let filledCount = baseLineup.length;
+
+  container.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:0 12px 12px">
       <div style="background:var(--surface2);padding:10px;border-radius:8px;text-align:center">
         <div style="font-size:14px;font-family:var(--disp);color:var(--gold)">$${rem.toLocaleString()}</div>
@@ -995,11 +1026,15 @@ function renderBuildTab() {
         <div style="font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-top:2px">Rem. / Plyr</div>
       </div>
       <div style="background:var(--surface2);padding:10px;border-radius:8px;text-align:center">
-        <div style="font-size:14px;font-family:var(--disp);color:${totalDlta>=0?'var(--teal-bright)':'var(--red)'}">${totalDlta>0?'+'+totalDlta.toFixed(1):totalDlta.toFixed(1)}</div>
+        <div style="font-size:14px;font-family:var(--disp);color:${totalDlta >= 0 ? 'var(--teal-bright)' : 'var(--red)'}">${totalDlta > 0 ? '+' + totalDlta.toFixed(1) : totalDlta.toFixed(1)}</div>
         <div style="font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-top:2px">Total $DLTA</div>
       </div>
     </div>
+    ${filledCount > 0 ? `<div style="padding:0 12px 6px;font-size:9px;color:var(--muted);font-family:var(--mono)">${filledCount}/6 filled · ${lockedCount} locked</div>` : ''}
     ${slotsHTML}`;
+
+  // FIX: Reset clear button confirm state whenever build tab re-renders
+  resetClearButton();
 }
 
 function removePlayerFromBuild(name) {
@@ -1007,7 +1042,6 @@ function removePlayerFromBuild(name) {
   if (p) p.locked = false;
 
   if (draftedLineup.length > 0) {
-      // User is altering an optimal build. Convert remaining 5 to manual locks.
       draftedLineup.forEach(x => {
           if (x.name !== name) {
               let lockedPlayer = players.find(pl => pl.name === x.name);
@@ -1020,15 +1054,13 @@ function removePlayerFromBuild(name) {
 
   saveToLocal();
   renderAll();
-  let buildPanel = document.getElementById('panel-build');
-  if(buildPanel && buildPanel.classList.contains('on')) renderBuildTab();
 }
 
 function toggleLock(name) {
   const p = players.find(x => x.name === name);
   if (!p) return;
   if (!p.locked && players.filter(x => x.locked).length >= 6) {
-      return; // Do nothing if trying to lock a 7th player
+      return;
   }
   p.locked = !p.locked;
   
@@ -1037,20 +1069,51 @@ function toggleLock(name) {
   
   saveToLocal();
   renderAll();
-  let buildPanel = document.getElementById('panel-build');
-  if(buildPanel && buildPanel.classList.contains('on')) renderBuildTab();
+}
+
+// FIX #2: Two-tap clear with visual confirm state
+function handleClearClick() {
+  const hasContent = draftedLineup.length > 0 || players.some(p => p.locked);
+  if (!hasContent) return; // Nothing to clear
+
+  if (clearConfirmPending) {
+    // Second tap: actually clear
+    clearLocks();
+    clearConfirmPending = false;
+  } else {
+    // First tap: show confirm state
+    clearConfirmPending = true;
+    const btn = document.getElementById('clear-roster-btn');
+    if (btn) {
+      btn.textContent = 'Tap Again to Confirm';
+      btn.classList.add('clear-btn-confirm');
+    }
+    // Auto-reset after 3 seconds if they don't confirm
+    setTimeout(() => {
+      if (clearConfirmPending) {
+        clearConfirmPending = false;
+        resetClearButton();
+      }
+    }, 3000);
+  }
+}
+
+function resetClearButton() {
+  clearConfirmPending = false;
+  const btn = document.getElementById('clear-roster-btn');
+  if (btn) {
+    btn.textContent = 'Clear Roster';
+    btn.classList.remove('clear-btn-confirm');
+  }
 }
 
 function clearLocks() {
   players.forEach(p => p.locked = false);
-  
   draftedLineup = [];
   currentLineup = [];
   
   saveToLocal();
   renderAll();
-  let buildPanel = document.getElementById('panel-build');
-  if(buildPanel && buildPanel.classList.contains('on')) renderBuildTab();
 }
 
 function buildPrebuilt() {
@@ -1059,15 +1122,25 @@ function buildPrebuilt() {
   renderLUCard('pb-cash-card',buildQuantLineup([],'cash'),'cash');
 }
 
+// FIX #1: updateBadge no longer crashes — safely references nav-auto-btn
 function updateBadge() {
-  const locked=players.filter(p=>p.locked);
-  const spent=locked.reduce((s,p)=>s+p.price,0);
-  const rem=SAL_CAP-spent;
-  document.getElementById('rs-count').textContent=locked.length;
-  document.getElementById('rs-rem').textContent='$'+(rem>=1000?(rem/1000).toFixed(1)+'K':rem);
-  const autoBtn=document.getElementById('nav-auto-btn');
-  if(locked.length>0&&locked.length<6){autoBtn.style.boxShadow='0 0 8px rgba(232,168,56,0.5)';}
-  else{autoBtn.style.boxShadow='none';}
+  const locked = players.filter(p => p.locked);
+  const lineupToShow = draftedLineup.length === 6 ? draftedLineup : locked;
+  const spent = lineupToShow.reduce((s, p) => s + p.price, 0);
+  const rem = SAL_CAP - spent;
+  const count = lineupToShow.length;
+
+  document.getElementById('rs-count').textContent = count;
+  document.getElementById('rs-rem').textContent = '$' + (rem >= 1000 ? (rem / 1000).toFixed(1) + 'K' : rem);
+
+  const autoBtn = document.getElementById('nav-auto-btn');
+  if (autoBtn) {
+    if (locked.length > 0 && locked.length < 6 && draftedLineup.length === 0) {
+      autoBtn.style.boxShadow = '0 0 8px rgba(232,168,56,0.5)';
+    } else {
+      autoBtn.style.boxShadow = 'none';
+    }
+  }
 }
 
 function renderPods() {
@@ -1088,7 +1161,17 @@ function copyLineupToClipboard() {
   navigator.clipboard.writeText(text).then(()=>alert("Lineup copied!"));
 }
 
-function renderAll() { renderPods(); renderArb(); updateBadge(); }
+// FIX #4: renderAll now always updates the build tab when it's visible
+function renderAll() {
+  renderPods();
+  renderArb();
+  updateBadge();
+  // Always re-render build tab if it's currently showing
+  const buildPanel = document.getElementById('panel-build');
+  if (buildPanel && buildPanel.classList.contains('on')) {
+    renderBuildTab();
+  }
+}
 
 // ============================================================
 //  BOOT
