@@ -134,6 +134,7 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
     </div>
     <div class="card-body">
       <ul style="padding-left:14px;font-size:11px;line-height:1.8;color:var(--sub);margin-bottom:0">
+        <li style="margin-bottom:6px"><strong style="color:var(--teal)">🌮 Steam (Taco):</strong> Represents sharp betting syndicate movement. Professional money is actively hammering this player's odds. Lock them into your GPP builds.</li>
         <li style="margin-bottom:6px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank vs. Odds Rank. Positive means DK mispriced them to your advantage.</li>
         <li style="margin-bottom:6px"><strong style="color:var(--text)">wVEL (Multi-Market):</strong> Blended Time-Decay Velocity. Tracks sharp money across Outright, T5, and T10 markets.</li>
         <li style="margin-bottom:6px"><strong style="color:var(--gold)">$DLTA:</strong> Master EV score. Blends Win/T5/T10 odds with Course History, Strokes Gained, and Line Movement.</li>
@@ -270,7 +271,7 @@ textarea{width:100%;min-height:100px;font-size:10px;line-height:1.5;background:v
 
 <script>
 // ============================================================
-//  CONFIG & STATE (v69 - FULL BUILD WITH TEE TIMES)
+//  CONFIG & STATE (v71 - BLENDED TRACKER RESTORED)
 // ============================================================
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900;
@@ -538,7 +539,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v69',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v71',JSON.stringify(players.map(p=>({
       name:p.name,
       tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
       tueT5:p.tueT5,wedT5:p.wedT5,liveT5:p.liveT5,
@@ -550,7 +551,7 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v69'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v71'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
@@ -659,7 +660,7 @@ function compute() {
     p.isDrift = parseInt(p.liveOdds) > parseInt(p.monOdds); 
     p.cut = p.trueCut; 
 
-    // STORM WEATHER MATRIX (Updated for 2 PM Peak Storms)
+    // STORM WEATHER MATRIX
     if(p.wave === "AM1") p.waveAdj = -1.0;
     else if(p.wave === "AM2") p.waveAdj = 1.5;
     else if(p.wave === "PM1") p.waveAdj = -3.5;
@@ -852,9 +853,10 @@ function renderArb() {
     if(p.tueOdds && p.tueOdds !== p.monOdds) breadcrumb+=` | T:${p.tueOdds>0?'+':''}${p.tueOdds}`;
     if(p.wedOdds && p.wedOdds !== (p.tueOdds || p.monOdds)) breadcrumb+=` | W:${p.wedOdds>0?'+':''}${p.wedOdds}`;
 
+    // Re-coupled to the Blended wVEL score
     let oddsDisplay=`<span style="color:var(--text);font-weight:800">+${p.liveOdds}</span>`;
-    if(p.wVelDisp>0)oddsDisplay=`<span style="color:var(--teal-bright);font-weight:800">+${p.liveOdds}</span>`;
-    else if(p.isDrift)oddsDisplay=`<span style="color:var(--red);font-weight:800">+${p.liveOdds}</span>`;
+    if(p.wVelDisp > 0) oddsDisplay=`<span style="color:var(--teal-bright);font-weight:800">+${p.liveOdds}</span>`;
+    else if(p.wVelDisp < 0) oddsDisplay=`<span style="color:var(--red);font-weight:800">+${p.liveOdds}</span>`;
 
     let wVelColor='var(--muted)';
     if(p.wVelDisp>0)wVelColor='var(--teal)';
@@ -1005,8 +1007,15 @@ function removePlayerFromBuild(name) {
   if (p) p.locked = false;
 
   if (draftedLineup.length > 0) {
-    draftedLineup = draftedLineup.filter(x => x.name !== name);
-    currentLineup = [...draftedLineup];
+      // User is altering an optimal build. Convert remaining 5 to manual locks.
+      draftedLineup.forEach(x => {
+          if (x.name !== name) {
+              let lockedPlayer = players.find(pl => pl.name === x.name);
+              if (lockedPlayer) lockedPlayer.locked = true;
+          }
+      });
+      draftedLineup = [];
+      currentLineup = [];
   }
 
   saveToLocal();
@@ -1018,7 +1027,9 @@ function removePlayerFromBuild(name) {
 function toggleLock(name) {
   const p = players.find(x => x.name === name);
   if (!p) return;
-  if (!p.locked && players.filter(x => x.locked).length >= 6) return;
+  if (!p.locked && players.filter(x => x.locked).length >= 6) {
+      return; // Do nothing if trying to lock a 7th player
+  }
   p.locked = !p.locked;
   
   draftedLineup = [];
