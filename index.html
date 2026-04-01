@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  /* San Antonio Palette */
   --bg:#110E0A;
   --surface:#1C1610;
   --surface2:#261E16;
@@ -217,6 +218,9 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
         <span class="wave-tag w-pm1">💨 PM1 (Wind) <span style="color:#FAF5EE; margin-left:2px;">-1.5 pts</span></span>
         <span class="wave-tag w-pm2">⛈️ PM2 (Storms) <span style="color:#FAF5EE; margin-left:2px;">-3.0 pts</span></span>
       </div>
+      <p style="font-size:10px;color:var(--sub);margin-top:8px; line-height: 1.4;">
+        The engine automatically applies these penalties and bonuses to a player's baseline projection based on Thursday/Friday weather splits.
+      </p>
     </div>
   </div>
 
@@ -326,7 +330,7 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
 
 <script>
 // ============================================================
-//  CONFIG & MASTER DATA (v55 COMPLETE, UNMINIFIED, CORRECT MATH)
+//  CONFIG & MASTER DATA (v57 - FINAL WEDNESDAY ODDS)
 // ============================================================
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900;
@@ -365,20 +369,20 @@ function showTab(id) {
 }
 
 // ============================================================
-//  MASTER DATABASE
+//  MASTER DATABASE (UPDATED WITH FINAL ODDS)
 // ============================================================
 const MASTER_DB = [
-    {name: "Tommy Fleetwood", sal: 10500, monOdds: 1400, tueOdds: 1425, wedOdds: 1425, liveOdds: 1425, liveT5: 285, liveT10: 144, sg: 1.87, trueCut: 0.95, fit: 'Elite', ch: 1.05},
-    {name: "Ludvig Aberg", sal: 10100, monOdds: 1550, tueOdds: 1600, wedOdds: 1500, liveOdds: 1450, liveT5: 295, liveT10: 154, sg: 1.03, trueCut: 0.78, fit: 'Elite', ch: 1.00},
+    {name: "Tommy Fleetwood", sal: 10500, monOdds: 1400, tueOdds: 1425, wedOdds: 1425, liveOdds: 1425, liveT5: 285, liveT10: 146, sg: 1.87, trueCut: 0.95, fit: 'Elite', ch: 1.05},
+    {name: "Ludvig Aberg", sal: 10100, monOdds: 1550, tueOdds: 1600, wedOdds: 1500, liveOdds: 1450, liveT5: 300, liveT10: 154, sg: 1.03, trueCut: 0.78, fit: 'Elite', ch: 1.00},
     {name: "Russell Henley", sal: 9800, monOdds: 1800, tueOdds: 1800, wedOdds: 1800, liveOdds: 1750, liveT5: 330, liveT10: 166, sg: 1.60, trueCut: 0.83, fit: 'Strong', ch: 1.15},
     {name: "Robert MacIntyre", sal: 9900, monOdds: 1750, tueOdds: 1800, wedOdds: 1800, liveOdds: 1800, liveT5: 350, liveT10: 178, sg: 1.26, trueCut: 0.92, fit: 'Mid', ch: 1.00},
-    {name: "Jordan Spieth", sal: 9500, monOdds: 1850, tueOdds: 1950, wedOdds: 2050, liveOdds: 1950, liveT5: 380, liveT10: 194, sg: 0.85, trueCut: 0.85, fit: 'Strong', ch: 1.20},
-    {name: "Si Woo Kim", sal: 9600, monOdds: 1900, tueOdds: 2000, wedOdds: 2050, liveOdds: 2150, liveT5: 395, liveT10: 198, sg: 1.17, trueCut: 0.80, fit: 'Elite', ch: 1.25},
+    {name: "Jordan Spieth", sal: 9500, monOdds: 1850, tueOdds: 1950, wedOdds: 2050, liveOdds: 1850, liveT5: 365, liveT10: 186, sg: 0.85, trueCut: 0.85, fit: 'Strong', ch: 1.20},
+    {name: "Si Woo Kim", sal: 9600, monOdds: 1900, tueOdds: 2000, wedOdds: 2050, liveOdds: 2150, liveT5: 400, liveT10: 198, sg: 1.17, trueCut: 0.80, fit: 'Elite', ch: 1.25},
     {name: "Hideki Matsuyama", sal: 9300, monOdds: 2250, tueOdds: 2150, wedOdds: 2250, liveOdds: 2250, liveT5: 410, liveT10: 205, sg: 1.02, trueCut: 0.92, fit: 'Strong', ch: 1.10},
     {name: "Maverick McNealy", sal: 9000, monOdds: 2300, tueOdds: 2300, wedOdds: 2500, liveOdds: 2500, liveT5: 475, liveT10: 235, sg: 1.16, trueCut: 0.83, fit: 'Strong', ch: 1.15},
     {name: "Sepp Straka", sal: 9200, monOdds: 3000, tueOdds: 2900, wedOdds: 2800, liveOdds: 2600, liveT5: 485, liveT10: 240, sg: 0.89, trueCut: 0.78, fit: 'Strong', ch: 1.05},
     {name: "Rickie Fowler", sal: 8800, monOdds: 2600, tueOdds: 2700, wedOdds: 2700, liveOdds: 2600, liveT5: 470, liveT10: 230, sg: 1.02, trueCut: 0.85, fit: 'Mid', ch: 1.05},
-    {name: "Michael Thorbjornsen", sal: 8900, monOdds: 2400, tueOdds: 2700, wedOdds: 2700, liveOdds: 2600, liveT5: 480, liveT10: 235, sg: 0.43, trueCut: 0.80, fit: 'Mid', ch: 1.00},
+    {name: "Michael Thorbjornsen", sal: 8900, monOdds: 2400, tueOdds: 2700, wedOdds: 2700, liveOdds: 2600, liveT5: 480, liveT10: 240, sg: 0.43, trueCut: 0.80, fit: 'Mid', ch: 1.00},
     {name: "Keith Mitchell", sal: 8500, monOdds: 3500, tueOdds: 3700, wedOdds: 3500, liveOdds: 3400, liveT5: 610, liveT10: 300, sg: 0.36, trueCut: 0.80, fit: 'Elite', ch: 1.15},
     {name: "Ryo Hisatsune", sal: 8300, monOdds: 4500, tueOdds: 3900, wedOdds: 3900, liveOdds: 3700, liveT5: 640, liveT10: 310, sg: 0.18, trueCut: 0.77, fit: 'Strong', ch: 1.10},
     {name: "Alex Noren", sal: 8700, monOdds: 3700, tueOdds: 4000, wedOdds: 4000, liveOdds: 3900, liveT5: 650, liveT10: 315, sg: 0.85, trueCut: 0.72, fit: 'Strong', ch: 1.15},
@@ -388,8 +392,8 @@ const MASTER_DB = [
     {name: "Thorbjorn Olesen", sal: 7800, monOdds: 5900, tueOdds: 6300, wedOdds: 6300, liveOdds: 5600, liveT5: 890, liveT10: 420, sg: 0.59, trueCut: 0.67, fit: 'Mid', ch: 1.15},
     {name: "John Keefer", sal: 8000, monOdds: 6500, tueOdds: 6400, wedOdds: 6000, liveOdds: 5700, liveT5: 930, liveT10: 445, sg: 0.27, trueCut: 0.53, fit: 'Mid', ch: 1.00},
     {name: "Sudarshan Yellamaraju", sal: 8100, monOdds: 7000, tueOdds: 6600, wedOdds: 6100, liveOdds: 5800, liveT5: 910, liveT10: 425, sg: 0.59, trueCut: 0.80, fit: 'Strong', ch: 1.00},
-    {name: "Marco Penge", sal: 7800, monOdds: 5100, tueOdds: 5400, wedOdds: 5800, liveOdds: 6200, liveT5: 1000, liveT10: 485, sg: 0.71, trueCut: 0.76, fit: 'Mid', ch: 1.00},
-    {name: "Alex Smalley", sal: 7600, monOdds: 6600, tueOdds: 6000, wedOdds: 5800, liveOdds: 6300, liveT5: 980, liveT10: 460, sg: 0.08, trueCut: 0.64, fit: 'Strong', ch: 1.00},
+    {name: "Marco Penge", sal: 7800, monOdds: 5100, tueOdds: 5400, wedOdds: 5800, liveOdds: 6300, liveT5: 1000, liveT10: 485, sg: 0.71, trueCut: 0.76, fit: 'Mid', ch: 1.00},
+    {name: "Alex Smalley", sal: 7600, monOdds: 6600, tueOdds: 6000, wedOdds: 5800, liveOdds: 6300, liveT5: 990, liveT10: 460, sg: 0.08, trueCut: 0.64, fit: 'Strong', ch: 1.00},
     {name: "Brian Harman", sal: 7900, monOdds: 7000, tueOdds: 7000, wedOdds: 6600, liveOdds: 6500, liveT5: 990, liveT10: 465, sg: 0.37, trueCut: 0.83, fit: 'Mid', ch: 1.15},
     {name: "Jordan Smith", sal: 7700, monOdds: 5600, tueOdds: 5800, wedOdds: 6100, liveOdds: 6600, liveT5: 1000, liveT10: 470, sg: 0.00, trueCut: 0.70, fit: 'Strong', ch: 1.00},
     {name: "Stephan Jaeger", sal: 7400, monOdds: 6600, tueOdds: 6400, wedOdds: 6100, liveOdds: 6600, liveT5: 1000, liveT10: 475, sg: -0.04, trueCut: 0.64, fit: 'Elite', ch: 1.05},
@@ -399,15 +403,15 @@ const MASTER_DB = [
     {name: "Rico Hoey", sal: 7500, monOdds: 7000, tueOdds: 7200, wedOdds: 7200, liveOdds: 7400, liveT5: 1125, liveT10: 520, sg: 0.01, trueCut: 0.74, fit: 'Strong', ch: 1.00},
     {name: "J.T. Poston", sal: 7400, monOdds: 7400, tueOdds: 7200, wedOdds: 7800, liveOdds: 7800, liveT5: 1150, liveT10: 530, sg: 0.46, trueCut: 0.75, fit: 'Mid', ch: 1.05},
     {name: "Christiaan Bezuidenhout", sal: 7300, monOdds: 7800, tueOdds: 7400, wedOdds: 7400, liveOdds: 7800, liveT5: 1125, liveT10: 520, sg: 0.64, trueCut: 0.77, fit: 'Mid', ch: 1.05},
-    {name: "Matt Wallace", sal: 7300, monOdds: 8600, tueOdds: 8000, wedOdds: 7600, liveOdds: 8000, liveT5: 1175, liveT10: 540, sg: 0.30, trueCut: 0.70, fit: 'Mid', ch: 1.10},
+    {name: "Matt Wallace", sal: 7300, monOdds: 8600, tueOdds: 8000, wedOdds: 7600, liveOdds: 8000, liveT5: 1200, liveT10: 550, sg: 0.30, trueCut: 0.70, fit: 'Mid', ch: 1.10},
     {name: "Mackenzie Hughes", sal: 7100, monOdds: 11000, tueOdds: 8400, wedOdds: 7800, liveOdds: 8000, liveT5: 1175, liveT10: 530, sg: -0.08, trueCut: 0.60, fit: 'Mid', ch: 1.00},
     {name: "Mac Meissner", sal: 8400, monOdds: 9400, tueOdds: 8200, wedOdds: 8200, liveOdds: 8400, liveT5: 1200, liveT10: 550, sg: 0.13, trueCut: 0.61, fit: 'Strong', ch: 1.10},
     {name: "Matt McCarty", sal: 7400, monOdds: 8400, tueOdds: 8800, wedOdds: 8200, liveOdds: 8600, liveT5: 1250, liveT10: 570, sg: 0.09, trueCut: 0.63, fit: 'Mid', ch: 1.00},
     {name: "Haotong Li", sal: 7100, monOdds: 8600, tueOdds: 9200, wedOdds: 8600, liveOdds: 8800, liveT5: 1300, liveT10: 590, sg: 0.38, trueCut: 0.72, fit: 'Mid', ch: 1.00},
     {name: "Chris Kirk", sal: 7200, monOdds: 8600, tueOdds: 9000, wedOdds: 8400, liveOdds: 8800, liveT5: 1275, liveT10: 580, sg: 0.25, trueCut: 0.56, fit: 'Strong', ch: 1.05},
-    {name: "Austin Smotherman", sal: 7000, monOdds: 10000, tueOdds: 8800, wedOdds: 9200, liveOdds: 8800, liveT5: 1275, liveT10: 580, sg: 0.04, trueCut: 0.37, fit: 'Strong', ch: 0.95},
-    {name: "Patrick Rodgers", sal: 7500, monOdds: 8400, tueOdds: 8400, wedOdds: 8400, liveOdds: 8800, liveT5: 1300, liveT10: 600, sg: 0.17, trueCut: 0.62, fit: 'Mid', ch: 1.10},
-    {name: "Andrew Novak", sal: 7300, monOdds: 10500, tueOdds: 10000, wedOdds: 10000, liveOdds: 9000, liveT5: 1325, liveT10: 600, sg: 0.11, trueCut: 0.80, fit: 'Strong', ch: 1.15},
+    {name: "Austin Smotherman", sal: 7000, monOdds: 10000, tueOdds: 8800, wedOdds: 9200, liveOdds: 8800, liveT5: 1275, liveT10: 590, sg: 0.04, trueCut: 0.37, fit: 'Strong', ch: 0.95},
+    {name: "Patrick Rodgers", sal: 7500, monOdds: 8400, tueOdds: 8400, wedOdds: 8400, liveOdds: 9000, liveT5: 1300, liveT10: 600, sg: 0.17, trueCut: 0.62, fit: 'Mid', ch: 1.10},
+    {name: "Andrew Novak", sal: 7300, monOdds: 10500, tueOdds: 10000, wedOdds: 10000, liveOdds: 9200, liveT5: 1325, liveT10: 600, sg: 0.11, trueCut: 0.80, fit: 'Strong', ch: 1.15},
     {name: "Kristoffer Reitan", sal: 7100, monOdds: 8600, tueOdds: 8600, wedOdds: 8200, liveOdds: 9000, liveT5: 1325, liveT10: 610, sg: 0.59, trueCut: 0.88, fit: 'Mid', ch: 1.00},
     {name: "Tom Kim", sal: 7200, monOdds: 10000, tueOdds: 9400, wedOdds: 9000, liveOdds: 9400, liveT5: 1325, liveT10: 600, sg: -0.08, trueCut: 0.73, fit: 'Strong', ch: 0.95},
     {name: "Bud Cauley", sal: 7200, monOdds: 9200, tueOdds: 9000, wedOdds: 9000, liveOdds: 9400, liveT5: 1325, liveT10: 600, sg: 0.07, trueCut: 0.75, fit: 'Mid', ch: 1.15},
@@ -417,22 +421,22 @@ const MASTER_DB = [
     {name: "Chad Ramey", sal: 7000, monOdds: 11000, tueOdds: 11000, wedOdds: 10000, liveOdds: 10500, liveT5: 1500, liveT10: 670, sg: 0.00, trueCut: 0.67, fit: 'Mid', ch: 0.95},
     {name: "Adrien Dumont De Chassart", sal: 7100, monOdds: 10500, tueOdds: 9400, wedOdds: 10000, liveOdds: 10500, liveT5: 1475, liveT10: 670, sg: -0.13, trueCut: 0.60, fit: 'Mid', ch: 1.00},
     {name: "Zecheng Dou", sal: 7100, monOdds: 10500, tueOdds: 10000, wedOdds: 10500, liveOdds: 11000, liveT5: 1600, liveT10: 720, sg: 0.07, trueCut: 0.80, fit: 'Mid', ch: 1.00},
-    {name: "William Mouw", sal: 7000, monOdds: 13000, tueOdds: 11500, wedOdds: 11500, liveOdds: 11000, liveT5: 1500, liveT10: 690, sg: -0.06, trueCut: 0.65, fit: 'Mid', ch: 1.00},
+    {name: "William Mouw", sal: 7000, monOdds: 13000, tueOdds: 11500, wedOdds: 11500, liveOdds: 11000, liveT5: 1550, liveT10: 690, sg: -0.06, trueCut: 0.65, fit: 'Mid', ch: 1.00},
     {name: "Taylor Moore", sal: 6900, monOdds: 11000, tueOdds: 11000, wedOdds: 11500, liveOdds: 11500, liveT5: 1600, liveT10: 720, sg: -0.12, trueCut: 0.52, fit: 'Mid', ch: 1.00},
     {name: "Billy Horschel", sal: 6800, monOdds: 15000, tueOdds: 11500, wedOdds: 11000, liveOdds: 11500, liveT5: 1600, liveT10: 720, sg: -0.72, trueCut: 0.66, fit: 'Strong', ch: 0.95},
     {name: "Beau Hossler", sal: 6800, monOdds: 13500, tueOdds: 11500, wedOdds: 11000, liveOdds: 11500, liveT5: 1600, liveT10: 720, sg: -0.09, trueCut: 0.62, fit: 'Mid', ch: 1.00},
-    {name: "S.H. Kim", sal: 6900, monOdds: 14500, tueOdds: 11500, wedOdds: 12000, liveOdds: 12000, liveT5: 1600, liveT10: 730, sg: -0.15, trueCut: 0.70, fit: 'Mid', ch: 1.00},
+    {name: "S.H. Kim", sal: 6900, monOdds: 14500, tueOdds: 11500, wedOdds: 12000, liveOdds: 12000, liveT5: 1650, liveT10: 730, sg: -0.15, trueCut: 0.70, fit: 'Mid', ch: 1.00},
     {name: "John Parry", sal: 7200, monOdds: 12000, tueOdds: 12500, wedOdds: 11500, liveOdds: 12500, liveT5: 1650, liveT10: 730, sg: 0.48, trueCut: 0.85, fit: 'Mid', ch: 1.00},
     {name: "Doug Ghim", sal: 7000, monOdds: 12500, tueOdds: 12500, wedOdds: 12500, liveOdds: 13000, liveT5: 1700, liveT10: 760, sg: 0.29, trueCut: 0.68, fit: 'Elite', ch: 1.00},
     {name: "Steven Fisk", sal: 6700, monOdds: 13500, tueOdds: 13000, wedOdds: 12500, liveOdds: 13000, liveT5: 1750, liveT10: 770, sg: -0.19, trueCut: 0.61, fit: 'Mid', ch: 1.00},
     {name: "Lee Hodges", sal: 6900, monOdds: 13500, tueOdds: 13500, wedOdds: 13000, liveOdds: 13000, liveT5: 1750, liveT10: 760, sg: -0.08, trueCut: 0.57, fit: 'Mid', ch: 1.05},
-    {name: "Vince Whaley", sal: 6700, monOdds: 13500, tueOdds: 12000, wedOdds: 12500, liveOdds: 13500, liveT5: 1850, liveT10: 810, sg: 0.41, trueCut: 0.79, fit: 'Mid', ch: 0.95},
+    {name: "Vince Whaley", sal: 6700, monOdds: 13500, tueOdds: 12000, wedOdds: 12500, liveOdds: 13500, liveT5: 1850, liveT10: 820, sg: 0.41, trueCut: 0.79, fit: 'Mid', ch: 0.95},
     {name: "Seamus Power", sal: 6900, monOdds: 14500, tueOdds: 13000, wedOdds: 13500, liveOdds: 13500, liveT5: 1800, liveT10: 790, sg: -0.02, trueCut: 0.66, fit: 'Mid', ch: 0.95},
-    {name: "Michael Kim", sal: 6900, monOdds: 12500, tueOdds: 12500, wedOdds: 13000, liveOdds: 13500, liveT5: 1800, liveT10: 810, sg: 0.20, trueCut: 0.75, fit: 'Mid', ch: 1.00},
+    {name: "Michael Kim", sal: 6900, monOdds: 12500, tueOdds: 12500, wedOdds: 13000, liveOdds: 13500, liveT5: 1850, liveT10: 810, sg: 0.20, trueCut: 0.75, fit: 'Mid', ch: 1.00},
     {name: "Sami Valimaki", sal: 6600, monOdds: 15500, tueOdds: 15000, wedOdds: 15000, liveOdds: 14000, liveT5: 1850, liveT10: 820, sg: 0.43, trueCut: 0.57, fit: 'Mid', ch: 1.00},
     {name: "Emiliano Grillo", sal: 6700, monOdds: 15000, tueOdds: 15000, wedOdds: 15500, liveOdds: 14500, liveT5: 1900, liveT10: 830, sg: 0.04, trueCut: 0.71, fit: 'Strong', ch: 1.05},
     {name: "Kevin Roy", sal: 6900, monOdds: 16500, tueOdds: 15000, wedOdds: 14000, liveOdds: 14500, liveT5: 1900, liveT10: 840, sg: 0.14, trueCut: 0.71, fit: 'Mid', ch: 0.95},
-    {name: "Austin Eckroat", sal: 6800, monOdds: 13500, tueOdds: 14000, wedOdds: 14500, liveOdds: 15000, liveT5: 2000, liveT10: 870, sg: 0.00, trueCut: 0.68, fit: 'Elite', ch: 1.00},
+    {name: "Austin Eckroat", sal: 6800, monOdds: 13500, tueOdds: 14000, wedOdds: 14500, liveOdds: 15000, liveT5: 2000, liveT10: 880, sg: 0.00, trueCut: 0.68, fit: 'Elite', ch: 1.00},
     {name: "Andrew Putnam", sal: 6800, monOdds: 20000, tueOdds: 17000, wedOdds: 16000, liveOdds: 15000, liveT5: 1850, liveT10: 800, sg: 0.28, trueCut: 0.59, fit: 'Mid', ch: 1.05},
     {name: "Bronson Burgoon", sal: 6600, monOdds: 24000, tueOdds: 14500, wedOdds: 15500, liveOdds: 15500, liveT5: 2050, liveT10: 910, sg: 0.29, trueCut: 0.50, fit: 'Mid', ch: 0.95},
     {name: "Kris Ventura", sal: 6600, monOdds: 16500, tueOdds: 14500, wedOdds: 15000, liveOdds: 16000, liveT5: 2050, liveT10: 890, sg: 0.05, trueCut: 0.52, fit: 'Mid', ch: 0.95},
@@ -451,44 +455,54 @@ const MASTER_DB = [
     {name: "David Ford", sal: 6700, monOdds: 18500, tueOdds: 18500, wedOdds: 21000, liveOdds: 22500, liveT5: 2700, liveT10: 1150, sg: -0.52, trueCut: 0.42, fit: 'Mid', ch: 1.00},
     {name: "Chandler Blanchet", sal: 6600, monOdds: 22500, tueOdds: 19500, wedOdds: 23000, liveOdds: 23000, liveT5: 2700, liveT10: 1125, sg: -1.13, trueCut: 0.22, fit: 'Mid', ch: 1.00},
     {name: "Chan Kim", sal: 6400, monOdds: 25000, tueOdds: 24000, wedOdds: 24000, liveOdds: 24000, liveT5: 2800, liveT10: 1175, sg: -0.06, trueCut: 0.54, fit: 'Mid', ch: 0.95},
-    {name: "Mark Hubbard", sal: 6400, monOdds: 29000, tueOdds: 28000, wedOdds: 28000, liveOdds: 24000, liveT5: 2800, liveT10: 1200, sg: -0.02, trueCut: 0.63, fit: 'Mid', ch: 0.95},
+    {name: "Mark Hubbard", sal: 6400, monOdds: 29000, tueOdds: 28000, wedOdds: 28000, liveOdds: 24000, liveT5: 2900, liveT10: 1200, sg: -0.02, trueCut: 0.63, fit: 'Mid', ch: 0.95},
     {name: "Lucas Glover", sal: 6500, monOdds: 22500, tueOdds: 22500, wedOdds: 24000, liveOdds: 24000, liveT5: 2800, liveT10: 1150, sg: -0.17, trueCut: 0.57, fit: 'Strong', ch: 1.00},
     {name: "Sam Ryder", sal: 6500, monOdds: 25000, tueOdds: 25000, wedOdds: 25000, liveOdds: 25000, liveT5: 3000, liveT10: 1250, sg: -0.32, trueCut: 0.56, fit: 'Mid', ch: 1.00},
     {name: "Takumi Kanaya", sal: 6400, monOdds: 25000, tueOdds: 26000, wedOdds: 24000, liveOdds: 25000, liveT5: 2800, liveT10: 1175, sg: -0.06, trueCut: 0.54, fit: 'Mid', ch: 0.95},
     {name: "Brandt Snedeker", sal: 6400, monOdds: 34000, tueOdds: 28000, wedOdds: 26000, liveOdds: 25000, liveT5: 2800, liveT10: 1150, sg: -0.34, trueCut: 0.39, fit: 'Weak', ch: 1.00},
     {name: "Carson Young", sal: 6200, monOdds: 39000, tueOdds: 25000, wedOdds: 25000, liveOdds: 25000, liveT5: 2900, liveT10: 1225, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 0.95},
     {name: "Pontus Nyholm", sal: 6300, monOdds: 42500, tueOdds: 31000, wedOdds: 30000, liveOdds: 26000, liveT5: 3200, liveT10: 1350, sg: -0.88, trueCut: 0.37, fit: 'Mid', ch: 1.00},
-    {name: "A.J. Ewart", sal: 6700, monOdds: 33000, tueOdds: 24000, wedOdds: 27000, liveOdds: 26000, liveT5: 3000, liveT10: 1225, sg: -0.06, trueCut: 0.60, fit: 'Mid', ch: 1.00},
-    {name: "Patrick Fishburn", sal: 6400, monOdds: 27500, tueOdds: 28000, wedOdds: 26000, liveOdds: 27000, liveT5: 3100, liveT10: 1300, sg: -0.08, trueCut: 0.53, fit: 'Strong', ch: 1.00},
+    {name: "A.J. Ewart", sal: 6700, monOdds: 33000, tueOdds: 24000, wedOdds: 27000, liveOdds: 26000, liveT5: 3000, liveT10: 1250, sg: -0.06, trueCut: 0.60, fit: 'Mid', ch: 1.00},
+    {name: "Patrick Fishburn", sal: 6400, monOdds: 27500, tueOdds: 28000, wedOdds: 26000, liveOdds: 27000, liveT5: 3200, liveT10: 1300, sg: -0.08, trueCut: 0.53, fit: 'Strong', ch: 1.00},
     {name: "Jimmy Stanger", sal: 6500, monOdds: 60000, tueOdds: 32500, wedOdds: 31000, liveOdds: 29000, liveT5: 3400, liveT10: 1400, sg: -0.09, trueCut: 0.80, fit: 'Mid', ch: 0.95},
-    {name: "Dylan Wu", sal: 6400, monOdds: 23000, tueOdds: 25000, wedOdds: 29000, liveOdds: 30000, liveT5: 3400, liveT10: 1375, sg: -0.41, trueCut: 0.60, fit: 'Mid', ch: 1.00},
+    {name: "Dylan Wu", sal: 6400, monOdds: 23000, tueOdds: 25000, wedOdds: 29000, liveOdds: 30000, liveT5: 3400, liveT10: 1400, sg: -0.41, trueCut: 0.60, fit: 'Mid', ch: 1.00},
     {name: "Jackson Suber", sal: 6200, monOdds: 17000, tueOdds: 17000, wedOdds: 18500, liveOdds: 32000, liveT5: 3700, liveT10: 1500, sg: -0.63, trueCut: 0.48, fit: 'Mid', ch: 0.95},
-    {name: "Adam Svensson", sal: 6300, monOdds: 34000, tueOdds: 32500, wedOdds: 33000, liveOdds: 33000, liveT5: 3700, liveT10: 1500, sg: -0.55, trueCut: 0.42, fit: 'Strong', ch: 1.00},
+    {name: "Adam Svensson", sal: 6300, monOdds: 34000, tueOdds: 32500, wedOdds: 33000, liveOdds: 34000, liveT5: 3700, liveT10: 1500, sg: -0.55, trueCut: 0.42, fit: 'Strong', ch: 1.00},
     {name: "Neal Shipley", sal: 6300, monOdds: 36000, tueOdds: 35000, wedOdds: 36000, liveOdds: 34000, liveT5: 3900, liveT10: 1600, sg: -1.81, trueCut: 0.11, fit: 'Mid', ch: 1.00},
     {name: "Hank Lebioda", sal: 6400, monOdds: 36000, tueOdds: 35000, wedOdds: 34000, liveOdds: 35000, liveT5: 3800, liveT10: 1550, sg: -0.85, trueCut: 0.50, fit: 'Mid', ch: 0.95},
     {name: "Danny Walker", sal: 6300, monOdds: 49000, tueOdds: 39000, wedOdds: 37000, liveOdds: 38000, liveT5: 4400, liveT10: 1800, sg: -0.63, trueCut: 0.48, fit: 'Mid', ch: 1.00},
     {name: "John Vanderlaan", sal: 6300, monOdds: 40000, tueOdds: 37000, wedOdds: 39000, liveOdds: 40000, liveT5: 4400, liveT10: 1750, sg: -0.48, trueCut: 0.50, fit: 'Mid', ch: 1.00},
     {name: "Erik Van Rooyen", sal: 6200, monOdds: 39000, tueOdds: 39000, wedOdds: 39000, liveOdds: 40000, liveT5: 4500, liveT10: 1850, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 0.95},
+    {name: "Zach Bauchau", sal: 6400, monOdds: 28000, tueOdds: 30000, wedOdds: 44000, liveOdds: 45000, liveT5: 4800, liveT10: 1900, sg: -0.33, trueCut: 0.70, fit: 'Mid', ch: 0.95},
     {name: "Patton Kizzire", sal: 6100, monOdds: 70000, tueOdds: 46000, wedOdds: 44000, liveOdds: 45000, liveT5: 4800, liveT10: 1900, sg: -0.64, trueCut: 0.45, fit: 'Mid', ch: 1.00},
     {name: "Lanto Griffin", sal: 6300, monOdds: 43000, tueOdds: 43000, wedOdds: 44000, liveOdds: 45000, liveT5: 4900, liveT10: 1950, sg: -0.35, trueCut: 0.29, fit: 'Mid', ch: 1.05},
-    {name: "Kevin Streelman", sal: 6300, monOdds: 46000, tueOdds: 35000, wedOdds: 45000, liveOdds: 46000, liveT5: 4800, liveT10: 1850, sg: -0.90, trueCut: 0.63, fit: 'Mid', ch: 1.00},
+    {name: "Kevin Streelman", sal: 6300, monOdds: 46000, tueOdds: 35000, wedOdds: 45000, liveOdds: 46000, liveT5: 4800, liveT10: 1900, sg: -0.90, trueCut: 0.63, fit: 'Mid', ch: 1.00},
     {name: "Nick Dunlap", sal: 6100, monOdds: 72500, tueOdds: 50000, wedOdds: 49000, liveOdds: 48000, liveT5: 5400, liveT10: 2150, sg: -1.11, trueCut: 0.36, fit: 'Strong', ch: 1.00},
     {name: "Charley Hoffman", sal: 6200, monOdds: 62500, tueOdds: 55000, wedOdds: 50000, liveOdds: 49000, liveT5: 5400, liveT10: 2150, sg: -1.64, trueCut: 0.14, fit: 'Mid', ch: 0.85},
     {name: "Chandler Phillips", sal: 6200, monOdds: 52500, tueOdds: 44000, wedOdds: 45000, liveOdds: 50000, liveT5: 5200, liveT10: 2000, sg: -0.43, trueCut: 0.51, fit: 'Mid', ch: 1.00},
     {name: "Alejandro Tosti", sal: 6200, monOdds: 55000, tueOdds: 55000, wedOdds: 49000, liveOdds: 50000, liveT5: 5800, liveT10: 2300, sg: -1.37, trueCut: 0.26, fit: 'Mid', ch: 0.95},
-    {name: "Adam Schenk", sal: 6100, monOdds: 70000, tueOdds: 50000, wedOdds: 52500, liveOdds: 52500, liveT5: 5700, liveT10: 2250, sg: -1.17, trueCut: 0.37, fit: 'Mid', ch: 0.95},
+    {name: "Adam Schenk", sal: 6100, monOdds: 70000, tueOdds: 50000, wedOdds: 52500, liveOdds: 52500, liveT5: 5800, liveT10: 2250, sg: -1.17, trueCut: 0.37, fit: 'Mid', ch: 0.95},
+    {name: "Christo Lamprecht", sal: 6200, monOdds: 57500, tueOdds: 46000, wedOdds: 52500, liveOdds: 55000, liveT5: 6000, liveT10: 2400, sg: -1.72, trueCut: 0.40, fit: 'Mid', ch: 1.00},
     {name: "Joe Highsmith", sal: 6300, monOdds: 65000, tueOdds: 57500, wedOdds: 57500, liveOdds: 57500, liveT5: 6100, liveT10: 2350, sg: -1.43, trueCut: 0.40, fit: 'Mid', ch: 1.00},
-    {name: "Peter Malnati", sal: 6100, monOdds: 90000, tueOdds: 48000, wedOdds: 57500, liveOdds: 57500, liveT5: 5900, liveT10: 2300, sg: -1.02, trueCut: 0.42, fit: 'Weak', ch: 1.00},
+    {name: "Gordon Sargent", sal: 6000, monOdds: 125000, tueOdds: 65000, wedOdds: 60000, liveOdds: 57500, liveT5: 6300, liveT10: 2500, sg: -1.08, trueCut: 0.33, fit: 'Strong', ch: 1.00},
+    {name: "Peter Malnati", sal: 6100, monOdds: 90000, tueOdds: 48000, wedOdds: 57500, liveOdds: 57500, liveT5: 6000, liveT10: 2300, sg: -1.02, trueCut: 0.42, fit: 'Weak', ch: 1.00},
+    {name: "Kensei Hirata", sal: 6100, monOdds: 85000, tueOdds: 60000, wedOdds: 55000, liveOdds: 57500, liveT5: 5900, liveT10: 2250, sg: -1.25, trueCut: 0.50, fit: 'Mid', ch: 1.00},
     {name: "Paul Waring", sal: 6200, monOdds: 90000, tueOdds: 65000, wedOdds: 62500, liveOdds: 60000, liveT5: 6400, liveT10: 2450, sg: -1.10, trueCut: 0.31, fit: 'Mid', ch: 1.00},
     {name: "Justin Lower", sal: 6200, monOdds: 72500, tueOdds: 65000, wedOdds: 60000, liveOdds: 67500, liveT5: 6800, liveT10: 2500, sg: -1.23, trueCut: 0.42, fit: 'Mid', ch: 1.00},
-    {name: "Brice Garnett", sal: 6100, monOdds: 80000, tueOdds: 60000, wedOdds: 62500, liveOdds: 67500, liveT5: 6500, liveT10: 2450, sg: -0.81, trueCut: 0.43, fit: 'Mid', ch: 1.00},
+    {name: "Brice Garnett", sal: 6100, monOdds: 80000, tueOdds: 60000, wedOdds: 62500, liveOdds: 67500, liveT5: 6600, liveT10: 2450, sg: -0.81, trueCut: 0.43, fit: 'Mid', ch: 1.00},
     {name: "Nick Hardy", sal: 6100, monOdds: 55000, tueOdds: 55000, wedOdds: 70000, liveOdds: 75000, liveT5: 7400, liveT10: 2800, sg: -0.48, trueCut: 0.31, fit: 'Mid', ch: 1.05},
+    {name: "Davis Chatfield", sal: 6300, monOdds: 67500, tueOdds: 70000, wedOdds: 72500, liveOdds: 77500, liveT5: 7200, liveT10: 2600, sg: -1.10, trueCut: 0.37, fit: 'Mid', ch: 1.00},
     {name: "Camilo Villegas", sal: 6100, monOdds: 120000, tueOdds: 90000, wedOdds: 87500, liveOdds: 85000, liveT5: 8200, liveT10: 3100, sg: -1.24, trueCut: 0.45, fit: 'Weak', ch: 0.95},
     {name: "K.H. Lee", sal: 6000, monOdds: 120000, tueOdds: 90000, wedOdds: 135000, liveOdds: 125000, liveT5: 11000, liveT10: 4000, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 0.95},
+    {name: "Jeffrey Kang", sal: 6100, monOdds: 140000, tueOdds: 115000, wedOdds: 110000, liveOdds: 125000, liveT5: 11500, liveT10: 4200, sg: -2.06, trueCut: 0.12, fit: 'Weak', ch: 0.95},
     {name: "Jimmy Walker", sal: 6000, monOdds: 300000, tueOdds: 140000, wedOdds: 160000, liveOdds: 170000, liveT5: 14500, liveT10: 5200, sg: -2.29, trueCut: 0.30, fit: 'Weak', ch: 0.95},
     {name: "Brendon Todd", sal: 6000, monOdds: 275000, tueOdds: 225000, wedOdds: 200000, liveOdds: 180000, liveT5: 15000, liveT10: 5200, sg: 0.00, trueCut: 0.50, fit: 'Weak', ch: 1.00},
-    {name: "Rafael Campos", sal: 6000, monOdds: 225000, tueOdds: 180000, wedOdds: 200000, liveOdds: 200000, liveT5: 17000, liveT10: 5800, sg: -1.29, trueCut: 0.31, fit: 'Weak', ch: 1.00},
-    {name: "Ryan Palmer", sal: 6000, monOdds: 200000, tueOdds: 250000, wedOdds: 275000, liveOdds: 250000, liveT5: 22000, liveT10: 7400, sg: -2.11, trueCut: 0.10, fit: 'Weak', ch: 0.95}
+    {name: "Frankie Capan III", sal: 6000, monOdds: 180000, tueOdds: 180000, wedOdds: 180000, liveOdds: 180000, liveT5: 15500, liveT10: 5500, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 1.00},
+    {name: "Rafael Campos", sal: 6000, monOdds: 225000, tueOdds: 180000, wedOdds: 200000, liveOdds: 200000, liveT5: 17000, liveT10: 5900, sg: -1.29, trueCut: 0.31, fit: 'Weak', ch: 1.00},
+    {name: "Ryan Palmer", sal: 6000, monOdds: 200000, tueOdds: 250000, wedOdds: 275000, liveOdds: 250000, liveT5: 22000, liveT10: 7400, sg: -2.11, trueCut: 0.10, fit: 'Weak', ch: 0.95},
+    {name: "Marcelo Rozo", sal: 6000, monOdds: 275000, tueOdds: 200000, wedOdds: 250000, liveOdds: 250000, liveT5: 20000, liveT10: 6900, sg: -2.10, trueCut: 0.28, fit: 'Weak', ch: 1.00},
+    {name: "Charlie Crockett", sal: 6000, monOdds: 400000, tueOdds: 350000, wedOdds: 400000, liveOdds: 350000, liveT5: 28000, liveT10: 9200, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 1.00},
+    {name: "Austin Wylie", sal: 6000, monOdds: 500000, tueOdds: 500000, wedOdds: 500000, liveOdds: 350000, liveT5: 29000, liveT10: 9600, sg: 0.00, trueCut: 0.50, fit: 'Weak', ch: 1.00}
 ];
 
 const TEE_TIMES = `7:30 AM,1,"Lanto Griffin, Kevin Streelman, Max McGreevy"
@@ -520,7 +534,7 @@ const TEE_TIMES = `7:30 AM,1,"Lanto Griffin, Kevin Streelman, Max McGreevy"
 12:54 PM,1,"Erik van Rooyen, K.H. Lee, Eric Cole"
 12:54 PM,10,"Nick Dunlap, Andrew Putnam, Justin Lower"
 1:06 PM,1,"Ludvig Aberg, Robert MacIntyre, Jordan Spieth"
-1:06 PM,10,"Ricky Castillo, Jhonattan Vegas, Brandt Snedeker"
+1:06 PM,10,"Jhonattan Vegas, Brandt Snedeker"
 1:18 PM,1,"Sepp Straka, Brian Harman, Billy Horschel"
 1:18 PM,10,"Nick Taylor, Matt McCarty, Kevin Yu"
 1:30 PM,1,"J.J. Spaun, Russell Henley, Stephan Jaeger"
@@ -560,16 +574,17 @@ TEE_TIMES.split('\n').forEach(line => {
 });
 
 function loadInitialData() {
-  players = MASTER_DB.map(p => {
-    let assignedWave = waveMap[extractLastName(p.name)] || "AM2";
-    
-    return {
-      name:p.name,price:p.sal,monOdds:p.monOdds,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
-      liveT5:p.liveT5,liveT10:p.liveT10,sg:p.sg,trueCut:p.trueCut,ch:p.ch,
-      fit:p.fit,locked:false,implMon:toImp(p.monOdds),implLive:toImp(p.liveOdds),
-      salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:p.trueCut,
-      isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
-    };
+  players = MASTER_DB
+    .filter(p => !p.name.toLowerCase().includes("castillo"))
+    .map(p => {
+      let assignedWave = waveMap[extractLastName(p.name)] || "AM2";
+      return {
+        name:p.name,price:p.sal,monOdds:p.monOdds,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
+        liveT5:p.liveT5,liveT10:p.liveT10,sg:p.sg,trueCut:p.trueCut,ch:p.ch,
+        fit:p.fit,locked:false,implMon:toImp(p.monOdds),implLive:toImp(p.liveOdds),
+        salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:p.trueCut,
+        isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
+      };
   });
   compute();
   saveToLocal();
@@ -578,7 +593,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v55',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v57',JSON.stringify(players.map(p=>({
       name:p.name,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,liveT5:p.liveT5,liveT10:p.liveT10,locked:p.locked
     }))));
   } catch(e) {}
@@ -586,28 +601,30 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v55'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v57'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
-    players = MASTER_DB.map(masterP => {
-      const savedP = parsed.find(x => x.name === masterP.name) || {};
-      const tueOdds = savedP.tueOdds || masterP.tueOdds;
-      const wedOdds = savedP.wedOdds || masterP.wedOdds;
-      const liveOdds = savedP.liveOdds || masterP.liveOdds;
-      const liveT5 = savedP.liveT5 || masterP.liveT5;
-      const liveT10 = savedP.liveT10 || masterP.liveT10;
-      
-      let assignedWave = waveMap[extractLastName(masterP.name)] || "AM2";
+    players = MASTER_DB
+      .filter(p => !p.name.toLowerCase().includes("castillo"))
+      .map(masterP => {
+        const savedP = parsed.find(x => x.name === masterP.name) || {};
+        const tueOdds = savedP.tueOdds || masterP.tueOdds;
+        const wedOdds = savedP.wedOdds || masterP.wedOdds;
+        const liveOdds = savedP.liveOdds || masterP.liveOdds;
+        const liveT5 = savedP.liveT5 || masterP.liveT5;
+        const liveT10 = savedP.liveT10 || masterP.liveT10;
+        
+        let assignedWave = waveMap[extractLastName(masterP.name)] || "AM2";
 
-      return {
-        name:masterP.name,price:masterP.sal,monOdds:masterP.monOdds,tueOdds,wedOdds,
-        liveOdds,liveT5,liveT10,sg:masterP.sg,trueCut:masterP.trueCut,ch:masterP.ch,
-        fit:masterP.fit||'Mid',locked:savedP.locked||false,
-        implMon:toImp(masterP.monOdds),implLive:toImp(liveOdds),
-        salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:masterP.trueCut,
-        isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
-      };
+        return {
+          name:masterP.name,price:masterP.sal,monOdds:masterP.monOdds,tueOdds,wedOdds,
+          liveOdds,liveT5,liveT10,sg:masterP.sg,trueCut:masterP.trueCut,ch:masterP.ch,
+          fit:masterP.fit||'Mid',locked:savedP.locked||false,
+          implMon:toImp(masterP.monOdds),implLive:toImp(liveOdds),
+          salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:masterP.trueCut,
+          isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
+        };
     });
     compute();
     renderAll();
@@ -695,14 +712,11 @@ function compute() {
     p.wVel = earlyVel + midVel + lateVel;
     p.wVelDisp = p.wVel * 1000;
 
-    let iT5 = p.liveT5 ? toImp(p.liveT5) : iLiv * 4; 
-    let iT10 = p.liveT10 ? toImp(p.liveT10) : iLiv * 8; 
-
     const winProb = iLiv;
-    const t5Prob = iT5 - winProb;       
-    const t10Prob = iT10 - iT5;         
-    const t20Prob = Math.min(iT10 * 0.9, 0.30); 
-    const t30Prob = Math.min(iT10 * 0.6, 0.20); 
+    const t5Prob = (toImp(p.liveT5) || (iLiv * 4)) - winProb;       
+    const t10Prob = (toImp(p.liveT10) || (iLiv * 8)) - (toImp(p.liveT5) || (iLiv * 4));         
+    const t20Prob = Math.min((toImp(p.liveT10) || (iLiv * 8)) * 0.9, 0.30); 
+    const t30Prob = Math.min((toImp(p.liveT10) || (iLiv * 8)) * 0.6, 0.20); 
 
     const expPlacement = (winProb * 30) + (t5Prob * 15.5) + (t10Prob * 8.8) + (t20Prob * 5.0) + (t30Prob * 2.5);
     const sgDKPts = p.sg * 18;
@@ -797,6 +811,7 @@ function buildQuantLineup(locked, type) {
 
     let improved = true, attempts = 0;
     
+    // Shuffled search array to prevent local optima trap
     let searchAvail = [...avail].sort(() => Math.random() - 0.5);
 
     while (improved && attempts < 25) {
@@ -984,6 +999,7 @@ function renderBuildTab() {
                 ${getWaveBadge(p.wave)}
                 <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
                 <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
+                <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
               </div>
             </div>
           </div>
