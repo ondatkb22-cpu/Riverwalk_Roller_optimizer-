@@ -218,6 +218,9 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
         <span class="wave-tag w-pm1">💨 PM1 (Wind) <span style="color:#FAF5EE; margin-left:2px;">-1.5 pts</span></span>
         <span class="wave-tag w-pm2">⛈️ PM2 (Storms) <span style="color:#FAF5EE; margin-left:2px;">-3.0 pts</span></span>
       </div>
+      <p style="font-size:10px;color:var(--sub);margin-top:8px; line-height: 1.4;">
+        The engine automatically applies these penalties and bonuses to a player's baseline projection based on Thursday/Friday weather splits.
+      </p>
     </div>
   </div>
 
@@ -327,7 +330,7 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
 
 <script>
 // ============================================================
-//  CONFIG & STATE (v58 - STRICT MATH PURGE)
+//  CONFIG & STATE (v59 - STRICT MATH PURGE & REFINED T5/T10 PROB)
 // ============================================================
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900;
@@ -589,7 +592,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v58',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v59',JSON.stringify(players.map(p=>({
       name:p.name,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,liveT5:p.liveT5,liveT10:p.liveT10,locked:p.locked
     }))));
   } catch(e) {}
@@ -597,7 +600,7 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v58'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v59'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
@@ -706,11 +709,15 @@ function compute() {
     p.wVel = earlyVel + midVel + lateVel;
     p.wVelDisp = p.wVel * 1000;
 
+    let iT5 = p.liveT5 ? toImp(p.liveT5) : iLiv * 4; 
+    let iT10 = p.liveT10 ? toImp(p.liveT10) : iLiv * 8; 
+
+    // EXACT CONDITIONAL PLACEMENT PROBABILITIES
     const winProb = iLiv;
-    const t5Prob = (toImp(p.liveT5) || (iLiv * 4)) - winProb;       
-    const t10Prob = (toImp(p.liveT10) || (iLiv * 8)) - (toImp(p.liveT5) || (iLiv * 4));         
-    const t20Prob = Math.min((toImp(p.liveT10) || (iLiv * 8)) * 0.9, 0.30); 
-    const t30Prob = Math.min((toImp(p.liveT10) || (iLiv * 8)) * 0.6, 0.20); 
+    const t5Prob = iT5 - winProb;       
+    const t10Prob = iT10 - iT5;         
+    const t20Prob = Math.min(iT10 * 0.9, 0.30); 
+    const t30Prob = Math.min(iT10 * 0.6, 0.20); 
 
     const expPlacement = (winProb * 30) + (t5Prob * 15.5) + (t10Prob * 8.8) + (t20Prob * 5.0) + (t30Prob * 2.5);
     const sgDKPts = p.sg * 18;
