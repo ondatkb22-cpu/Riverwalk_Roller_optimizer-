@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* San Antonio Palette: warm terracotta, river teal, limestone, mission gold */
+  /* San Antonio Palette */
   --bg:#110E0A;
   --surface:#1C1610;
   --surface2:#261E16;
@@ -36,10 +36,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:56px}
 
-/* Subtle warm grain overlay */
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
 
-/* Header — mission-inspired warm gradient */
 .hdr{
   background:linear-gradient(135deg,#110E0A 0%,#1C1610 40%,#2A1F14 100%);
   border-bottom:3px solid transparent;
@@ -57,7 +55,6 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:var(--mono);letter-spacing:.3px}
 .badge-teal{background:rgba(46,196,182,0.15);color:var(--teal-bright);border:1px solid rgba(46,196,182,0.3)}
 
-/* Bottom nav — unified with roster info */
 .nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:fixed;bottom:0;width:100%;z-index:1000;box-shadow:0 -4px 24px rgba(0,0,0,0.5);align-items:stretch}
 .nav-tab{flex:0 1 auto;padding:12px 10px;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-top:3px solid transparent;text-transform:uppercase;letter-spacing:.6px;transition:all .2s;min-width:44px}
 .nav-tab.on{color:var(--gold);border-color:var(--gold);background:rgba(232,168,56,0.06)}
@@ -69,13 +66,11 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .panel{display:none;flex:1;overflow-y:auto}
 .panel.on{display:block}
 
-/* Pods */
 .pods{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px}
 .pod{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
 .pod-val{font-family:var(--disp);font-size:18px;line-height:1}
 .pod-lbl{font-size:9px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
-/* Filters */
 .filters{padding:8px 12px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;align-items:center}
 .fchip{padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s}
 .fchip.on{background:var(--terracotta);color:#FAF5EE;border-color:var(--terracotta)}
@@ -85,11 +80,9 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .search-box:focus{border-color:var(--teal);width:140px;background:var(--surface2)}
 .search-box::placeholder{color:var(--muted);font-weight:700}
 
-/* Key strip */
 .key-strip{display:flex;flex-wrap:wrap;gap:4px 14px;padding:10px 12px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);margin:0 12px 10px;font-size:10px;color:var(--sub)}
 .key-strip span strong{color:var(--text);font-family:var(--mono);margin-right:2px}
 
-/* Table */
 .tw{overflow-x:auto;padding:0 12px 12px}
 table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
 thead th{background:var(--surface2);color:var(--muted);padding:10px 7px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;cursor:pointer;border-bottom:1px solid var(--border);transition:background .2s}
@@ -100,41 +93,40 @@ tbody tr.steam-row td{background:var(--steam-bg)}
 td{padding:8px 7px;vertical-align:middle;white-space:nowrap}
 .sort-icon{display:inline-block;margin-left:4px;font-size:8px;opacity:.6}
 
-/* Delta badges */
 .db{display:inline-flex;align-items:center;justify-content:center;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:32px;font-family:var(--mono)}
 .d-elite{background:var(--gold-bright);color:#110E0A}
 .d-solid{background:rgba(46,196,182,0.25);color:var(--teal-bright)}
 .d-slight{background:rgba(46,196,182,0.12);color:var(--teal)}
 .d-neg{background:var(--red-bg);color:var(--red)}
 
-/* Grade badges */
 .grade{font-size:9px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.5px;font-family:var(--mono);white-space:nowrap;display:inline-block;text-align:center}
 .grade-core{background:var(--gold-bright);color:#FAF5EE}
 .grade-play{background:rgba(46,196,182,0.2);color:var(--teal-bright)}
 .grade-pool{background:var(--surface3);color:var(--sub)}
 .grade-fade{background:var(--red-bg);color:var(--red)}
 
-/* Cards */
+.wave-tag { font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; font-family:var(--mono); display:inline-flex; align-items:center; gap:3px; }
+.w-am1 { background:rgba(46,196,182,0.15); color:var(--teal-bright); }
+.w-am2 { background:var(--surface3); color:var(--sub); }
+.w-pm1 { background:var(--amber-bg); color:var(--amber); }
+.w-pm2 { background:var(--red-bg); color:var(--red); }
+
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 12px 10px}
 .card-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.6px;text-transform:uppercase}
 .card-body{padding:14px}
 
-/* Lineup cards */
 .lu-card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border2);border-radius:14px;overflow:hidden;margin:0 12px 10px}
 .lu-slot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(61,46,31,0.4);gap:8px}
 .lu-slot:last-child{border:none}
 .lu-slot-num{font-size:10px;color:var(--muted);font-weight:700;width:20px;flex-shrink:0}
 .lu-slot-name{font-weight:700;font-size:13px;display:flex;align-items:center}
-.lu-slot-meta{font-size:10px;color:var(--muted);margin-top:2px}
-.lu-slot-sal{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--gold);white-space:nowrap}
 .lu-totals{display:grid;grid-template-columns:repeat(4,1fr);padding:12px 16px;background:var(--surface2);border-top:1px solid var(--border);gap:4px}
 .lu-total-val{font-family:var(--disp);font-size:17px}
 .lu-total-lbl{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
 
 textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;font-family:var(--mono);outline:none;resize:vertical;white-space:pre}
 
-/* Buttons — warm terracotta and teal */
 .btn{width:100%;padding:14px;border-radius:8px;font-size:15px;font-weight:900;font-family:var(--disp);cursor:pointer;border:none;background:linear-gradient(135deg,var(--teal) 0%,var(--river) 100%);color:#FAF5EE;letter-spacing:.3px;transition:all .2s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(46,196,182,0.3)}
 .btn:active{transform:scale(0.98)}
@@ -152,15 +144,10 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
 .pb-gpp{background:rgba(232,168,56,0.15);color:var(--gold)}
 .pb-cash{background:rgba(26,138,122,0.15);color:var(--river)}
 
-.insight{background:rgba(232,168,56,0.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 14px;font-size:11px;color:var(--sub);line-height:1.7;margin:0 12px 10px}
-
 .radio-group{display:flex;gap:10px;margin-bottom:12px}
 .radio-label{font-size:11px;color:var(--sub);display:flex;align-items:center;gap:4px;cursor:pointer}
 
-/* San Antonio decorative divider */
 .sa-divider{height:3px;margin:16px 12px;border-radius:2px;background:linear-gradient(to right, var(--terracotta), var(--gold) 40%, var(--teal) 70%, var(--river))}
-
-/* Alamo star decorations */
 .alamo-star{display:inline-block;color:var(--gold);font-size:10px;margin:0 3px;opacity:.7}
 
 @media(max-width:700px){
@@ -190,7 +177,6 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <div style="font-family:var(--disp);font-size:28px;color:var(--gold);line-height:1">User Guide</div>
     <p style="font-size:11px;color:var(--muted);margin-top:4px;font-style:italic">Built for the Riverwalk. Fueled by tacos.</p>
   </div>
-
   <div class="sa-divider"></div>
   
   <div class="card" style="border-color:var(--teal);background:rgba(46,196,182,0.03)">
@@ -213,31 +199,11 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     </div>
     <div class="card-body">
       <ul style="padding-left:14px;font-size:11px;line-height:1.8;color:var(--sub);margin-bottom:0">
-        <li style="margin-bottom:6px"><strong style="color:var(--text)">Tracker:</strong> Shows a player's Monday → Tuesday → Wednesday odds progression.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank vs. Odds Rank. A positive number means DraftKings mispriced them to your advantage.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--text)">wVEL:</strong> Weighted Time-Decay Velocity. Identifies the fastest-dropping odds (sharp syndicate movement) over the week.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--gold)">$DLTA:</strong> How many DraftKings points this player is projected ABOVE (or below) what their salary expects. Positive = value, negative = overpriced.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--river)">pOWN:</strong> Projected Ownership. Dynamically tracks leverage based on mathematical value and sharp steam.</li>
-        <li style="margin-bottom:10px"><strong style="color:var(--text)">Grade:</strong> The bottom-line verdict on every player:</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank vs. Odds Rank. Positive means DK mispriced them to your advantage.</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--text)">wVEL:</strong> Weighted Time-Decay Velocity. Identifies the fastest-dropping odds (sharp syndicate movement).</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--gold)">$DLTA:</strong> Master EV score. Blends Win/T5/T10 odds with Course History, Strokes Gained, and Line Movement.</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--river)">Weather Wave:</strong> Mathematically stacks the calm morning wave (AM) and penalizes the high-wind afternoon wave (PM).</li>
       </ul>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px">
-        <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;border-left:3px solid var(--gold-bright)">
-          <span class="grade grade-core" style="font-size:9px;padding:2px 6px">CORE</span>
-          <div style="font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4"><strong style="color:var(--text)">Build around him.</strong> High projected pts, safe cut, good price.</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;border-left:3px solid var(--teal)">
-          <span class="grade grade-play" style="font-size:9px;padding:2px 6px">PLAY</span>
-          <div style="font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4"><strong style="color:var(--text)">In the mix.</strong> Solid value, one small question mark.</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;border-left:3px solid var(--muted)">
-          <span class="grade grade-pool" style="font-size:9px;padding:2px 6px">POOL</span>
-          <div style="font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4"><strong style="color:var(--text)">Filler.</strong> Not broken, not exciting. Salary plug only.</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;border-left:3px solid var(--red)">
-          <span class="grade grade-fade" style="font-size:9px;padding:2px 6px">FADE</span>
-          <div style="font-size:10px;color:var(--sub);margin-top:4px;line-height:1.4"><strong style="color:var(--text)">Stay away.</strong> Overpriced, likely missed cut, or drifting.</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -269,9 +235,9 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
   </div>
   
   <div class="key-strip">
-    <span><strong style="color:var(--teal)">wVEL:</strong> Sharp money velocity</span>
-    <span><strong style="color:var(--gold)">$DLTA:</strong> Projected pts vs salary expects</span>
-    <span><strong>Grade:</strong> CORE=start · PLAY=solid · POOL=filler · FADE=avoid</span>
+    <span><strong style="color:var(--teal)">wVEL:</strong> Sharp money</span>
+    <span><strong style="color:var(--gold)">$DLTA:</strong> Value</span>
+    <span><strong>Wave:</strong> Weather Draw</span>
   </div>
 
   <div class="tw">
@@ -284,8 +250,8 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
           <th onclick="srt('liveOdds')">Tracker<span class="sort-icon"></span></th>
           <th onclick="srt('delta')">Δ<span class="sort-icon"></span></th>
           <th onclick="srt('wVelDisp')" style="color:var(--teal)">wVEL<span class="sort-icon"></span></th>
+          <th onclick="srt('wave')">Wave<span class="sort-icon"></span></th>
           <th onclick="srt('dlta')" style="color:var(--gold)">$DLTA<span class="sort-icon"></span></th>
-          <th onclick="srt('estOwn')" style="color:var(--river)">pOWN<span class="sort-icon"></span></th>
           <th onclick="srt('gradeSort')">Grade<span class="sort-icon"></span></th>
         </tr>
       </thead>
@@ -385,9 +351,6 @@ let currentStrategy = 'gpp';
 
 const toImp = (o) => o > 0 ? 100 / (o + 100) : Math.abs(o) / (Math.abs(o) + 100);
 
-// ============================================================
-//  TAB NAVIGATION
-// ============================================================
 function showTab(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('on'));
@@ -538,17 +501,92 @@ const MASTER_DB = [
     {name: "C. Crockett", sal: 6000, monOdds: 400000, tueOdds: 350000, wedOdds: 400000, liveOdds: 400000, liveT5: 30000, liveT10: 9800, sg: 0.00, trueCut: 0.50, fit: 'Mid', ch: 1.00}
 ];
 
+const TEE_TIMES = `7:30 AM,1,"Lanto Griffin, Kevin Streelman, Max McGreevy"
+7:30 AM,10,"Ryan Palmer, Dylan Wu, Mac Meissner"
+7:42 AM,1,"Nick Hardy, Christiaan Bezuidenhout, Austin Smotherman"
+7:42 AM,10,"Joel Dahmen, Bud Cauley, Chandler Phillips"
+7:54 AM,1,"Taylor Moore, Sam Ryder, Bronson Burgoon"
+7:54 AM,10,"Will Zalatoris, Patrick Rodgers, S.H. Kim"
+8:06 AM,1,"William Mouw, J.T. Poston, Lucas Glover"
+8:06 AM,10,"Tommy Fleetwood, Hideki Matsuyama, Rickie Fowler"
+8:18 AM,1,"Sami Valimaki, Webb Simpson, Charley Hoffman"
+8:18 AM,10,"Maverick McNealy, Tony Finau, Max Homa"
+8:30 AM,1,"Adam Schenk, Matt Kuchar, Alex Noren"
+8:30 AM,10,"Si Woo Kim, Michael Thorbjornsen, Marco Penge"
+8:42 AM,1,"Joe Highsmith, Davis Thompson, Ryo Hisatsune"
+8:42 AM,10,"Andrew Novak, Garrick Higgo, Sudarshan Yellamaraju"
+8:54 AM,1,"Rafael Campos, Emiliano Grillo, Rico Hoey"
+8:54 AM,10,"Brice Garnett, Adam Svensson, Thorbjorn Olesen"
+9:06 AM,1,"Austin Eckroat, Peter Malnati, Doug Ghim"
+9:06 AM,10,"Seamus Power, Michael Kim, Vince Whaley"
+9:18 AM,1,"David Ford, Neal Shipley, Davis Chatfield"
+9:18 AM,10,"Kris Ventura, Chandler Blanchet, Zach Bauchou"
+9:30 AM,1,"Frankie Capan III, Luke Clanton, Austin Wylie"
+9:30 AM,10,"Adrien Dumont de Chassart, Dan Brown, Christo Lamprecht"
+12:30 PM,1,"Tom Kim, Lee Hodges, Alex Smalley"
+12:30 PM,10,"Brendon Todd, Jimmy Walker, Hank Lebioda"
+12:42 PM,1,"Matt Wallace, Tom Hoge, Carson Young"
+12:42 PM,10,"Camilo Villegas, Takumi Kanaya, Kristoffer Reitan"
+12:54 PM,1,"Erik van Rooyen, K.H. Lee, Eric Cole"
+12:54 PM,10,"Nick Dunlap, Andrew Putnam, Justin Lower"
+1:06 PM,1,"Ludvig Aberg, Robert MacIntyre, Jordan Spieth"
+1:06 PM,10,"Ricky Castillo, Jhonattan Vegas, Brandt Snedeker"
+1:18 PM,1,"Sepp Straka, Brian Harman, Billy Horschel"
+1:18 PM,10,"Nick Taylor, Matt McCarty, Kevin Yu"
+1:30 PM,1,"J.J. Spaun, Russell Henley, Stephan Jaeger"
+1:30 PM,10,"Steven Fisk, Karl Vilips, Chris Kirk"
+1:42 PM,1,"Mark Hubbard, Kevin Roy, Danny Walker"
+1:42 PM,10,"Mackenzie Hughes, Chad Ramey, Beau Hossler"
+1:54 PM,1,"Matthieu Pavon, Denny McCarthy, Johnny Keefer"
+1:54 PM,10,"Patton Kizzire, Keith Mitchell, Jordan Smith"
+2:06 PM,1,"Kensei Hirata, Adrien Saddier, Paul Waring"
+2:06 PM,10,"Zecheng Dou, Jackson Suber, Gordon Sargent"
+2:18 PM,1,"Pontus Nyholm, Marcelo Rozo, Charlie Crockett"
+2:18 PM,10,"Patrick Fishburn, Alejandro Tosti, Jesper Svensson"
+2:30 PM,1,"Jimmy Stanger, A.J. Ewart, John VanDerLaan"
+2:30 PM,10,"Haotong Li, John Parry, Jeffrey Kang"`;
+
+// Map players to specific waves
+let waveMap = {};
+TEE_TIMES.split('\n').forEach(line => {
+  if(!line) return;
+  let parts = line.split(',"');
+  if(parts.length === 2) {
+    let t = parts[0].split(',')[0];
+    let wave = "AM1";
+    if(t.includes("AM")) {
+      let [h, m] = t.split(" ")[0].split(":");
+      if(h == 7 || (h == 8 && parseInt(m) <= 30)) wave = "AM1";
+      else wave = "AM2";
+    } else {
+      let [h, m] = t.split(" ")[0].split(":");
+      if(h == 12 || (h == 1 && parseInt(m) <= 30)) wave = "PM1";
+      else wave = "PM2";
+    }
+    let pNames = parts[1].replace('"','').split(',');
+    pNames.forEach(n => {
+      let last = n.trim().split(' ').pop().toLowerCase();
+      waveMap[last] = wave;
+    });
+  }
+});
+
 // ============================================================
 //  DATA PERSISTENCE & INITIALIZATION
 // ============================================================
 function loadInitialData() {
-  players = MASTER_DB.map(p => ({
-    name:p.name,price:p.sal,monOdds:p.monOdds,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
-    liveT5:p.liveT5,liveT10:p.liveT10,sg:p.sg,trueCut:p.trueCut,ch:p.ch,
-    fit:p.fit,locked:false,implMon:toImp(p.monOdds),implLive:toImp(p.liveOdds),
-    salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:p.trueCut,
-    isSteam:false,isDrift:false, estOwn:0
-  }));
+  players = MASTER_DB.map(p => {
+    let last = p.name.split(' ').pop().toLowerCase();
+    let assignedWave = waveMap[last] || "AM2";
+    
+    return {
+      name:p.name,price:p.sal,monOdds:p.monOdds,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
+      liveT5:p.liveT5,liveT10:p.liveT10,sg:p.sg,trueCut:p.trueCut,ch:p.ch,
+      fit:p.fit,locked:false,implMon:toImp(p.monOdds),implLive:toImp(p.liveOdds),
+      salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:p.trueCut,
+      isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0
+    };
+  });
   compute();
   saveToLocal();
   renderAll();
@@ -556,7 +594,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v47',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v49',JSON.stringify(players.map(p=>({
       name:p.name,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,liveT5:p.liveT5,liveT10:p.liveT10,locked:p.locked
     }))));
   } catch(e) {}
@@ -564,7 +602,7 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v47'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v49'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
@@ -575,13 +613,17 @@ function loadFromLocal() {
       const liveOdds = savedP.liveOdds || masterP.liveOdds;
       const liveT5 = savedP.liveT5 || masterP.liveT5;
       const liveT10 = savedP.liveT10 || masterP.liveT10;
+      
+      let last = masterP.name.split(' ').pop().toLowerCase();
+      let assignedWave = waveMap[last] || "AM2";
+
       return {
         name:masterP.name,price:masterP.sal,monOdds:masterP.monOdds,tueOdds,wedOdds,
         liveOdds,liveT5,liveT10,sg:masterP.sg,trueCut:masterP.trueCut,ch:masterP.ch,
         fit:masterP.fit||'Mid',locked:savedP.locked||false,
         implMon:toImp(masterP.monOdds),implLive:toImp(liveOdds),
         salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:masterP.trueCut,
-        isSteam:false,isDrift:false, estOwn:0
+        isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0
       };
     });
     compute();
@@ -592,14 +634,13 @@ function loadFromLocal() {
 }
 
 // ============================================================
-//  UPGRADED LIVE ODDS UPLOAD LOGIC (Bulletproof Parser)
+//  LIVE ODDS UPLOAD LOGIC
 // ============================================================
 function handleLiveOddsUpload() {
   const csv = document.getElementById('csv-input').value;
   const daySelect = document.querySelector('input[name="oddsDay"]:checked').value;
   if (!csv) return;
   
-  // Normalize text to make matching easier
   const normalizedCsv = csv.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   
   players.forEach(p => {
@@ -652,7 +693,7 @@ function srt(col) {
 }
 
 // ============================================================
-//  UPGRADED QUANT ENGINE
+//  QUANT ENGINE - PURE EV WITH WEATHER WAVE STACKING
 // ============================================================
 function compute() {
   if (!players.length) return;
@@ -664,6 +705,12 @@ function compute() {
     p.delta = p.salRank - p.oddsRank;
     p.isDrift = p.liveOdds > p.monOdds; 
     p.cut = p.trueCut; 
+
+    // --- WEATHER ADJUSTMENT LOGIC ---
+    if(p.wave === "AM1") p.waveAdj = 1.2;
+    else if(p.wave === "AM2") p.waveAdj = 0.0;
+    else if(p.wave === "PM1") p.waveAdj = -1.5;
+    else if(p.wave === "PM2") p.waveAdj = -3.0;
 
     let iMon = toImp(p.monOdds);
     let iTue = p.tueOdds ? toImp(p.tueOdds) : iMon;
@@ -689,7 +736,8 @@ function compute() {
     const MADE_CUT_HOLE_BASE = 60;  
     const MISS_CUT_PTS = 28;        
 
-    const madeCtPts = MADE_CUT_HOLE_BASE + 5 + expPlacement + sgDKPts + chAdj;
+    // Apply Weather wave adjustment directly to made cut point expectations
+    const madeCtPts = MADE_CUT_HOLE_BASE + 5 + expPlacement + sgDKPts + chAdj + p.waveAdj;
     
     p.baseProj = (p.cut * madeCtPts) + ((1 - p.cut) * MISS_CUT_PTS);
     p.expPts = (p.price / 1000) * 6.8;
@@ -716,24 +764,13 @@ function compute() {
     p.simMean = p.baseProj;
     p.simFloor = p.baseProj - (volatility * 1.0);
     p.simCeil = p.baseProj + (volatility * 1.3);
-
-    // ==========================================================
-    //  UPGRADE: VALUE-BASED OWNERSHIP PROXY
-    //  Chalk follows Value ($DLTA) and Sharp Movement (Steam), not just salary.
-    // ==========================================================
-    let projectedOwn = 5 + (p.dlta * 2.5); // Base ownership driven by math value
-    if (p.isSteam) projectedOwn += 12;     // The DFS community chases line movement
-    if (p.price < 7500 && p.dlta > 2) projectedOwn += 8; // Cheap value is the chalkiest
-    
-    p.estOwn = Math.max(1, Math.min(35, projectedOwn)); // Cap between 1% and 35%
   });
 }
 
-// Helper for grade computation
 function chAdjForGrade(p) { return Math.max(-6, Math.min(6, (p.ch - 1.0) * 25)); }
 
 // ==========================================================
-//  LINEUP SCORING BY BUILD TYPE
+//  LINEUP SCORING BY BUILD TYPE 
 // ==========================================================
 const getPlayerScore = (p, buildType) => {
   let score = p.simMean;
@@ -744,10 +781,7 @@ const getPlayerScore = (p, buildType) => {
     if (p.dlta < -3) score -= 40;
   }
   else if (buildType === 'gpp') {
-    score = p.simCeil + (p.dlta * 1.5) + (p.isSteam ? 10 : 0);
-    if (p.wVel > 0) score += p.wVelDisp * 0.8;
-    // Ownership leverage: Only penalize extreme chalk in GPPs
-    if (p.estOwn > 25) score -= (p.estOwn - 25) * 0.8;
+    score = p.simCeil + (p.wVel > 0 ? p.wVel * 1500 : 0) + (p.dlta * 2) + (p.isSteam ? 15 : 0);
   }
   else if (buildType === 'steam') {
     if (p.isSteam) {
@@ -832,6 +866,14 @@ function buildQuantLineup(locked, type) {
 // ============================================================
 //  UI RENDERING
 // ============================================================
+function getWaveBadge(wave) {
+    if(wave === 'AM1') return '<span class="wave-tag w-am1">☁️ AM1</span>';
+    if(wave === 'AM2') return '<span class="wave-tag w-am2">🌤️ AM2</span>';
+    if(wave === 'PM1') return '<span class="wave-tag w-pm1">💨 PM1</span>';
+    if(wave === 'PM2') return '<span class="wave-tag w-pm2">⛈️ PM2</span>';
+    return '<span class="wave-tag w-am2">🌤️ AM2</span>';
+}
+
 function renderArb() {
   const tbody=document.getElementById('arb-tbody');
   const filtered=players.filter(p=>{
@@ -872,8 +914,8 @@ function renderArb() {
       </td>
       <td><span class="db ${p.delta>5?'d-elite':p.delta>0?'d-slight':'d-neg'}">${p.delta>0?'+':''}${p.delta}</span></td>
       <td style="font-weight:800;font-family:var(--mono);color:${wVelColor}">${p.wVelDisp>0?'+':''}${p.wVelDisp.toFixed(2)}</td>
+      <td>${getWaveBadge(p.wave)}</td>
       <td style="font-weight:800;color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+':''}${p.dlta.toFixed(1)}</td>
-      <td style="font-weight:800;font-family:var(--mono);color:var(--river)">${p.estOwn.toFixed(1)}%</td>
       <td><span class="grade grade-${p.grade.toLowerCase()}">${p.grade}</span></td>
     </tr>`;
   }).join('');
@@ -908,11 +950,10 @@ function renderLUCard(elId,lineup,type) {
         </div>
         <div style="display:flex;gap:10px;font-size:10px;color:var(--muted);font-family:var(--mono);margin-left:24px;flex-wrap:wrap;align-items:center">
           <span class="grade grade-${p.grade.toLowerCase()}" style="font-size:8px;padding:2px 5px">${p.grade}</span>
-          <span>ODDS:<strong style="color:var(--text)">+${p.liveOdds}</strong></span>
+          ${getWaveBadge(p.wave)}
           <span>Δ:<strong style="color:${p.delta>0?'var(--teal-bright)':'var(--red)'}">${p.delta>0?'+'+p.delta:p.delta}</strong></span>
           <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
           <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
-          <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
         </div>
       </div>
     `).join('')}
@@ -955,11 +996,11 @@ function renderBuildTab() {
               <div style="font-weight:700;font-size:13px;display:flex;align-items:center">
                 ${p.name} ${p.isSteam?'<span class="stm-badge" style="font-size:10px">🌮</span>':''}
               </div>
-              <div style="font-size:9px;color:var(--sub);font-family:var(--mono);margin-top:2px;display:flex;gap:6px;align-items:center">
+              <div style="font-size:9px;color:var(--sub);font-family:var(--mono);margin-top:2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
                 <span class="grade grade-${p.grade.toLowerCase()}" style="font-size:7px;padding:1px 4px">${p.grade}</span>
+                ${getWaveBadge(p.wave)}
                 <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
                 <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
-                <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
               </div>
             </div>
           </div>
