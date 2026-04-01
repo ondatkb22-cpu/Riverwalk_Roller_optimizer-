@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Riverwalk Roller — Valero 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -36,7 +36,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:56px}
 
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.5}
 
 .hdr{
   background:linear-gradient(135deg,#110E0A 0%,#1C1610 40%,#2A1F14 100%);
@@ -63,7 +63,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-auto{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-bright) 100%);color:#110E0A;border:none;border-radius:4px;font-weight:900;font-family:var(--mono);padding:4px 10px;font-size:10px;cursor:pointer;margin-left:6px;letter-spacing:.3px;transition:all .15s}
 .nav-auto:active{transform:scale(0.95)}
 
-.panel{display:none;flex:1;overflow-y:auto}
+.panel{display:none;flex:1;overflow-y:auto; position:relative; z-index:10;}
 .panel.on{display:block}
 
 .pods{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px}
@@ -186,9 +186,9 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <div class="card-body">
       <p style="font-size:12px;color:var(--text);font-weight:600;margin-bottom:8px">The math is already done for you.</p>
       <ol style="padding-left:14px;font-size:11px;line-height:1.8;color:var(--sub);margin-bottom:0">
-        <li style="margin-bottom:6px"><strong style="color:var(--text)">Grab an Optimal:</strong> Tap the <strong>PRE</strong> tab. The engine automatically builds 3 mathematically perfect lineups (Cash, GPP, Steam) using live odds and true cut probabilities.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--text)">Hunt for Tacos:</strong> Check the <strong>ARB</strong> tab to see who is taking sharp money (🌮) and outperforming their DraftKings salary.</li>
-        <li><strong style="color:var(--text)">Build Your Own:</strong> Lock your favorite core plays on the ARB tab (+), then go to the <strong>BUILD</strong> tab, pick your strategy, and hit "Auto-Fill Optimal Lineup".</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--text)">Grab an Optimal:</strong> Tap the <strong>PRE</strong> tab. The engine automatically builds 3 mathematically perfect lineups (Cash, GPP, Steam).</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--text)">Hunt for Tacos:</strong> Check the <strong>ARB</strong> tab to see who is taking sharp money (🌮) and outperforming their DK salary.</li>
+        <li><strong style="color:var(--text)">Build Your Own:</strong> Lock your favorite core plays on the ARB tab (+), then go to the <strong>BUILD</strong> tab and hit "Auto-Fill Optimal Lineup".</li>
       </ol>
     </div>
   </div>
@@ -200,17 +200,26 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
     <div class="card-body">
       <ul style="padding-left:14px;font-size:11px;line-height:1.8;color:var(--sub);margin-bottom:0">
         <li style="margin-bottom:6px"><strong style="color:var(--teal)">Δ (Delta):</strong> Salary Rank vs. Odds Rank. Positive means DK mispriced them to your advantage.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--text)">wVEL:</strong> Weighted Time-Decay Velocity. Identifies the fastest-dropping odds (sharp syndicate movement).</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--text)">wVEL:</strong> Weighted Time-Decay Velocity. Identifies the fastest-dropping odds.</li>
         <li style="margin-bottom:6px"><strong style="color:var(--gold)">$DLTA:</strong> Master EV score. Blends Win/T5/T10 odds with Course History, Strokes Gained, and Line Movement.</li>
-        <li style="margin-bottom:6px"><strong style="color:var(--river)">Weather Wave:</strong> Mathematically stacks the calm morning wave (AM) and penalizes the high-wind afternoon wave (PM).</li>
+        <li style="margin-bottom:6px"><strong style="color:var(--river)">pOWN:</strong> Projected Ownership. Dynamically tracks leverage based on value and steam.</li>
       </ul>
     </div>
   </div>
 
-  <div class="card" style="border-color:var(--border);background:var(--surface)">
-    <div class="card-body" style="padding:12px;text-align:center">
-      <p style="font-size:10px;color:var(--muted);line-height:1.4">
-        <strong>Disclaimer:</strong> This tool is for informational and entertainment purposes only. Golf DFS has extreme variance. Never wager more than you can afford to lose. If you or someone you know has a gambling problem, call <strong>1-800-GAMBLER</strong>.
+  <div class="card" style="border-color:var(--river);background:rgba(26,138,122,0.03)">
+    <div class="card-head" style="border-bottom-color:rgba(26,138,122,0.2)">
+      <span class="card-title" style="color:var(--river)"><span class="alamo-star">★</span> Weather Draw Matrix</span>
+    </div>
+    <div class="card-body" style="padding:10px 14px;">
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <span class="wave-tag w-am1">☁️ AM1 (Calm) <span style="color:#FAF5EE; margin-left:2px;">+1.2 pts</span></span>
+        <span class="wave-tag w-am2">🌤️ AM2 (Breezy) <span style="color:#FAF5EE; margin-left:2px;">0.0 pts</span></span>
+        <span class="wave-tag w-pm1">💨 PM1 (Wind) <span style="color:#FAF5EE; margin-left:2px;">-1.5 pts</span></span>
+        <span class="wave-tag w-pm2">⛈️ PM2 (Storms) <span style="color:#FAF5EE; margin-left:2px;">-3.0 pts</span></span>
+      </div>
+      <p style="font-size:10px;color:var(--sub);margin-top:8px; line-height: 1.4;">
+        The engine automatically applies these penalties and bonuses to a player's baseline projection based on Thursday/Friday weather splits.
       </p>
     </div>
   </div>
@@ -237,7 +246,7 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
   <div class="key-strip">
     <span><strong style="color:var(--teal)">wVEL:</strong> Sharp money</span>
     <span><strong style="color:var(--gold)">$DLTA:</strong> Value</span>
-    <span><strong>Wave:</strong> Weather Draw</span>
+    <span><strong style="color:var(--river)">pOWN:</strong> Est. Ownership</span>
   </div>
 
   <div class="tw">
@@ -252,6 +261,7 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
           <th onclick="srt('wVelDisp')" style="color:var(--teal)">wVEL<span class="sort-icon"></span></th>
           <th onclick="srt('wave')">Wave<span class="sort-icon"></span></th>
           <th onclick="srt('dlta')" style="color:var(--gold)">$DLTA<span class="sort-icon"></span></th>
+          <th onclick="srt('estOwn')" style="color:var(--river)">pOWN<span class="sort-icon"></span></th>
           <th onclick="srt('gradeSort')">Grade<span class="sort-icon"></span></th>
         </tr>
       </thead>
@@ -351,6 +361,14 @@ let currentStrategy = 'gpp';
 
 const toImp = (o) => o > 0 ? 100 / (o + 100) : Math.abs(o) / (Math.abs(o) + 100);
 
+// Helper function to safely extract the actual last name for matching
+function extractLastName(nameStr) {
+    let parts = nameStr.normalize("NFD").replace(/[\u0300-\u036f\.,']/g, "").toLowerCase().split(' ');
+    let last = parts.pop();
+    if (['jr', 'iii', 'ii'].includes(last)) last = parts.pop();
+    return last.trim();
+}
+
 function showTab(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('on'));
@@ -367,7 +385,7 @@ function showTab(id) {
 }
 
 // ============================================================
-//  MASTER DATABASE
+//  MASTER DATABASE & WEATHER MAPPING
 // ============================================================
 const MASTER_DB = [
     {name: "T. Fleetwood", sal: 10500, monOdds: 1400, tueOdds: 1425, wedOdds: 1425, liveOdds: 1425, liveT5: 285, liveT10: 146, sg: 1.87, trueCut: 0.95, fit: 'Elite', ch: 1.05},
@@ -546,7 +564,6 @@ const TEE_TIMES = `7:30 AM,1,"Lanto Griffin, Kevin Streelman, Max McGreevy"
 2:30 PM,1,"Jimmy Stanger, A.J. Ewart, John VanDerLaan"
 2:30 PM,10,"Haotong Li, John Parry, Jeffrey Kang"`;
 
-// Map players to specific waves
 let waveMap = {};
 TEE_TIMES.split('\n').forEach(line => {
   if(!line) return;
@@ -565,26 +582,21 @@ TEE_TIMES.split('\n').forEach(line => {
     }
     let pNames = parts[1].replace('"','').split(',');
     pNames.forEach(n => {
-      let last = n.trim().split(' ').pop().toLowerCase();
-      waveMap[last] = wave;
+      waveMap[extractLastName(n.trim())] = wave;
     });
   }
 });
 
-// ============================================================
-//  DATA PERSISTENCE & INITIALIZATION
-// ============================================================
 function loadInitialData() {
   players = MASTER_DB.map(p => {
-    let last = p.name.split(' ').pop().toLowerCase();
-    let assignedWave = waveMap[last] || "AM2";
+    let assignedWave = waveMap[extractLastName(p.name)] || "AM2";
     
     return {
       name:p.name,price:p.sal,monOdds:p.monOdds,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,
       liveT5:p.liveT5,liveT10:p.liveT10,sg:p.sg,trueCut:p.trueCut,ch:p.ch,
       fit:p.fit,locked:false,implMon:toImp(p.monOdds),implLive:toImp(p.liveOdds),
       salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:p.trueCut,
-      isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0
+      isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
     };
   });
   compute();
@@ -594,7 +606,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v49',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v52',JSON.stringify(players.map(p=>({
       name:p.name,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,liveT5:p.liveT5,liveT10:p.liveT10,locked:p.locked
     }))));
   } catch(e) {}
@@ -602,7 +614,7 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v49'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v52'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
@@ -614,8 +626,7 @@ function loadFromLocal() {
       const liveT5 = savedP.liveT5 || masterP.liveT5;
       const liveT10 = savedP.liveT10 || masterP.liveT10;
       
-      let last = masterP.name.split(' ').pop().toLowerCase();
-      let assignedWave = waveMap[last] || "AM2";
+      let assignedWave = waveMap[extractLastName(masterP.name)] || "AM2";
 
       return {
         name:masterP.name,price:masterP.sal,monOdds:masterP.monOdds,tueOdds,wedOdds,
@@ -623,7 +634,7 @@ function loadFromLocal() {
         fit:masterP.fit||'Mid',locked:savedP.locked||false,
         implMon:toImp(masterP.monOdds),implLive:toImp(liveOdds),
         salRank:0,oddsRank:0,delta:0,dlta:0,wVel:0,wVelDisp:0,grade:'POOL',gradeSort:2,cut:masterP.trueCut,
-        isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0
+        isSteam:false,isDrift:false, wave: assignedWave, waveAdj: 0, estOwn: 0
       };
     });
     compute();
@@ -633,9 +644,6 @@ function loadFromLocal() {
   }
 }
 
-// ============================================================
-//  LIVE ODDS UPLOAD LOGIC
-// ============================================================
 function handleLiveOddsUpload() {
   const csv = document.getElementById('csv-input').value;
   const daySelect = document.querySelector('input[name="oddsDay"]:checked').value;
@@ -644,10 +652,8 @@ function handleLiveOddsUpload() {
   const normalizedCsv = csv.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   
   players.forEach(p => {
-     let nameParts = p.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(' ');
-     let searchName = nameParts.pop();
-     if (['jr', 'iii', 'ii', 'jr.'].includes(searchName)) searchName = nameParts.pop(); 
-     if (searchName.length < 3) searchName = nameParts.join(' '); 
+     let searchName = extractLastName(p.name);
+     if (searchName.length < 3) searchName = p.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); 
      
      const regex = new RegExp(searchName + "[^\\d]*\\+?(\\d+)[^\\d]+\\+?(\\d+)[^\\d]+\\+?(\\d+)", "i");
      const match = normalizedCsv.match(regex);
@@ -674,9 +680,6 @@ function handleLiveOddsUpload() {
   showTab('arb');
 }
 
-// ============================================================
-//  SEARCH & FILTER
-// ============================================================
 function handleSearch(val) { searchQuery = val.toLowerCase(); renderArb(); }
 
 function setFilter(mode, el) {
@@ -692,9 +695,6 @@ function srt(col) {
   renderArb();
 }
 
-// ============================================================
-//  QUANT ENGINE - PURE EV WITH WEATHER WAVE STACKING
-// ============================================================
 function compute() {
   if (!players.length) return;
 
@@ -706,7 +706,6 @@ function compute() {
     p.isDrift = p.liveOdds > p.monOdds; 
     p.cut = p.trueCut; 
 
-    // --- WEATHER ADJUSTMENT LOGIC ---
     if(p.wave === "AM1") p.waveAdj = 1.2;
     else if(p.wave === "AM2") p.waveAdj = 0.0;
     else if(p.wave === "PM1") p.waveAdj = -1.5;
@@ -736,7 +735,6 @@ function compute() {
     const MADE_CUT_HOLE_BASE = 60;  
     const MISS_CUT_PTS = 28;        
 
-    // Apply Weather wave adjustment directly to made cut point expectations
     const madeCtPts = MADE_CUT_HOLE_BASE + 5 + expPlacement + sgDKPts + chAdj + p.waveAdj;
     
     p.baseProj = (p.cut * madeCtPts) + ((1 - p.cut) * MISS_CUT_PTS);
@@ -764,30 +762,35 @@ function compute() {
     p.simMean = p.baseProj;
     p.simFloor = p.baseProj - (volatility * 1.0);
     p.simCeil = p.baseProj + (volatility * 1.3);
+
+    // VALUE-BASED OWNERSHIP PROXY
+    let projectedOwn = 5 + (p.dlta * 2.5);
+    if (p.isSteam) projectedOwn += 8;    
+    if (p.price < 7500 && p.dlta > 2) projectedOwn += 8; 
+    p.estOwn = Math.max(1, Math.min(35, projectedOwn));
   });
 }
 
 function chAdjForGrade(p) { return Math.max(-6, Math.min(6, (p.ch - 1.0) * 25)); }
 
-// ==========================================================
-//  LINEUP SCORING BY BUILD TYPE 
-// ==========================================================
 const getPlayerScore = (p, buildType) => {
   let score = p.simMean;
 
   if (buildType === 'cash') {
-    score = p.simFloor + (p.cut * 40) + (p.dlta * 3);
-    if (p.cut < 0.55) score -= 30;
-    if (p.dlta < -3) score -= 40;
+    score = p.simFloor + (p.cut * 50) + (p.dlta * 5);
+    if (p.isSteam && p.cut >= 0.60) score += 15; 
+    if (p.cut < 0.60) score -= 30; 
+    if (p.dlta < 0) score -= 50;   
   }
   else if (buildType === 'gpp') {
-    score = p.simCeil + (p.wVel > 0 ? p.wVel * 1500 : 0) + (p.dlta * 2) + (p.isSteam ? 15 : 0);
+    score = p.simCeil + (p.wVelDisp * 1.5) + (p.dlta * 3) + (p.isSteam ? 10 : 0);
+    if (p.estOwn > 20) score -= (p.estOwn - 20) * 1.5;
   }
   else if (buildType === 'steam') {
     if (p.isSteam) {
-      score = p.simMean + (p.wVelDisp * 2.0) + (p.dlta * 1.5) + 25;
+      score = p.simMean + (p.wVelDisp * 3.0) + (p.dlta * 2.0) + 30;
     } else {
-      score = p.simMean + (p.dlta * 0.8) - 10;
+      score = p.simMean + p.dlta - 15;
     }
   }
 
@@ -795,9 +798,6 @@ const getPlayerScore = (p, buildType) => {
   return score;
 };
 
-// ============================================================
-//  RANDOMIZED GREEDY + LOCAL SEARCH OPTIMIZER
-// ============================================================
 function buildQuantLineup(locked, type) {
   const avail = players.filter(p => !p.locked && p.price >= MIN_PRICE);
   const targetMinSal = 49200;
@@ -806,8 +806,8 @@ function buildQuantLineup(locked, type) {
 
   for (let i = 0; i < 5000; i++) {
     let lineup = [...locked], spent = lineup.reduce((s,p) => s+p.price, 0);
-
     const perturbation = i < 2000 ? 0.5 : 0.25;
+    
     let cands = [...avail].sort((a,b) =>
       (getPlayerScore(b,type)/b.price) - (getPlayerScore(a,type)/a.price)
     );
@@ -817,34 +817,50 @@ function buildQuantLineup(locked, type) {
       if (lineup.length >= 6) break;
       if (spent + p.price <= targetMaxSal) { lineup.push(p); spent += p.price; }
     }
+    
     if (lineup.length !== 6) continue;
 
     let improved = true, attempts = 0;
+    
+    // Create a shuffled array for the local search to ensure iteration diversity
+    let searchAvail = [...avail].sort(() => Math.random() - 0.5);
+
     while (improved && attempts < 25) {
       improved = false; attempts++;
       for (let k = locked.length; k < 6; k++) {
-        for (let j = 0; j < avail.length; j++) {
-          let candidate = avail[j];
+        for (let j = 0; j < searchAvail.length; j++) {
+          let candidate = searchAvail[j];
           if (lineup.includes(candidate)) continue;
+          
           let newSpent = spent - lineup[k].price + candidate.price;
           if (newSpent <= targetMaxSal) {
             let currentScore = lineup.reduce((s,p) => s + getPlayerScore(p,type), 0);
             let newScore = currentScore - getPlayerScore(lineup[k],type) + getPlayerScore(candidate,type);
-            let currentlyValid = (spent >= targetMinSal), newlyValid = (newSpent >= targetMinSal);
-            if ((!currentlyValid && newSpent > spent) || (newlyValid && newScore > currentScore)) {
-              spent = newSpent; lineup[k] = candidate; improved = true; break;
+            
+            // Prefer valid lineups. If both are valid, strictly require score improvement.
+            if (spent >= targetMinSal) {
+              if (newSpent >= targetMinSal && newScore > currentScore) {
+                spent = newSpent; lineup[k] = candidate; improved = true; break;
+              }
+            } else {
+              // If we are below the floor, we are willing to take a slight score hit to fix validity
+              if (newSpent > spent && newScore > currentScore - 10) {
+                spent = newSpent; lineup[k] = candidate; improved = true; break;
+              }
             }
           }
         }
         if (improved) break;
       }
     }
+    
     if (spent >= targetMinSal && spent <= targetMaxSal) {
       const score = lineup.reduce((s,p) => s + getPlayerScore(p,type), 0);
       if (score > bestScore) { bestScore = score; bestLineup = [...lineup]; }
     }
   }
 
+  // Random fallback if no constrained lineup is found
   if (bestLineup.length !== 6) {
     bestScore = -Infinity;
     for (let i = 0; i < 3000; i++) {
@@ -863,9 +879,6 @@ function buildQuantLineup(locked, type) {
   return bestLineup;
 }
 
-// ============================================================
-//  UI RENDERING
-// ============================================================
 function getWaveBadge(wave) {
     if(wave === 'AM1') return '<span class="wave-tag w-am1">☁️ AM1</span>';
     if(wave === 'AM2') return '<span class="wave-tag w-am2">🌤️ AM2</span>';
@@ -916,6 +929,7 @@ function renderArb() {
       <td style="font-weight:800;font-family:var(--mono);color:${wVelColor}">${p.wVelDisp>0?'+':''}${p.wVelDisp.toFixed(2)}</td>
       <td>${getWaveBadge(p.wave)}</td>
       <td style="font-weight:800;color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+':''}${p.dlta.toFixed(1)}</td>
+      <td style="font-weight:800;font-family:var(--mono);color:var(--river)">${p.estOwn.toFixed(1)}%</td>
       <td><span class="grade grade-${p.grade.toLowerCase()}">${p.grade}</span></td>
     </tr>`;
   }).join('');
@@ -954,6 +968,7 @@ function renderLUCard(elId,lineup,type) {
           <span>Δ:<strong style="color:${p.delta>0?'var(--teal-bright)':'var(--red)'}">${p.delta>0?'+'+p.delta:p.delta}</strong></span>
           <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
           <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
+          <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
         </div>
       </div>
     `).join('')}
@@ -963,9 +978,6 @@ function renderLUCard(elId,lineup,type) {
     </div>`;
 }
 
-// ============================================================
-//  BUILD TAB (LINEUP STUDIO)
-// ============================================================
 function setStrategy(strat) {
   currentStrategy=strat;
   ['gpp','cash','steam'].forEach(s=>document.getElementById('strat-'+s).classList.remove('on'));
@@ -1001,6 +1013,7 @@ function renderBuildTab() {
                 ${getWaveBadge(p.wave)}
                 <span>$DLTA:<strong style="color:${p.dlta>=0?'var(--gold)':'var(--red)'}">${p.dlta>0?'+'+p.dlta.toFixed(1):p.dlta.toFixed(1)}</strong></span>
                 <span>wVEL:<strong style="color:${p.wVelDisp>0?'var(--teal)':(p.wVelDisp<0?'var(--red)':'var(--muted)')}">${p.wVelDisp>0?'+'+p.wVelDisp.toFixed(2):p.wVelDisp.toFixed(2)}</strong></span>
+                <span>pOWN:<strong style="color:var(--river)">${p.estOwn.toFixed(1)}%</strong></span>
               </div>
             </div>
           </div>
