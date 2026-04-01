@@ -330,7 +330,7 @@ textarea{width:100%;min-height:120px;font-size:11px;line-height:1.5;background:v
 
 <script>
 // ============================================================
-//  CONFIG & STATE (v60 - SIMPLIFIED UI CONTROLS)
+//  CONFIG & STATE (v61 - UI BUTTON FIXES)
 // ============================================================
 const SAL_CAP = 50000;
 const MIN_PRICE = 6900;
@@ -453,7 +453,7 @@ const MASTER_DB = [
     {name: "David Ford", sal: 6700, monOdds: 18500, tueOdds: 18500, wedOdds: 21000, liveOdds: 22500, liveT5: 2700, liveT10: 1150, sg: -0.52, trueCut: 0.42, fit: 'Mid', ch: 1.00},
     {name: "Chandler Blanchet", sal: 6600, monOdds: 22500, tueOdds: 19500, wedOdds: 23000, liveOdds: 23000, liveT5: 2700, liveT10: 1125, sg: -1.13, trueCut: 0.22, fit: 'Mid', ch: 1.00},
     {name: "Chan Kim", sal: 6400, monOdds: 25000, tueOdds: 24000, wedOdds: 24000, liveOdds: 24000, liveT5: 2800, liveT10: 1175, sg: -0.06, trueCut: 0.54, fit: 'Mid', ch: 0.95},
-    {name: "Mark Hubbard", sal: 6400, monOdds: 29000, tueOdds: 28000, wedOdds: 28000, liveOdds: 24000, liveT5: 2900, liveT10: 1200, sg: -0.02, trueCut: 0.63, fit: 'Mid', ch: 0.95},
+    {name: "Mark Hubbard", sal: 6400, monOdds: 29000, tueOdds: 28000, wedOdds: 28000, liveOdds: 29000, liveT5: 2900, liveT10: 1200, sg: -0.02, trueCut: 0.63, fit: 'Mid', ch: 0.95},
     {name: "Lucas Glover", sal: 6500, monOdds: 22500, tueOdds: 22500, wedOdds: 24000, liveOdds: 24000, liveT5: 2800, liveT10: 1150, sg: -0.17, trueCut: 0.57, fit: 'Strong', ch: 1.00},
     {name: "Sam Ryder", sal: 6500, monOdds: 25000, tueOdds: 25000, wedOdds: 25000, liveOdds: 25000, liveT5: 3000, liveT10: 1250, sg: -0.32, trueCut: 0.56, fit: 'Mid', ch: 1.00},
     {name: "Takumi Kanaya", sal: 6400, monOdds: 25000, tueOdds: 26000, wedOdds: 24000, liveOdds: 25000, liveT5: 2800, liveT10: 1175, sg: -0.06, trueCut: 0.54, fit: 'Mid', ch: 0.95},
@@ -503,51 +503,6 @@ const MASTER_DB = [
     {name: "Austin Wylie", sal: 6000, monOdds: 500000, tueOdds: 500000, wedOdds: 500000, liveOdds: 350000, liveT5: 29000, liveT10: 9600, sg: 0.00, trueCut: 0.50, fit: 'Weak', ch: 1.00}
 ];
 
-const TEE_TIMES = `7:30 AM,1,"Lanto Griffin, Kevin Streelman, Max McGreevy"
-7:30 AM,10,"Ryan Palmer, Dylan Wu, Mac Meissner"
-7:42 AM,1,"Nick Hardy, Christiaan Bezuidenhout, Austin Smotherman"
-7:42 AM,10,"Joel Dahmen, Bud Cauley, Chandler Phillips"
-7:54 AM,1,"Taylor Moore, Sam Ryder, Bronson Burgoon"
-7:54 AM,10,"Will Zalatoris, Patrick Rodgers, S.H. Kim"
-8:06 AM,1,"William Mouw, J.T. Poston, Lucas Glover"
-8:06 AM,10,"Tommy Fleetwood, Hideki Matsuyama, Rickie Fowler"
-8:18 AM,1,"Sami Valimaki, Webb Simpson, Charley Hoffman"
-8:18 AM,10,"Maverick McNealy, Tony Finau, Max Homa"
-8:30 AM,1,"Adam Schenk, Matt Kuchar, Alex Noren"
-8:30 AM,10,"Si Woo Kim, Michael Thorbjornsen, Marco Penge"
-8:42 AM,1,"Joe Highsmith, Davis Thompson, Ryo Hisatsune"
-8:42 AM,10,"Andrew Novak, Garrick Higgo, Sudarshan Yellamaraju"
-8:54 AM,1,"Rafael Campos, Emiliano Grillo, Rico Hoey"
-8:54 AM,10,"Brice Garnett, Adam Svensson, Thorbjorn Olesen"
-9:06 AM,1,"Austin Eckroat, Peter Malnati, Doug Ghim"
-9:06 AM,10,"Seamus Power, Michael Kim, Vince Whaley"
-9:18 AM,1,"David Ford, Neal Shipley, Davis Chatfield"
-9:18 AM,10,"Kris Ventura, Chandler Blanchet, Zach Bauchou"
-9:30 AM,1,"Frankie Capan III, Luke Clanton, Austin Wylie"
-9:30 AM,10,"Adrien Dumont de Chassart, Dan Brown, Christo Lamprecht"
-12:30 PM,1,"Tom Kim, Lee Hodges, Alex Smalley"
-12:30 PM,10,"Brendon Todd, Jimmy Walker, Hank Lebioda"
-12:42 PM,1,"Matt Wallace, Tom Hoge, Carson Young"
-12:42 PM,10,"Camilo Villegas, Takumi Kanaya, Kristoffer Reitan"
-12:54 PM,1,"Erik van Rooyen, K.H. Lee, Eric Cole"
-12:54 PM,10,"Nick Dunlap, Andrew Putnam, Justin Lower"
-1:06 PM,1,"Ludvig Aberg, Robert MacIntyre, Jordan Spieth"
-1:06 PM,10,"Jhonattan Vegas, Brandt Snedeker"
-1:18 PM,1,"Sepp Straka, Brian Harman, Billy Horschel"
-1:18 PM,10,"Nick Taylor, Matt McCarty, Kevin Yu"
-1:30 PM,1,"J.J. Spaun, Russell Henley, Stephan Jaeger"
-1:30 PM,10,"Steven Fisk, Karl Vilips, Chris Kirk"
-1:42 PM,1,"Mark Hubbard, Kevin Roy, Danny Walker"
-1:42 PM,10,"Mackenzie Hughes, Chad Ramey, Beau Hossler"
-1:54 PM,1,"Matthieu Pavon, Denny McCarthy, Johnny Keefer"
-1:54 PM,10,"Patton Kizzire, Keith Mitchell, Jordan Smith"
-2:06 PM,1,"Kensei Hirata, Adrien Saddier, Paul Waring"
-2:06 PM,10,"Zecheng Dou, Jackson Suber, Gordon Sargent"
-2:18 PM,1,"Pontus Nyholm, Marcelo Rozo, Charlie Crockett"
-2:18 PM,10,"Patrick Fishburn, Alejandro Tosti, Jesper Svensson"
-2:30 PM,1,"Jimmy Stanger, A.J. Ewart, John VanDerLaan"
-2:30 PM,10,"Haotong Li, John Parry, Jeffrey Kang"`;
-
 let waveMap = {};
 TEE_TIMES.split('\n').forEach(line => {
   if(!line) return;
@@ -591,7 +546,7 @@ function loadInitialData() {
 
 function saveToLocal() {
   try {
-    localStorage.setItem('tve_players_v60',JSON.stringify(players.map(p=>({
+    localStorage.setItem('tve_players_v61',JSON.stringify(players.map(p=>({
       name:p.name,tueOdds:p.tueOdds,wedOdds:p.wedOdds,liveOdds:p.liveOdds,liveT5:p.liveT5,liveT10:p.liveT10,locked:p.locked
     }))));
   } catch(e) {}
@@ -599,7 +554,7 @@ function saveToLocal() {
 
 function loadFromLocal() {
   let stored;
-  try { stored = localStorage.getItem('tve_players_v60'); } catch(e) {}
+  try { stored = localStorage.getItem('tve_players_v61'); } catch(e) {}
   
   if (stored && stored !== '[]') {
     const parsed = JSON.parse(stored);
@@ -1036,8 +991,11 @@ function renderBuildTab() {
 function removePlayerFromBuild(name) {
   let p = players.find(x => x.name === name);
   if (p) p.locked = false;
-  draftedLineup = [];
-  currentLineup = [];
+
+  if (draftedLineup.length > 0) {
+    draftedLineup = draftedLineup.filter(x => x.name !== name);
+  }
+
   saveToLocal();
   renderAll();
   let buildPanel = document.getElementById('panel-build');
@@ -1049,8 +1007,10 @@ function toggleLock(name) {
   if (!p) return;
   if (!p.locked && players.filter(x => x.locked).length >= 6) return;
   p.locked = !p.locked;
+  
   draftedLineup = [];
   currentLineup = [];
+  
   saveToLocal();
   renderAll();
   let buildPanel = document.getElementById('panel-build');
@@ -1059,8 +1019,10 @@ function toggleLock(name) {
 
 function clearLocks() {
   players.forEach(p => p.locked = false);
+  
   draftedLineup = [];
   currentLineup = [];
+  
   saveToLocal();
   renderAll();
   let buildPanel = document.getElementById('panel-build');
